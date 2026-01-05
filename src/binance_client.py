@@ -6,6 +6,7 @@ Binance 客户端
 import asyncio
 import json
 import os
+import ssl
 from datetime import datetime
 from typing import AsyncGenerator, Callable, Dict, List, Optional
 
@@ -49,6 +50,9 @@ class BinanceClient:
         if self._proxy:
             logger.info(f"使用代理: {self._mask_proxy(self._proxy)}")
 
+        # 创建宽松的 SSL 上下文（解决 SSL 连接问题）
+        self._ssl_context = self._create_ssl_context()
+
     def _mask_proxy(self, proxy: str) -> str:
         """隐藏代理密码"""
         if "@" in proxy:
@@ -57,33 +61,122 @@ class BinanceClient:
             return parts[0].rsplit(":", 1)[0] + ":***@" + parts[1]
         return proxy
 
-    def _create_connector(self) -> Optional[aiohttp.BaseConnector]:
-        """创建连接器（支持代理）"""
-        if not self._proxy:
-            return None
+    def _create_ssl_context(self) -> ssl.SSLContext:
+        """
+        创建优化的 SSL 上下文
+        解决 macOS 上常见的 SSL 连接问题
+        """
+        # 创建 SSL 上下文，使用系统默认证书
+        ssl_context = ssl.create_default_context()
+
+        # 设置更宽松的 SSL 选项
+        ssl_context.check_hostname = True  # 保持主机名检查
+        ssl_context.verify_mode = ssl.CERT_REQUIRED  # 要求证书验证
+
+        # 兼容更多 TLS 版本（包括 TLS 1.2 和 1.3）
+        ssl_context.minimum_version = ssl.TLSVersion.TLSv1_2
+
+        # 如果遇到证书问题，可以临时启用以下选项进行诊断：
+        # ssl_context.check_hostname = False
+        # ssl_context.verify_mode = ssl.CERT_NONE
+        # 注意：生产环境不建议禁用证书验证
+
+        return ssl_context
+
+    def _create_connector(self) -> aiohttp.BaseConnector:
+        """
+        创建优化的连接器
+        配置连接池、超时、DNS 缓存等参数
+        """
+        # 基础 TCPConnector 配置
+        connector_kwargs = {
+            "limit": 100,  # 连接池大小
+            "limit_per_host": 30,  # 每个主机的最大连接数
+            "ttl_dns_cache": 300,  # DNS 缓存时间（秒）
+            "ssl": self._ssl_context,  # 使用自定义 SSL 上下文
+            "force_close": False,  # 保持连接复用
+            "enable_cleanup_closed": True,  # 启用关闭连接清理
+        }
 
         try:
-            if self._proxy.startswith(("socks5://", "socks4://")):
-                # SOCKS 代理
-                return ProxyConnector.from_url(self._proxy)
+            if self._proxy and self._proxy.startswith(("socks5://", "socks4://")):
+                # SOCKS 代理：使用 ProxyConnector
+                return ProxyConnector.from_url(
+                    self._proxy,
+                    ssl=self._ssl_context,
+                    limit=100,
+                    limit_per_host=30
+                )
             else:
-                # HTTP 代理使用 aiohttp 内置支持
-                return None
+                # 无代理或 HTTP 代理：使用 TCPConnector
+                return aiohttp.TCPConnector(**connector_kwargs)
         except Exception as e:
-            logger.error(f"创建代理连接器失败: {e}")
-            return None
+            logger.error(f"创建连接器失败: {e}，使用默认配置")
+            return aiohttp.TCPConnector(**connector_kwargs)
 
     async def _get_session(self) -> aiohttp.ClientSession:
-        """获取或创建 HTTP 会话"""
+        """
+        获取或创建 HTTP 会话
+        配置超时、连接器等参数
+        """
         if self._session is None or self._session.closed:
             connector = self._create_connector()
-            self._session = aiohttp.ClientSession(connector=connector)
+
+            # 配置超时参数（秒）
+            timeout = aiohttp.ClientTimeout(
+                total=30,  # 总超时
+                connect=10,  # 连接超时
+                sock_read=20,  # 读取超时
+            )
+
+            self._session = aiohttp.ClientSession(
+                connector=connector,
+                timeout=timeout,
+            )
+            logger.debug("已创建新的 HTTP 会话")
+
         return self._session
 
     def _get_http_proxy(self) -> Optional[str]:
         """获取 HTTP 代理地址（用于 aiohttp 原生代理支持）"""
         if self._proxy and self._proxy.startswith(("http://", "https://")):
             return self._proxy
+        return None
+
+    async def _request_with_retry(
+        self,
+        method: str,
+        url: str,
+        max_retries: int = 3,
+        **kwargs
+    ) -> Optional[aiohttp.ClientResponse]:
+        """
+        带重试机制的 HTTP 请求
+        Args:
+            method: HTTP 方法 (GET/POST/etc)
+            url: 请求 URL
+            max_retries: 最大重试次数
+            **kwargs: 传递给 session.request 的其他参数
+        """
+        session = await self._get_session()
+        http_proxy = self._get_http_proxy()
+        if http_proxy and 'proxy' not in kwargs:
+            kwargs['proxy'] = http_proxy
+
+        last_error = None
+        for attempt in range(max_retries):
+            try:
+                response = await session.request(method, url, **kwargs)
+                return response
+            except (aiohttp.ClientError, asyncio.TimeoutError) as e:
+                last_error = e
+                if attempt < max_retries - 1:
+                    wait_time = 2 ** attempt  # 指数退避: 1s, 2s, 4s
+                    logger.debug(f"请求失败 ({type(e).__name__}), {wait_time}s 后重试... [{attempt+1}/{max_retries}]")
+                    await asyncio.sleep(wait_time)
+                else:
+                    logger.error(f"请求失败，已达最大重试次数: {e}")
+
         return None
 
     async def close(self):
@@ -206,14 +299,14 @@ class BinanceClient:
         params = {"symbol": symbol}
 
         try:
-            session = await self._get_session()
-            http_proxy = self._get_http_proxy()
-            async with session.get(url, params=params, proxy=http_proxy) as resp:
-                if resp.status == 200:
-                    data = await resp.json()
-                    return float(data.get("openInterest", 0))
-                else:
-                    logger.warning(f"获取 {symbol} OI 失败: HTTP {resp.status}")
+            resp = await self._request_with_retry("GET", url, params=params)
+            if resp and resp.status == 200:
+                data = await resp.json()
+                await resp.release()
+                return float(data.get("openInterest", 0))
+            elif resp:
+                logger.warning(f"获取 {symbol} OI 失败: HTTP {resp.status}")
+                await resp.release()
         except Exception as e:
             logger.error(f"获取 {symbol} OI 异常: {e}")
 
@@ -255,19 +348,20 @@ class BinanceClient:
         url = f"{self.REST_BASE_URL}/fapi/v1/exchangeInfo"
 
         try:
-            session = await self._get_session()
-            http_proxy = self._get_http_proxy()
-            async with session.get(url, proxy=http_proxy) as resp:
-                if resp.status == 200:
-                    data = await resp.json()
-                    symbols = [
-                        s["symbol"]
-                        for s in data.get("symbols", [])
-                        if s.get("contractType") == "PERPETUAL"
-                        and s.get("quoteAsset") == "USDT"
-                        and s.get("status") == "TRADING"
-                    ]
-                    return symbols
+            resp = await self._request_with_retry("GET", url)
+            if resp and resp.status == 200:
+                data = await resp.json()
+                await resp.release()
+                symbols = [
+                    s["symbol"]
+                    for s in data.get("symbols", [])
+                    if s.get("contractType") == "PERPETUAL"
+                    and s.get("quoteAsset") == "USDT"
+                    and s.get("status") == "TRADING"
+                ]
+                return symbols
+            elif resp:
+                await resp.release()
         except Exception as e:
             logger.error(f"获取交易对列表失败: {e}")
 
@@ -279,11 +373,13 @@ class BinanceClient:
         params = {"symbol": symbol}
 
         try:
-            session = await self._get_session()
-            http_proxy = self._get_http_proxy()
-            async with session.get(url, params=params, proxy=http_proxy) as resp:
-                if resp.status == 200:
-                    return await resp.json()
+            resp = await self._request_with_retry("GET", url, params=params)
+            if resp and resp.status == 200:
+                data = await resp.json()
+                await resp.release()
+                return data
+            elif resp:
+                await resp.release()
         except Exception as e:
             logger.error(f"获取 {symbol} 24h 统计失败: {e}")
 
@@ -350,13 +446,14 @@ class BinanceClient:
         params = {"symbol": symbol, "limit": 1}
 
         try:
-            session = await self._get_session()
-            http_proxy = self._get_http_proxy()
-            async with session.get(url, params=params, proxy=http_proxy) as resp:
-                if resp.status == 200:
-                    data = await resp.json()
-                    if data:
-                        return float(data[0].get("fundingRate", 0))
+            resp = await self._request_with_retry("GET", url, params=params, max_retries=2)
+            if resp and resp.status == 200:
+                data = await resp.json()
+                await resp.release()
+                if data:
+                    return float(data[0].get("fundingRate", 0))
+            elif resp:
+                await resp.release()
         except Exception as e:
             logger.debug(f"获取 {symbol} 资金费率失败: {e}")
 
@@ -368,11 +465,13 @@ class BinanceClient:
         params = {"symbol": symbol}
 
         try:
-            session = await self._get_session()
-            http_proxy = self._get_http_proxy()
-            async with session.get(url, params=params, proxy=http_proxy) as resp:
-                if resp.status == 200:
-                    return await resp.json()
+            resp = await self._request_with_retry("GET", url, params=params, max_retries=2)
+            if resp and resp.status == 200:
+                data = await resp.json()
+                await resp.release()
+                return data
+            elif resp:
+                await resp.release()
         except Exception as e:
             logger.debug(f"获取 {symbol} 标记价格失败: {e}")
 
@@ -421,25 +520,25 @@ class BinanceClient:
         }
 
         try:
-            session = await self._get_session()
-            http_proxy = self._get_http_proxy()
-
-            async with session.get(url, params=params, proxy=http_proxy) as resp:
-                if resp.status == 200:
-                    data = await resp.json()
-                    klines = []
-                    for k in data:
-                        klines.append({
-                            "timestamp": k[0],
-                            "open": float(k[1]),
-                            "high": float(k[2]),
-                            "low": float(k[3]),
-                            "close": float(k[4]),
-                            "volume": float(k[5]),
-                            "close_time": k[6],
-                            "quote_volume": float(k[7]),
-                        })
-                    return klines
+            resp = await self._request_with_retry("GET", url, params=params)
+            if resp and resp.status == 200:
+                data = await resp.json()
+                await resp.release()
+                klines = []
+                for k in data:
+                    klines.append({
+                        "timestamp": k[0],
+                        "open": float(k[1]),
+                        "high": float(k[2]),
+                        "low": float(k[3]),
+                        "close": float(k[4]),
+                        "volume": float(k[5]),
+                        "close_time": k[6],
+                        "quote_volume": float(k[7]),
+                    })
+                return klines
+            elif resp:
+                await resp.release()
         except Exception as e:
             logger.error(f"获取 {symbol} K线失败: {e}")
 
