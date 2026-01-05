@@ -108,7 +108,7 @@ class AlertEvent:
         base_symbol = self.symbol.replace("USDT", "")
         lines.extend([
             "",
-            f"💬 回复 `{base_symbol}` 查看K线详情"
+            f"💬 回复 `/info {base_symbol}` 查看K线详情"
         ])
 
         return "\n".join(lines)
