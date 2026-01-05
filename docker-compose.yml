@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  price-monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: price-change-monitor
+    restart: unless-stopped
+
+    # 环境变量（覆盖 .env 中的配置）
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+      - PROXY_URL=${PROXY_URL}
+      - TZ=Asia/Shanghai
+
+    # 加载 .env 文件
+    env_file:
+      - .env
+
+    # 挂载配置和日志（便于修改配置和查看日志）
+    volumes:
+      - ./config:/app/config:ro
+      - ./logs:/app/logs
+
+    # 网络模式
+    network_mode: bridge
+
+    # 资源限制
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
+
+    # 日志配置
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

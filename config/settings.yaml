@@ -1,0 +1,85 @@
+# ========================================
+# 合约价格异动监控系统配置
+# ========================================
+
+# 按 24h 成交额分层阈值配置
+# 从高到低排列，匹配第一个满足条件的层级
+volume_tiers:
+  # 超大盘：24h成交额 >= 10亿U
+  - min_quote_volume: 1000000000
+    price_threshold: 1.5      # 价格变化 1.5% 触发
+    volume_threshold: 3.0     # 成交量 3 倍于均值触发
+    oi_threshold: 5.0         # 持仓量变化 5% 触发
+    label: "超大盘"
+
+  # 大盘：24h成交额 >= 1亿U
+  - min_quote_volume: 100000000
+    price_threshold: 2.5      # 价格变化 2.5% 触发
+    volume_threshold: 4.0     # 成交量 4 倍于均值触发
+    oi_threshold: 8.0         # 持仓量变化 8% 触发
+    label: "大盘"
+
+  # 中盘：24h成交额 >= 1000万U
+  - min_quote_volume: 10000000
+    price_threshold: 4.0      # 价格变化 4% 触发
+    volume_threshold: 5.0     # 成交量 5 倍于均值触发
+    oi_threshold: 10.0        # 持仓量变化 10% 触发
+    label: "中盘"
+
+  # 小盘：24h成交额 < 1000万U
+  - min_quote_volume: 0
+    price_threshold: 6.0      # 价格变化 6% 触发
+    volume_threshold: 6.0     # 成交量 6 倍于均值触发
+    oi_threshold: 15.0        # 持仓量变化 15% 触发
+    label: "小盘"
+
+# 告警配置
+alerts:
+  # 价格异动告警
+  price_change:
+    enabled: true
+    time_window: 60           # 检测窗口（秒）
+
+  # 成交量突增告警
+  volume_spike:
+    enabled: true
+    lookback_periods: 10      # 对比最近 N 个周期的平均成交量
+
+  # 持仓量变化告警
+  open_interest:
+    enabled: true
+    poll_interval: 30         # 轮询间隔（秒）
+    time_window: 300          # 检测窗口（秒）
+
+  # 告警冷却时间（秒）- 同一币种同类型告警的最小间隔
+  cooldown: 300
+
+# 币种过滤
+filter:
+  # 模式: "all" | "whitelist" | "blacklist"
+  mode: "all"
+
+  # 白名单模式下，仅监控这些币种
+  whitelist:
+    - BTCUSDT
+    - ETHUSDT
+    - BNBUSDT
+    - SOLUSDT
+    - XRPUSDT
+
+  # 黑名单模式下，排除这些币种
+  blacklist:
+    - USDCUSDT
+    - TUSDUSDT
+    - BUSDUSDT
+    - FDUSDUSDT
+
+# Telegram 配置（敏感信息通过环境变量设置）
+telegram:
+  enabled: true
+
+# 日志配置
+logging:
+  level: "INFO"               # DEBUG | INFO | WARNING | ERROR
+  file_output: true
+  file_path: "logs/monitor.log"
