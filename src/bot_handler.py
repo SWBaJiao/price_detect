@@ -131,6 +131,57 @@ class BotCommandHandler:
                 # 纯文本响应
                 await self._send_reply(chat_id, result)
 
+    def _parse_interval(self, time_value: str) -> str:
+        """
+        解析时间参数，转换为 Binance interval 格式
+
+        支持的输入：
+        - 1, 3, 5, 15, 30 -> 1m, 3m, 5m, 15m, 30m (分钟)
+        - 60 -> 1h, 120 -> 2h, 240 -> 4h (小时)
+        - 1440 -> 1d (日)
+
+        默认返回 1h
+        """
+        try:
+            minutes = int(time_value)
+
+            # 分钟级别 (1-59)
+            if minutes < 60:
+                valid_minutes = [1, 3, 5, 15, 30]
+                if minutes in valid_minutes:
+                    return f"{minutes}m"
+                # 不在有效列表中，返回最接近的
+                for vm in valid_minutes:
+                    if minutes <= vm:
+                        return f"{vm}m"
+                return "30m"
+
+            # 小时级别 (60, 120, 240, 360, 720)
+            elif minutes < 1440:
+                hours = minutes // 60
+                valid_hours = [1, 2, 4, 6, 12]
+                if hours in valid_hours:
+                    return f"{hours}h"
+                # 返回最接近的
+                for vh in valid_hours:
+                    if hours <= vh:
+                        return f"{vh}h"
+                return "12h"
+
+            # 日级别
+            elif minutes >= 1440:
+                days = minutes // 1440
+                if days >= 7:
+                    return "1w"
+                elif days >= 3:
+                    return "3d"
+                return "1d"
+
+        except (ValueError, TypeError):
+            pass
+
+        return "1h"  # 默认返回 1h
+
     async def _handle_command(self, text: str) -> Optional[str]:
         """处理命令并返回响应"""
         text = text.strip()
@@ -149,23 +200,29 @@ class BotCommandHandler:
             symbol = match.group(2)
             return await self._handle_price_command(symbol)
 
-        # /info 或 /i 命令
-        match = re.match(r"^[/]?(info|i)\s+(\w+)$", text, re.IGNORECASE)
+        # /info 或 /i 命令（支持可选的时间参数）
+        match = re.match(r"^[/]?(info|i)\s+(\w+)(?:\s+(\d+))?$", text, re.IGNORECASE)
         if match:
             symbol = match.group(2)
-            return await self._handle_info_command(symbol)
+            time_param = match.group(3)  # 可能为 None
+            interval = self._parse_interval(time_param) if time_param else "1h"
+            return await self._handle_info_command(symbol, interval)
 
-        # 直接输入币种名称（如 BTC、ETH、btc）
-        match = re.match(r"^([A-Za-z]{2,10})$", text)
+        # 直接输入币种名称（如 BTC、ETH、btc），支持可选时间参数
+        match = re.match(r"^([A-Za-z]{2,10})(?:\s+(\d+))?$", text)
         if match:
             symbol = match.group(1)
-            return await self._handle_info_command(symbol)
+            time_param = match.group(2)
+            interval = self._parse_interval(time_param) if time_param else "1h"
+            return await self._handle_info_command(symbol, interval)
 
-        # 带 USDT 后缀
-        match = re.match(r"^([A-Za-z]{2,10})USDT$", text, re.IGNORECASE)
+        # 带 USDT 后缀，支持可选时间参数
+        match = re.match(r"^([A-Za-z]{2,10})USDT(?:\s+(\d+))?$", text, re.IGNORECASE)
         if match:
             symbol = match.group(1)
-            return await self._handle_info_command(symbol)
+            time_param = match.group(2)
+            interval = self._parse_interval(time_param) if time_param else "1h"
+            return await self._handle_info_command(symbol, interval)
 
         return None  # 不识别的消息不回复
 
@@ -190,16 +247,28 @@ class BotCommandHandler:
             f"{change_emoji} 24h: `{info['price_change_percent']:+.2f}%`"
         )
 
-    async def _handle_info_command(self, symbol: str):
+    async def _handle_info_command(self, symbol: str, interval: str = "1h"):
         """处理完整信息查询命令，返回带 K 线图"""
         # 标准化 symbol
         symbol_upper = symbol.upper()
         if not symbol_upper.endswith("USDT"):
             symbol_upper = f"{symbol_upper}USDT"
 
+        # 根据时间级别确定数据量
+        if interval.endswith("m"):
+            limit = 100  # 分钟级别，显示更多数据点
+        elif interval.endswith("h"):
+            limit = 48   # 小时级别，2天数据
+        elif interval.endswith("d"):
+            limit = 30   # 日级别，1个月数据
+        elif interval.endswith("w"):
+            limit = 24   # 周级别，半年数据
+        else:
+            limit = 48
+
         # 并发获取信息和 K 线数据
         info_task = self.binance.get_symbol_info(symbol)
-        klines_task = self.binance.get_klines(symbol, interval="1h", limit=48)
+        klines_task = self.binance.get_klines(symbol, interval=interval, limit=limit)
 
         info, klines = await asyncio.gather(info_task, klines_task)
 
@@ -256,7 +325,7 @@ class BotCommandHandler:
                 chart_data = self.chart.generate_kline_chart(
                     klines=klines,
                     symbol=info['symbol'],
-                    interval="1h",
+                    interval=interval,
                     show_volume=True,
                     show_ma=True
                 )
@@ -333,12 +402,20 @@ class BotCommandHandler:
             "🤖 *合约数据查询机器人*\n\n"
             "*查询命令：*\n"
             "• 直接发送币种名称，如 `BTC` `ETH` `SOL`\n"
-            "• `/info <币种>` - k线图等详细信息\n"
+            "• `/info <币种> [时间]` - k线图等详细信息\n"
             "• `/p <币种>` - 快速查看价格\n"
-            "• `/i <币种>` - 查看完整信息\n"
+            "• `/i <币种> [时间]` - 查看完整信息\n"
             "• `/top` - 成交额 Top 10\n\n"
+            "*时间参数（可选，单位：分钟）：*\n"
+            "• `5` - 5分钟 K线\n"
+            "• `15` - 15分钟 K线\n"
+            "• `60` - 1小时 K线\n"
+            "• `240` - 4小时 K线\n"
+            "• 不传默认为 1小时\n\n"
             "*示例：*\n"
-            "• `BTC` - 查询 BTCUSDT 信息\n"
+            "• `BTC` - 查询 BTCUSDT (1h K线)\n"
+            "• `BTC 5` - 查询 BTCUSDT (5分钟 K线)\n"
+            "• `/info RIVER 15` - 查询 RIVERUSDT (15分钟 K线)\n"
             "• `/p eth` - 查询 ETH 价格\n"
             "• `/top` - 查看热门合约\n\n"
             "*数据说明：*\n"
