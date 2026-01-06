@@ -232,6 +232,54 @@ class AlertEngine:
         self._record_alert(symbol, AlertType.OI_CHANGE)
         return event
 
+    def check_spot_futures_spread(self, symbol: str) -> Optional[AlertEvent]:
+        """检测现货-合约价差"""
+        if not self.settings.alerts.spot_futures_spread.enabled:
+            return None
+
+        if self._should_filter(symbol):
+            return None
+
+        if not self._is_cooled_down(symbol, AlertType.SPOT_FUTURES_SPREAD):
+            return None
+
+        # 获取价差数据
+        spread_data = self.tracker.get_spot_futures_spread(symbol)
+        if spread_data is None:
+            return None
+
+        spread_percent, spot_price, futures_price = spread_data
+
+        # 获取分层阈值
+        quote_volume = self.tracker.get_quote_volume(symbol)
+        tier = self._get_tier(quote_volume)
+        if tier is None:
+            return None
+
+        # 检查是否超阈值（绝对值）
+        threshold = tier.spread_threshold
+        if abs(spread_percent) < threshold:
+            return None
+
+        # 触发告警
+        event = AlertEvent(
+            symbol=symbol,
+            alert_type=AlertType.SPOT_FUTURES_SPREAD,
+            tier_label=tier.label,
+            current_price=futures_price,
+            change_percent=spread_percent,
+            threshold=threshold,
+            time_window=self.settings.alerts.spot_futures_spread.time_window,
+            extra_info={
+                "现货价格": f"${spot_price:.4f}",
+                "合约价格": f"${futures_price:.4f}",
+                "24h成交额": f"${quote_volume:,.0f}"
+            }
+        )
+
+        self._record_alert(symbol, AlertType.SPOT_FUTURES_SPREAD)
+        return event
+
     def check_all(self, symbol: str) -> List[AlertEvent]:
         """
         检查所有类型的异动
@@ -258,6 +306,13 @@ class AlertEngine:
         if oi_event:
             events.append(oi_event)
             logger.info(f"[持仓量变化] {symbol}: {oi_event.change_percent:+.2f}%")
+
+        # 现货-合约价差
+        spread_event = self.check_spot_futures_spread(symbol)
+        if spread_event:
+            events.append(spread_event)
+            direction = "现货溢价" if spread_event.change_percent > 0 else "合约溢价"
+            logger.info(f"[现货-合约价差] {symbol}: {spread_event.change_percent:+.2f}% ({direction})")
 
         # 回调通知
         if self.on_alert:

@@ -25,12 +25,17 @@ class SymbolTracker:
     # 持仓量历史（用于 OI 变化检测）
     oi_history: deque = field(default_factory=lambda: deque(maxlen=100))
 
+    # 现货价格历史（用于现货-合约价差检测）
+    spot_price_history: deque = field(default_factory=lambda: deque(maxlen=100))
+
     # 最新数据缓存
     latest_price: float = 0.0
     latest_volume: float = 0.0
     latest_quote_volume: float = 0.0
     latest_oi: float = 0.0
+    latest_spot_price: float = 0.0  # 最新现货价格
     last_update: Optional[datetime] = None
+    last_spot_update: Optional[datetime] = None  # 最新现货更新时间
 
 
 class PriceTracker:
@@ -43,11 +48,13 @@ class PriceTracker:
         self,
         price_window: int = 60,      # 价格检测窗口（秒）
         volume_periods: int = 10,    # 成交量对比周期数
-        oi_window: int = 300         # OI 检测窗口（秒）
+        oi_window: int = 300,        # OI 检测窗口（秒）
+        spread_window: int = 60      # 现货-合约价差检测窗口（秒）
     ):
         self.price_window = price_window
         self.volume_periods = volume_periods
         self.oi_window = oi_window
+        self.spread_window = spread_window
 
         # symbol -> SymbolTracker
         self._trackers: Dict[str, SymbolTracker] = defaultdict(SymbolTracker)
@@ -88,6 +95,34 @@ class PriceTracker:
         tracker = self._trackers[symbol]
         tracker.latest_oi = oi
         tracker.oi_history.append((timestamp, oi))
+
+    def update_spot_price(self, symbol: str, spot_price: float, timestamp: datetime = None) -> None:
+        """
+        更新现货价格（来自 REST API）
+
+        Args:
+            symbol: 交易对
+            spot_price: 现货价格
+            timestamp: 时间戳
+        """
+        if timestamp is None:
+            timestamp = datetime.now()
+
+        tracker = self._trackers[symbol]
+        tracker.latest_spot_price = spot_price
+        tracker.last_spot_update = timestamp
+        tracker.spot_price_history.append((timestamp, spot_price))
+
+    def batch_update_spot_prices(self, spot_prices: Dict[str, float]) -> None:
+        """
+        批量更新现货价格
+
+        Args:
+            spot_prices: {symbol: price} 字典
+        """
+        timestamp = datetime.now()
+        for symbol, price in spot_prices.items():
+            self.update_spot_price(symbol, price, timestamp)
 
     def batch_update(self, tickers: List[TickerData]) -> None:
         """批量更新"""
@@ -188,6 +223,43 @@ class PriceTracker:
 
         change_percent = ((current_oi - start_oi) / start_oi) * 100
         return change_percent
+
+    def get_spot_futures_spread(self, symbol: str) -> Optional[Tuple[float, float, float]]:
+        """
+        计算现货-合约价差百分比
+
+        Returns:
+            (spread_percent, spot_price, futures_price) 或 None
+            spread_percent: (现货价格 - 合约价格) / 合约价格 * 100
+            正值表示现货溢价，负值表示合约溢价
+        """
+        tracker = self._trackers.get(symbol)
+        if not tracker:
+            return None
+
+        # 检查是否有现货价格数据
+        if tracker.latest_spot_price == 0 or tracker.last_spot_update is None:
+            return None
+
+        # 检查是否有合约价格数据
+        if tracker.latest_price == 0:
+            return None
+
+        # 检查现货数据是否过期（超过检测窗口）
+        now = datetime.now()
+        if now - tracker.last_spot_update > timedelta(seconds=self.spread_window * 2):
+            return None
+
+        spot_price = tracker.latest_spot_price
+        futures_price = tracker.latest_price
+
+        if futures_price == 0:
+            return None
+
+        # 计算价差百分比
+        spread_percent = ((spot_price - futures_price) / futures_price) * 100
+
+        return (spread_percent, spot_price, futures_price)
 
     # ==================== 数据访问 ====================
 

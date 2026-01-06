@@ -26,8 +26,10 @@ class BinanceClient:
     """
 
     # API 端点
-    WS_BASE_URL = "wss://fstream.binance.com"
-    REST_BASE_URL = "https://fapi.binance.com"
+    WS_BASE_URL = "wss://fstream.binance.com"      # 合约 WebSocket
+    WS_SPOT_BASE_URL = "wss://stream.binance.com"  # 现货 WebSocket
+    REST_BASE_URL = "https://fapi.binance.com"     # 合约 REST
+    REST_SPOT_BASE_URL = "https://api.binance.com" # 现货 REST
 
     def __init__(self, proxy: Optional[str] = None):
         """
@@ -541,5 +543,87 @@ class BinanceClient:
                 await resp.release()
         except Exception as e:
             logger.error(f"获取 {symbol} K线失败: {e}")
+
+        return None
+
+    # ==================== 现货 API ====================
+
+    async def get_spot_ticker_24h(self, symbol: str) -> Optional[dict]:
+        """
+        获取现货 24 小时价格统计
+
+        Args:
+            symbol: 交易对，如 BTCUSDT
+
+        Returns:
+            现货价格统计数据
+        """
+        url = f"{self.REST_SPOT_BASE_URL}/api/v3/ticker/24hr"
+        params = {"symbol": symbol}
+
+        try:
+            resp = await self._request_with_retry("GET", url, params=params, max_retries=2)
+            if resp and resp.status == 200:
+                data = await resp.json()
+                await resp.release()
+                return data
+            elif resp:
+                await resp.release()
+        except Exception as e:
+            logger.debug(f"获取现货 {symbol} 24h 统计失败: {e}")
+
+        return None
+
+    async def get_all_spot_tickers(self) -> Dict[str, float]:
+        """
+        批量获取所有现货价格
+
+        Returns:
+            {symbol: price} 字典
+        """
+        url = f"{self.REST_SPOT_BASE_URL}/api/v3/ticker/price"
+
+        try:
+            resp = await self._request_with_retry("GET", url, max_retries=2)
+            if resp and resp.status == 200:
+                data = await resp.json()
+                await resp.release()
+                # 只返回 USDT 交易对
+                result = {
+                    item["symbol"]: float(item["price"])
+                    for item in data
+                    if item["symbol"].endswith("USDT")
+                }
+                return result
+            elif resp:
+                await resp.release()
+        except Exception as e:
+            logger.error(f"批量获取现货价格失败: {e}")
+
+        return {}
+
+    async def get_spot_price(self, symbol: str) -> Optional[float]:
+        """
+        获取单个现货价格
+
+        Args:
+            symbol: 交易对，如 BTCUSDT
+
+        Returns:
+            现货价格，失败返回 None
+        """
+        url = f"{self.REST_SPOT_BASE_URL}/api/v3/ticker/price"
+        params = {"symbol": symbol}
+
+        try:
+            resp = await self._request_with_retry("GET", url, params=params, max_retries=2)
+            if resp and resp.status == 200:
+                data = await resp.json()
+                await resp.release()
+                return float(data.get("price", 0))
+            elif resp:
+                await resp.release()
+        except Exception as e:
+            logger.debug(f"获取现货 {symbol} 价格失败: {e}")
 
         return None

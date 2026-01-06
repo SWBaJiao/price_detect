@@ -41,11 +41,20 @@ class OpenInterestAlert(BaseModel):
     time_window: int = 300   # 检测窗口（秒）
 
 
+class SpotFuturesSpreadAlert(BaseModel):
+    """现货-合约价差告警配置"""
+    enabled: bool = True
+    threshold: float = 0.3    # 价差阈值（%）
+    time_window: int = 60     # 检测窗口（秒）
+    poll_interval: int = 30   # 现货价格轮询间隔（秒）
+
+
 class AlertsConfig(BaseModel):
     """告警配置"""
     price_change: PriceChangeAlert = Field(default_factory=PriceChangeAlert)
     volume_spike: VolumeSpikeAlert = Field(default_factory=VolumeSpikeAlert)
     open_interest: OpenInterestAlert = Field(default_factory=OpenInterestAlert)
+    spot_futures_spread: SpotFuturesSpreadAlert = Field(default_factory=SpotFuturesSpreadAlert)
     # 告警冷却时间（秒）
     cooldown: int = 300
 
@@ -56,6 +65,7 @@ class VolumeTierConfig(BaseModel):
     price_threshold: float         # 价格变化阈值(%)
     volume_threshold: float = 3.0  # 成交量倍数阈值
     oi_threshold: float = 5.0      # 持仓量变化阈值(%)
+    spread_threshold: float = 0.3  # 现货-合约价差阈值(%)
     label: str                     # 层级标签
 
 

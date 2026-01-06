@@ -10,9 +10,10 @@ from typing import Optional
 
 class AlertType(Enum):
     """告警类型枚举"""
-    PRICE_CHANGE = "price_change"      # 价格异动
-    VOLUME_SPIKE = "volume_spike"      # 成交量突增
-    OI_CHANGE = "oi_change"            # 持仓量变化
+    PRICE_CHANGE = "price_change"          # 价格异动
+    VOLUME_SPIKE = "volume_spike"          # 成交量突增
+    OI_CHANGE = "oi_change"                # 持仓量变化
+    SPOT_FUTURES_SPREAD = "spot_futures_spread"  # 现货合约价差
 
 
 @dataclass
@@ -30,6 +31,19 @@ class TickerData:
     # 持仓量（通过 REST API 获取，可能为空）
     open_interest: Optional[float] = None
     open_interest_value: Optional[float] = None  # 持仓价值(USDT)
+
+
+@dataclass
+class SpotTickerData:
+    """
+    现货行情快照数据
+    来源: Binance Spot API
+    """
+    symbol: str                        # 交易对，如 BTCUSDT
+    price: float                       # 最新价格
+    volume: float                      # 24h 成交量（基础货币）
+    quote_volume: float                # 24h 成交额（USDT）
+    timestamp: datetime = field(default_factory=datetime.now)
 
 
 @dataclass
@@ -70,6 +84,11 @@ class AlertEvent:
 
     def format_message(self) -> str:
         """格式化告警消息"""
+        # 现货合约价差专用格式
+        if self.alert_type == AlertType.SPOT_FUTURES_SPREAD:
+            return self._format_spread_message()
+
+        # 原有的合约告警格式
         emoji_map = {
             AlertType.PRICE_CHANGE: "📈" if self.change_percent > 0 else "📉",
             AlertType.VOLUME_SPIKE: "📊",
@@ -109,6 +128,51 @@ class AlertEvent:
         lines.extend([
             "",
             f"💬 回复 `/info {base_symbol}` 查看K线详情"
+        ])
+
+        return "\n".join(lines)
+
+    def _format_spread_message(self) -> str:
+        """
+        格式化现货合约价差告警消息
+        使用独特的样式，与合约告警明显区分
+        """
+        # 判断价差方向
+        spread_emoji = "🔺" if self.change_percent > 0 else "🔻"
+        direction = "现货溢价" if self.change_percent > 0 else "合约溢价"
+
+        lines = [
+            "═" * 30,
+            f"{spread_emoji} *现货-合约价差异动* {spread_emoji}",
+            "═" * 30,
+            "",
+            f"🪙 币种: `{self.symbol}`",
+            f"📊 层级: {self.tier_label}",
+            "",
+            f"💵 现货价格: {self.extra_info.get('现货价格', 'N/A')}",
+            f"⚡ 合约价格: {self.extra_info.get('合约价格', 'N/A')}",
+            "",
+            f"📊 价差: *{self.change_percent:+.2f}%* ({direction})",
+            f"⚠️ 阈值: {self.threshold:.2f}%",
+            f"⏱ 检测窗口: {self.time_window}秒",
+            "",
+            f"🕐 时间: {self.timestamp.strftime('%Y-%m-%d %H:%M:%S')}",
+        ]
+
+        # 添加套利提示
+        if abs(self.change_percent) > self.threshold * 1.5:
+            lines.extend([
+                "",
+                "⚡ *套利机会提示* ⚡",
+                f"• 价差已超过阈值 {abs(self.change_percent/self.threshold):.1f} 倍"
+            ])
+
+        # 添加查询提示
+        base_symbol = self.symbol.replace("USDT", "")
+        lines.extend([
+            "",
+            "═" * 30,
+            f"💬 回复 `/info {base_symbol}` 查看详情"
         ])
 
         return "\n".join(lines)

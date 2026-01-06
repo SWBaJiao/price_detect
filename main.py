@@ -37,7 +37,8 @@ class MonitorApp:
         self.tracker = PriceTracker(
             price_window=settings.alerts.price_change.time_window,
             volume_periods=settings.alerts.volume_spike.lookback_periods,
-            oi_window=settings.alerts.open_interest.time_window
+            oi_window=settings.alerts.open_interest.time_window,
+            spread_window=settings.alerts.spot_futures_spread.time_window
         )
 
         # Telegram 通知
@@ -62,6 +63,9 @@ class MonitorApp:
 
         # OI 轮询任务
         self._oi_task = None
+        # 现货价格轮询任务
+        self._spot_price_task = None
+        # Bot 命令处理任务
         self._bot_task = None
 
     def _on_alert(self, event: AlertEvent):
@@ -95,6 +99,25 @@ class MonitorApp:
 
             await asyncio.sleep(interval)
 
+    async def _poll_spot_prices(self):
+        """定时轮询现货价格"""
+        interval = self.settings.alerts.spot_futures_spread.poll_interval
+
+        while self._running:
+            try:
+                # 批量获取所有现货价格
+                spot_prices = await self.binance.get_all_spot_tickers()
+
+                if spot_prices:
+                    # 批量更新追踪器
+                    self.tracker.batch_update_spot_prices(spot_prices)
+                    logger.debug(f"已更新 {len(spot_prices)} 个现货价格")
+
+            except Exception as e:
+                logger.error(f"轮询现货价格失败: {e}")
+
+            await asyncio.sleep(interval)
+
     async def start(self):
         """启动监控"""
         self._running = True
@@ -121,6 +144,11 @@ class MonitorApp:
             self._oi_task = asyncio.create_task(self._poll_open_interest())
             logger.info("持仓量轮询已启动")
 
+        # 启动现货价格轮询任务
+        if self.settings.alerts.spot_futures_spread.enabled:
+            self._spot_price_task = asyncio.create_task(self._poll_spot_prices())
+            logger.info("现货价格轮询已启动")
+
         # 启动 Bot 命令处理器（用于查询功能）
         if self.telegram.is_enabled:
             self._bot_task = asyncio.create_task(self.bot_handler.start_polling())
@@ -143,6 +171,14 @@ class MonitorApp:
             self._oi_task.cancel()
             try:
                 await self._oi_task
+            except asyncio.CancelledError:
+                pass
+
+        # 取消现货价格轮询
+        if self._spot_price_task:
+            self._spot_price_task.cancel()
+            try:
+                await self._spot_price_task
             except asyncio.CancelledError:
                 pass
 

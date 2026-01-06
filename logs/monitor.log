@@ -4245,3 +4245,1465 @@
 2026-01-05 17:38:43 | ERROR    | Telegram 网络错误: Server disconnected
 2026-01-05 17:38:43 | INFO     | 监控系统已停止
 2026-01-05 17:38:43 | INFO     | 监控系统已停止
+2026-01-05 17:39:38 | INFO     | ==================================================
+2026-01-05 17:39:38 | INFO     | 合约价格异动监控系统启动
+2026-01-05 17:39:38 | INFO     | ==================================================
+2026-01-05 17:39:39 | INFO     | Telegram Bot 连接成功: @price_botbot
+2026-01-05 17:39:39 | INFO     | Telegram 连接正常
+2026-01-05 17:39:39 | INFO     | 持仓量轮询已启动
+2026-01-05 17:39:39 | INFO     | Bot 查询功能已启动
+2026-01-05 17:39:39 | INFO     | 开始订阅 Binance 行情...
+2026-01-05 17:39:39 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-05 17:39:40 | INFO     | Bot 命令处理器已启动: @price_botbot
+2026-01-05 17:40:22 | INFO     | [价格异动] BROCCOLI714USDT: +2.68%
+2026-01-05 17:46:16 | INFO     | 将在 1s 后重连...
+2026-01-05 17:46:18 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-05 17:55:51 | INFO     | 将在 1s 后重连...
+2026-01-05 17:55:52 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-05 18:14:42 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:42 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:42 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:42 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:42 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:42 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:42 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:42 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:42 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:42 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:45 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:45 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:45 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:45 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:45 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:45 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:45 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:45 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:45 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:45 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:48 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:48 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:51 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:51 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:52 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:52 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:52 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:52 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:52 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:52 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:52 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:52 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:54 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:54 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:55 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:55 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:55 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:55 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:55 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:55 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:55 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:58 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:58 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:58 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:58 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:58 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:58 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:58 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:58 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:14:58 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:01 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:01 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:01 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:01 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:01 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:01 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:01 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:01 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:01 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:04 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:04 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:04 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:04 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:04 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:04 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:04 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:04 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:04 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:05 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:06 | ERROR    | WebSocket 错误: No PONG received after 15.0 seconds
+2026-01-05 18:15:06 | INFO     | 将在 1s 后重连...
+2026-01-05 18:15:07 | ERROR    | WebSocket 连接失败: Cannot connect to host fstream.binance.com:443 ssl:default [None]
+2026-01-05 18:15:07 | INFO     | 将在 2s 后重连...
+2026-01-05 18:15:07 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:07 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:07 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:07 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:07 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:07 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:07 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:07 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:07 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:08 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:09 | ERROR    | WebSocket 连接失败: Cannot connect to host fstream.binance.com:443 ssl:default [None]
+2026-01-05 18:15:09 | INFO     | 将在 4s 后重连...
+2026-01-05 18:15:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:15:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:30 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:32 | ERROR    | WebSocket 连接失败: Cannot connect to host fstream.binance.com:443 ssl:default [None]
+2026-01-05 18:19:32 | INFO     | 将在 8s 后重连...
+2026-01-05 18:19:32 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:32 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:32 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:32 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:32 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:32 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:32 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:32 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:32 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:33 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:35 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:35 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:35 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:35 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:35 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:35 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:36 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:39 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:40 | ERROR    | WebSocket 连接失败: Cannot connect to host fstream.binance.com:443 ssl:default [None]
+2026-01-05 18:19:40 | INFO     | 将在 16s 后重连...
+2026-01-05 18:19:46 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TOSHIUSDT
+2026-01-05 18:19:46 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=DUSKUSDT
+2026-01-05 18:19:46 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:49 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=AUCTIONUSDT
+2026-01-05 18:19:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:52 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:52 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:52 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:52 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=POWRUSDT
+2026-01-05 18:19:55 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:55 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:55 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:55 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:56 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:56 | ERROR    | WebSocket 连接失败: Cannot connect to host fstream.binance.com:443 ssl:default [None]
+2026-01-05 18:19:56 | INFO     | 将在 32s 后重连...
+2026-01-05 18:19:58 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:58 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:58 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:58 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:19:59 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:31 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SFPUSDT
+2026-01-05 18:20:32 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:33 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:33 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:33 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:34 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:35 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:35 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:35 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:35 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:36 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:36 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:38 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:38 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:39 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:39 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:41 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:41 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:42 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:42 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:44 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:44 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:45 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CAKEUSDT
+2026-01-05 18:20:45 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:45 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:46 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:47 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:47 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:48 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:48 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:50 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:50 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:51 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:51 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:52 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:52 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:52 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:53 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:53 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:54 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:54 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:55 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:55 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:55 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:56 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:56 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:57 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:57 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:58 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:58 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:58 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:58 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:59 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:59 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:59 | ERROR    | WebSocket 连接失败: Cannot connect to host fstream.binance.com:443 ssl:default [None]
+2026-01-05 18:20:59 | INFO     | 将在 60s 后重连...
+2026-01-05 18:20:59 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:20:59 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:21:00 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:21:00 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:42 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:42 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:42 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:42 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:43 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:43 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:43 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:43 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:44 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:44 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:45 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:45 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:45 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:45 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:46 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:46 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:46 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:46 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:47 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:47 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:48 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:48 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:48 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:48 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 18:38:49 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-05 19:54:53 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-05 22:16:25 | INFO     | 将在 1s 后重连...
+2026-01-05 22:16:26 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-05 23:27:38 | INFO     | 将在 1s 后重连...
+2026-01-05 23:27:39 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-05 23:27:43 | INFO     | 将在 1s 后重连...
+2026-01-05 23:27:45 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-05 23:27:45 | INFO     | [价格异动] LYNUSDT: +6.54%
+2026-01-06 02:49:08 | INFO     | 将在 1s 后重连...
+2026-01-06 02:49:10 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-06 04:09:39 | INFO     | 将在 1s 后重连...
+2026-01-06 04:09:41 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-06 05:00:36 | ERROR    | 请求失败，已达最大重试次数: Timeout on reading data from socket
+2026-01-06 05:57:03 | ERROR    | WebSocket 错误: No PONG received after 15.0 seconds
+2026-01-06 05:57:03 | INFO     | 将在 1s 后重连...
+2026-01-06 05:57:04 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-06 06:33:13 | INFO     | 将在 1s 后重连...
+2026-01-06 07:06:35 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-06 07:08:31 | INFO     | 将在 1s 后重连...
+2026-01-06 08:12:54 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-06 08:43:33 | INFO     | 将在 1s 后重连...
+2026-01-06 08:43:35 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-06 09:44:53 | INFO     | 将在 1s 后重连...
+2026-01-06 09:44:54 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-06 09:45:01 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-06 09:45:01 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-06 11:18:34 | ERROR    | WebSocket 错误: No PONG received after 15.0 seconds
+2026-01-06 11:18:34 | INFO     | 将在 1s 后重连...
+2026-01-06 11:18:35 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-06 11:55:04 | INFO     | [价格异动] RIVERUSDT: +1.95%
+2026-01-06 11:56:09 | INFO     | 收到终止信号...
+2026-01-06 11:56:09 | INFO     | 正在停止监控系统...
+2026-01-06 11:56:09 | INFO     | 正在停止监控系统...
+2026-01-06 11:56:09 | ERROR    | Telegram 网络错误: Server disconnected
+2026-01-06 11:56:09 | INFO     | 监控系统已停止
+2026-01-06 11:56:09 | INFO     | 监控系统已停止
+2026-01-06 11:56:47 | INFO     | ==================================================
+2026-01-06 11:56:47 | INFO     | 合约价格异动监控系统启动
+2026-01-06 11:56:47 | INFO     | ==================================================
+2026-01-06 11:56:48 | INFO     | Telegram Bot 连接成功: @price_botbot
+2026-01-06 11:56:48 | INFO     | Telegram 连接正常
+2026-01-06 11:56:48 | INFO     | 持仓量轮询已启动
+2026-01-06 11:56:48 | INFO     | 现货价格轮询已启动
+2026-01-06 11:56:48 | INFO     | Bot 查询功能已启动
+2026-01-06 11:56:48 | INFO     | 开始订阅 Binance 行情...
+2026-01-06 11:56:48 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-06 11:56:49 | INFO     | [现货-合约价差] CVCUSDT: +0.40% (现货溢价)
+2026-01-06 11:56:49 | INFO     | [现货-合约价差] LITUSDT: -75.92% (合约溢价)
+2026-01-06 11:56:49 | INFO     | [现货-合约价差] TRUUSDT: +0.67% (现货溢价)
+2026-01-06 11:56:49 | INFO     | Bot 命令处理器已启动: @price_botbot
+2026-01-06 11:56:50 | INFO     | [现货-合约价差] FLOWUSDT: -6.38% (合约溢价)
+2026-01-06 11:56:51 | INFO     | [现货-合约价差] XMRUSDT: -73.23% (合约溢价)
+2026-01-06 11:56:51 | INFO     | [现货-合约价差] HEMIUSDT: +0.37% (现货溢价)
+2026-01-06 11:56:51 | INFO     | [现货-合约价差] ONTUSDT: +0.59% (现货溢价)
+2026-01-06 11:56:51 | INFO     | [现货-合约价差] C98USDT: +0.40% (现货溢价)
+2026-01-06 11:56:52 | INFO     | [现货-合约价差] PHBUSDT: -0.30% (合约溢价)
+2026-01-06 11:56:53 | INFO     | [现货-合约价差] BMTUSDT: +0.39% (现货溢价)
+2026-01-06 11:56:53 | INFO     | [现货-合约价差] AERGOUSDT: -1.06% (合约溢价)
+2026-01-06 11:56:54 | INFO     | [现货-合约价差] MAVUSDT: +0.32% (现货溢价)
+2026-01-06 11:56:54 | INFO     | [现货-合约价差] CUSDT: +0.39% (现货溢价)
+2026-01-06 11:56:54 | INFO     | [现货-合约价差] ATAUSDT: +0.53% (现货溢价)
+2026-01-06 11:56:54 | INFO     | [现货-合约价差] OGNUSDT: +0.62% (现货溢价)
+2026-01-06 11:56:54 | INFO     | [现货-合约价差] ARKMUSDT: +0.45% (现货溢价)
+2026-01-06 11:56:55 | INFO     | [现货-合约价差] CELOUSDT: +0.54% (现货溢价)
+2026-01-06 11:56:55 | INFO     | [现货-合约价差] NTRNUSDT: +0.34% (现货溢价)
+2026-01-06 11:56:56 | INFO     | [现货-合约价差] GTCUSDT: +0.65% (现货溢价)
+2026-01-06 11:56:58 | INFO     | [现货-合约价差] ARUSDT: +0.31% (现货溢价)
+2026-01-06 11:56:58 | INFO     | [现货-合约价差] REZUSDT: +0.60% (现货溢价)
+2026-01-06 11:56:59 | INFO     | [现货-合约价差] IOUSDT: -0.39% (合约溢价)
+2026-01-06 11:56:59 | INFO     | [现货-合约价差] FXSUSDT: -0.43% (合约溢价)
+2026-01-06 11:56:59 | INFO     | [现货-合约价差] LUMIAUSDT: -0.32% (合约溢价)
+2026-01-06 11:57:00 | INFO     | [现货-合约价差] LSKUSDT: -0.33% (合约溢价)
+2026-01-06 11:57:01 | INFO     | [现货-合约价差] NKNUSDT: -0.45% (合约溢价)
+2026-01-06 11:57:01 | INFO     | [现货-合约价差] DENTUSDT: -0.42% (合约溢价)
+2026-01-06 11:57:02 | INFO     | [现货-合约价差] ZRXUSDT: +0.40% (现货溢价)
+2026-01-06 11:57:02 | INFO     | [现货-合约价差] DUSKUSDT: +0.32% (现货溢价)
+2026-01-06 11:57:02 | INFO     | [现货-合约价差] BIOUSDT: +0.30% (现货溢价)
+2026-01-06 11:57:03 | INFO     | [现货-合约价差] SAPIENUSDT: +0.37% (现货溢价)
+2026-01-06 11:57:03 | INFO     | [现货-合约价差] INITUSDT: +0.31% (现货溢价)
+2026-01-06 11:57:04 | INFO     | [现货-合约价差] TUSDT: +0.32% (现货溢价)
+2026-01-06 11:57:05 | INFO     | [现货-合约价差] STORJUSDT: +0.48% (现货溢价)
+2026-01-06 11:57:06 | INFO     | [现货-合约价差] 1000SATSUSDT: -0.44% (合约溢价)
+2026-01-06 11:57:10 | INFO     | [现货-合约价差] AGLDUSDT: +0.34% (现货溢价)
+2026-01-06 11:57:11 | INFO     | [现货-合约价差] GHSTUSDT: -0.32% (合约溢价)
+2026-01-06 11:57:18 | WARNING  | 获取 EOSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:18 | WARNING  | 获取 BCCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 TUSDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 VENUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 NULSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 PAXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 BCHABCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 BCHSVUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 WAVESUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 BTTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 USDSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 NANOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 OMGUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 MITHUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 MATICUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 TFUELUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 FTMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 USDSBUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 GTOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 ERDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 WINUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 NPXSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 COCOSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 TOMOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 PERLUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 MFTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 KEYUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 STORMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 DOCKUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 WANUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 BUSDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 BEAMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 RENUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 HCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 MCOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 CTXCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 TROYUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 FTTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 EURUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 VITEUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 DREPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 BULLUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 ETHBEARUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 ETHBULLUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 BEARUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 TCTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 WRXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 BTSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 LTOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 EOSBULLUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 EOSBEARUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 STRATUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 XRPBULLUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 XRPBEARUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 MBLUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 AIONUSDT OI 失败: HTTP 400
+2026-01-06 11:57:19 | WARNING  | 获取 BNBBULLUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 BNBBEARUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 DATAUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 WTCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 STPTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 XZCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 BTCUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 BTCDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 GXSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 ARDRUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 LENDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 MDTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 STMXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 REPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 PNTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 BKRWUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 SCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 ETHUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 ETHDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 ADAUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 ADADOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 LINKUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 LINKDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 DGBUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 SXPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 GBPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 MKRUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 DAIUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 DCRUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 BNBDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 XTZUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 BNBUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 XTZDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 AUDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 BALUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 BLZUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 IRISUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 KMDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 SRMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 ANTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 OCEANUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 LUNAUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 WNXMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 BZRXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 YFIIUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 EOSUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 EOSDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 TRXUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 TRXDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 XRPUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 XRPDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 DOTDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 DOTUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 WINGUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 LTCUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 LTCDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 NBSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 FLMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 HNTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 UNIUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 UNIDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 ORNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 UTKUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 ALPHAUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 SXPUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 SXPDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 FILUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:20 | WARNING  | 获取 FILDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 YFIUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 YFIDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 AUDIOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 BCHUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 BCHDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 AKROUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 HARDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 DNTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 STRAXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 UNFIUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 XEMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 AAVEUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 AAVEDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 SUSDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 SUSHIUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 SUSHIDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 XLMUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 XLMDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 JUVUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 PSGUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 REEFUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 ATMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 BTCSTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 FIROUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 ACMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 DODOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 BADGERUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 FISUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 PONDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 LINAUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 PERPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 RAMPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 EPSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 TKOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 AUTOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 1INCHUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 1INCHDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 MIRUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 BTGUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 BARUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 BAKEUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 BURGERUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 SHIBUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 POLSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 MDXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 NUUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 TORNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 KEEPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 KLAYUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 ERNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 BONDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 CLVUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 TVKUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 RAYUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 FARMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 ALPACAUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 QUICKUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 FORUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 REQUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 TRIBEUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 XECUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 GNOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:21 | WARNING  | 获取 ELFUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 IDEXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 POLYUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 VIDTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 USDPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 FRONTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 CVPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 RADUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 BETAUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 LAZIOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 ADXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 DARUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 BNXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 RGTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 CITYUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 KP3RUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 QIUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 PORTOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 VGXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 AMPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 PLAUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 PYRUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 RNDRUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 ALCXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 MCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 ANYUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 VOXELUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 OOKIUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 USTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 GLMRUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 LOKAUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 BTTCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 ANCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 XNOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 ACAUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 NBTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 BSWUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 KDAUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 BIFIUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 MULTIUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 NEXOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 MOBUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 REIUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 GALUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 EPXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 LEVERUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 LUNCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 NEBLUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 OSMOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 HIFIUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 PROSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 GNSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 VIBUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 AMBUSDT OI 失败: HTTP 400
+2026-01-06 11:57:22 | WARNING  | 获取 BETHUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 QKCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 UFTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 OAXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 LOOMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 WBTCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 AGIXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 PEPEUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 FLOKIUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 ASTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 SNTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 COMBOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 WBETHUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 FDUSDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 CREAMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 GFTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 IQUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 PIVXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 AEURUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 BONKUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 PDAUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 OMNIUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 EURIUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 SLFUSDT OI 失败: HTTP 400
+2026-01-06 11:57:23 | WARNING  | 获取 BNSOLUSDT OI 失败: HTTP 400
+2026-01-06 11:57:24 | WARNING  | 获取 XUSDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:24 | WARNING  | 获取 USD1USDT OI 失败: HTTP 400
+2026-01-06 11:57:24 | WARNING  | 获取 BFUSDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:24 | WARNING  | 获取 USDEUSDT OI 失败: HTTP 400
+2026-01-06 11:57:25 | WARNING  | 获取 KGSTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:26 | INFO     | [现货-合约价差] OMUSDT: +0.33% (现货溢价)
+2026-01-06 11:57:27 | INFO     | [现货-合约价差] AVNTUSDT: +0.32% (现货溢价)
+2026-01-06 11:57:27 | ERROR    | Telegram 发送失败: HTTP 429, {"ok":false,"error_code":429,"description":"Too Many Requests: retry after 43","parameters":{"retry_after":43}}
+2026-01-06 11:57:28 | ERROR    | Telegram 发送失败: HTTP 429, {"ok":false,"error_code":429,"description":"Too Many Requests: retry after 42","parameters":{"retry_after":42}}
+2026-01-06 11:57:35 | INFO     | [现货-合约价差] STOUSDT: +0.32% (现货溢价)
+2026-01-06 11:57:35 | ERROR    | Telegram 发送失败: HTTP 429, {"ok":false,"error_code":429,"description":"Too Many Requests: retry after 35","parameters":{"retry_after":35}}
+2026-01-06 11:57:44 | INFO     | [现货-合约价差] ALICEUSDT: -0.31% (合约溢价)
+2026-01-06 11:57:44 | ERROR    | Telegram 发送失败: HTTP 429, {"ok":false,"error_code":429,"description":"Too Many Requests: retry after 26","parameters":{"retry_after":26}}
+2026-01-06 11:57:45 | INFO     | [现货-合约价差] ZBTUSDT: +0.31% (现货溢价)
+2026-01-06 11:57:45 | ERROR    | Telegram 发送失败: HTTP 429, {"ok":false,"error_code":429,"description":"Too Many Requests: retry after 25","parameters":{"retry_after":25}}
+2026-01-06 11:57:49 | INFO     | [现货-合约价差] OGUSDT: +0.35% (现货溢价)
+2026-01-06 11:57:49 | INFO     | [现货-合约价差] RDNTUSDT: +0.38% (现货溢价)
+2026-01-06 11:57:49 | ERROR    | Telegram 发送失败: HTTP 429, {"ok":false,"error_code":429,"description":"Too Many Requests: retry after 21","parameters":{"retry_after":21}}
+2026-01-06 11:57:50 | ERROR    | Telegram 发送失败: HTTP 429, {"ok":false,"error_code":429,"description":"Too Many Requests: retry after 21","parameters":{"retry_after":21}}
+2026-01-06 11:57:52 | INFO     | [现货-合约价差] SPKUSDT: +0.46% (现货溢价)
+2026-01-06 11:57:52 | ERROR    | Telegram 发送失败: HTTP 429, {"ok":false,"error_code":429,"description":"Too Many Requests: retry after 18","parameters":{"retry_after":18}}
+2026-01-06 11:57:54 | INFO     | [现货-合约价差] RPLUSDT: +0.32% (现货溢价)
+2026-01-06 11:57:54 | ERROR    | Telegram 发送失败: HTTP 429, {"ok":false,"error_code":429,"description":"Too Many Requests: retry after 16","parameters":{"retry_after":16}}
+2026-01-06 11:57:56 | WARNING  | 获取 BCCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:56 | WARNING  | 获取 EOSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:56 | WARNING  | 获取 TUSDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 VENUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 NULSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 PAXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 BCHABCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 BCHSVUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 WAVESUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 BTTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 USDSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 NANOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 OMGUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 MITHUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 MATICUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 TFUELUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 FTMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 USDSBUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 GTOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 ERDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 WINUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 NPXSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 COCOSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 TOMOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 PERLUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 MFTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 KEYUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 STORMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 WANUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 DOCKUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 BEAMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 BUSDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 RENUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 HCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 MCOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 CTXCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 TROYUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 VITEUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 FTTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 EURUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 DREPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 BULLUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 BEARUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 ETHBEARUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 ETHBULLUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 TCTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 WRXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 BTSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 EOSBULLUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 LTOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 EOSBEARUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 XRPBULLUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 XRPBEARUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 STRATUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 AIONUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 MBLUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 BNBBEARUSDT OI 失败: HTTP 400
+2026-01-06 11:57:57 | WARNING  | 获取 BNBBULLUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 STPTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 WTCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 DATAUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 XZCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 BTCUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 BTCDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 GXSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 LENDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 MDTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 ARDRUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 STMXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 REPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 PNTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 BKRWUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 SCUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 ETHUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 ETHDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 ADAUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 ADADOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 LINKUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 LINKDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 GBPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 DGBUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 SXPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 MKRUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 DAIUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 DCRUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 BNBUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 BNBDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 XTZDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 XTZUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 AUDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 BALUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 BLZUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 IRISUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 KMDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 SRMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 ANTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 OCEANUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 LUNAUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 WNXMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 BZRXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 YFIIUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 EOSUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 EOSDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 TRXUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 XRPUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 TRXDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 XRPDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 DOTUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 DOTDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 WINGUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 LTCUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 LTCDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 NBSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 HNTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 FLMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 UNIUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 UNIDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 UTKUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 ORNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 ALPHAUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 SXPUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 SXPDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 FILUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 FILDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 YFIDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 YFIUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:58 | WARNING  | 获取 AUDIOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 BCHUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 BCHDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 AKROUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 STRAXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 UNFIUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 HARDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 DNTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 XEMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 AAVEDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 SUSHIUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 AAVEUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 SUSDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 SUSHIDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 XLMDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 JUVUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 XLMUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 PSGUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 REEFUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 ATMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 BTCSTUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | INFO     | [现货-合约价差] BROCCOLI714USDT: -0.32% (合约溢价)
+2026-01-06 11:57:59 | WARNING  | 获取 FIROUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 DODOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 BADGERUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 ACMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 FISUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 PONDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 LINAUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 PERPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 RAMPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 EPSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 AUTOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 TKOUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 1INCHUPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 1INCHDOWNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 BTGUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 MIRUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 BARUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 BAKEUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 BURGERUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 SHIBUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 POLSUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 MDXUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 NUUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | ERROR    | Telegram 发送失败: HTTP 429, {"ok":false,"error_code":429,"description":"Too Many Requests: retry after 11","parameters":{"retry_after":11}}
+2026-01-06 11:57:59 | WARNING  | 获取 KEEPUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 TORNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 ERNUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 KLAYUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 BONDUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 CLVUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 TVKUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 RAYUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 ALPACAUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 FARMUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 QUICKUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 FORUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 REQUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 TRIBEUSDT OI 失败: HTTP 400
+2026-01-06 11:57:59 | WARNING  | 获取 GNOUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 XECUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 ELFUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 POLYUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 IDEXUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 VIDTUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 USDPUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 FRONTUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 CVPUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 RADUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 BETAUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 LAZIOUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 ADXUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 DARUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 BNXUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 CITYUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 RGTUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 KP3RUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 PORTOUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 QIUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 VGXUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 AMPUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 PLAUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | INFO     | [现货-合约价差] EDUUSDT: -0.31% (合约溢价)
+2026-01-06 11:58:00 | WARNING  | 获取 PYRUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 RNDRUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 ALCXUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 MCUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 ANYUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 VOXELUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 OOKIUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 USTUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 LOKAUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 GLMRUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 BTTCUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 ACAUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 ANCUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 XNOUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 NBTUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 KDAUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 BSWUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 BIFIUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 MULTIUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 NEXOUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 MOBUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 REIUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 GALUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | ERROR    | Telegram 发送失败: HTTP 429, {"ok":false,"error_code":429,"description":"Too Many Requests: retry after 10","parameters":{"retry_after":10}}
+2026-01-06 11:58:00 | WARNING  | 获取 EPXUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 LEVERUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 LUNCUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 NEBLUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 OSMOUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 HIFIUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 PROSUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 AGIXUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 GNSUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 VIBUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 AMBUSDT OI 失败: HTTP 400
+2026-01-06 11:58:00 | WARNING  | 获取 BETHUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 UFTUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 QKCUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 LOOMUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 OAXUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 WBTCUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 PEPEUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 FLOKIUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 ASTUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 COMBOUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 SNTUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 WBETHUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 FDUSDUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 GFTUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 CREAMUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 IQUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 PIVXUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | INFO     | [现货-合约价差] MINAUSDT: +0.33% (现货溢价)
+2026-01-06 11:58:01 | INFO     | [现货-合约价差] SIGNUSDT: +0.33% (现货溢价)
+2026-01-06 11:58:01 | INFO     | [现货-合约价差] CHRUSDT: -0.44% (合约溢价)
+2026-01-06 11:58:01 | WARNING  | 获取 AEURUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 BONKUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 PDAUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 OMNIUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | ERROR    | Telegram 发送失败: HTTP 429, {"ok":false,"error_code":429,"description":"Too Many Requests: retry after 9","parameters":{"retry_after":9}}
+2026-01-06 11:58:01 | WARNING  | 获取 EURIUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 SLFUSDT OI 失败: HTTP 400
+2026-01-06 11:58:01 | WARNING  | 获取 BNSOLUSDT OI 失败: HTTP 400
+2026-01-06 11:58:02 | INFO     | 收到终止信号...
+2026-01-06 11:58:02 | INFO     | 正在停止监控系统...
+2026-01-06 11:58:02 | INFO     | 正在停止监控系统...
+2026-01-06 11:58:02 | ERROR    | Telegram 发送失败: HTTP 429, {"ok":false,"error_code":429,"description":"Too Many Requests: retry after 9","parameters":{"retry_after":9}}
+2026-01-06 12:04:20 | INFO     | ==================================================
+2026-01-06 12:04:20 | INFO     | 合约价格异动监控系统启动
+2026-01-06 12:04:20 | INFO     | ==================================================
+2026-01-06 12:04:20 | INFO     | Telegram Bot 连接成功: @price_botbot
+2026-01-06 12:04:20 | INFO     | Telegram 连接正常
+2026-01-06 12:04:21 | INFO     | 持仓量轮询已启动
+2026-01-06 12:04:21 | INFO     | 现货价格轮询已启动
+2026-01-06 12:04:21 | INFO     | Bot 查询功能已启动
+2026-01-06 12:04:21 | INFO     | 开始订阅 Binance 行情...
+2026-01-06 12:04:21 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-06 12:04:22 | INFO     | Bot 命令处理器已启动: @price_botbot
+2026-01-06 12:04:22 | INFO     | [现货-合约价差] XMRUSDT: -73.30% (合约溢价)
+2026-01-06 12:04:22 | INFO     | [现货-合约价差] LITUSDT: -76.18% (合约溢价)
+2026-01-06 12:04:26 | INFO     | [现货-合约价差] FLOWUSDT: -6.38% (合约溢价)
+2026-01-06 12:04:51 | WARNING  | 获取 BCCUSDT OI 失败: HTTP 400
+2026-01-06 12:04:51 | WARNING  | 获取 EOSUSDT OI 失败: HTTP 400
+2026-01-06 12:04:51 | WARNING  | 获取 TUSDUSDT OI 失败: HTTP 400
+2026-01-06 12:04:51 | WARNING  | 获取 VENUSDT OI 失败: HTTP 400
+2026-01-06 12:04:51 | WARNING  | 获取 NULSUSDT OI 失败: HTTP 400
+2026-01-06 12:04:51 | WARNING  | 获取 PAXUSDT OI 失败: HTTP 400
+2026-01-06 12:04:51 | WARNING  | 获取 BCHABCUSDT OI 失败: HTTP 400
+2026-01-06 12:04:51 | WARNING  | 获取 BCHSVUSDT OI 失败: HTTP 400
+2026-01-06 12:04:51 | WARNING  | 获取 BTTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:51 | WARNING  | 获取 WAVESUSDT OI 失败: HTTP 400
+2026-01-06 12:04:51 | WARNING  | 获取 USDSUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 NANOUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 OMGUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 MITHUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 MATICUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 TFUELUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 FTMUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 USDSBUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 ERDUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 GTOUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 WINUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 NPXSUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 COCOSUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 TOMOUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 PERLUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 MFTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 KEYUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 STORMUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 WANUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 DOCKUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 BUSDUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 BEAMUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 RENUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 HCUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 MCOUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 CTXCUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 TROYUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 FTTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 EURUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 VITEUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 DREPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 BULLUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 BEARUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 ETHBULLUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 ETHBEARUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 WRXUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 BTSUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 LTOUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 EOSBULLUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 EOSBEARUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 XRPBULLUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 XRPBEARUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 STRATUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 AIONUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 MBLUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 BNBBULLUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 BNBBEARUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 STPTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 WTCUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 DATAUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 XZCUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 TCTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 BTCUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 GXSUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 BTCDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 ARDRUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 LENDUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 MDTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 STMXUSDT OI 失败: HTTP 400
+2026-01-06 12:04:52 | WARNING  | 获取 REPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 PNTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 SCUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 BKRWUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 ETHUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 ADAUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 ETHDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 ADADOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 LINKUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 LINKDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 DGBUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 GBPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 SXPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 MKRUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 DAIUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 DCRUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 BNBDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 XTZUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 BNBUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 XTZDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 AUDUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 BALUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 BLZUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 IRISUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 KMDUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 SRMUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 ANTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 OCEANUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 LUNAUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 WNXMUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 BZRXUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 YFIIUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 EOSDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 EOSUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 TRXUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 TRXDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 XRPUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 XRPDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 DOTUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 DOTDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 WINGUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 LTCUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 LTCDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 NBSUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 HNTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 FLMUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 UNIUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 UNIDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 UTKUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 ORNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 ALPHAUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 SXPUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 SXPDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 FILUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 FILDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 YFIDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 YFIUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 AUDIOUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 BCHUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 BCHDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 AKROUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 HARDUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 DNTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 STRAXUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 UNFIUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 XEMUSDT OI 失败: HTTP 400
+2026-01-06 12:04:53 | WARNING  | 获取 AAVEDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 AAVEUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 SUSDUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 SUSHIUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 XLMDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 SUSHIDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 JUVUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 PSGUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 REEFUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 ATMUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 BTCSTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 FIROUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 DODOUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 ACMUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 XLMUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 BADGERUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 FISUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 PONDUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 PERPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 LINAUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 RAMPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 EPSUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 AUTOUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 TKOUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 1INCHDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 BTGUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 1INCHUPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 MIRUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 BARUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 BAKEUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 BURGERUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 SHIBUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 POLSUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 MDXUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 NUUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 KEEPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 TORNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 ERNUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 KLAYUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 BONDUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 CLVUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 TVKUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 RAYUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 FARMUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 ALPACAUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 QUICKUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 REQUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 FORUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 TRIBEUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 XECUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 GNOUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 ELFUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 POLYUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 IDEXUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 USDPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 VIDTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 FRONTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:54 | WARNING  | 获取 CVPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 RADUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 BETAUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 LAZIOUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 ADXUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 DARUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 BNXUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 RGTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 CITYUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 KP3RUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 QIUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 PORTOUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 VGXUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 AMPUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 PLAUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 PYRUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 ALCXUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 RNDRUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 MCUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 ANYUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 VOXELUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 OOKIUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 USTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 GLMRUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 LOKAUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 ACAUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 BTTCUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 ANCUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 XNOUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 NBTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 KDAUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 BSWUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 BIFIUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 MULTIUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 MOBUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 NEXOUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 GALUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 REIUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 EPXUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 LEVERUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 LUNCUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 NEBLUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 OSMOUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 HIFIUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 PROSUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 AGIXUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 GNSUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 VIBUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 AMBUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 BETHUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 QKCUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 UFTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 LOOMUSDT OI 失败: HTTP 400
+2026-01-06 12:04:55 | WARNING  | 获取 OAXUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 WBTCUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 FLOKIUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 PEPEUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 SNTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 ASTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 COMBOUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 WBETHUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 FDUSDUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 CREAMUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 IQUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 GFTUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 PIVXUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 AEURUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 BONKUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 PDAUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 OMNIUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 EURIUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 SLFUSDT OI 失败: HTTP 400
+2026-01-06 12:04:56 | WARNING  | 获取 BNSOLUSDT OI 失败: HTTP 400
+2026-01-06 12:04:57 | WARNING  | 获取 XUSDUSDT OI 失败: HTTP 400
+2026-01-06 12:04:57 | WARNING  | 获取 USD1USDT OI 失败: HTTP 400
+2026-01-06 12:04:57 | WARNING  | 获取 BFUSDUSDT OI 失败: HTTP 400
+2026-01-06 12:04:57 | WARNING  | 获取 USDEUSDT OI 失败: HTTP 400
+2026-01-06 12:04:57 | WARNING  | 获取 KGSTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:12 | INFO     | [价格异动] RIVERUSDT: +1.81%
+2026-01-06 12:05:29 | WARNING  | 获取 BCCUSDT OI 失败: HTTP 400
+2026-01-06 12:05:29 | WARNING  | 获取 EOSUSDT OI 失败: HTTP 400
+2026-01-06 12:05:29 | WARNING  | 获取 TUSDUSDT OI 失败: HTTP 400
+2026-01-06 12:05:29 | WARNING  | 获取 VENUSDT OI 失败: HTTP 400
+2026-01-06 12:05:29 | WARNING  | 获取 NULSUSDT OI 失败: HTTP 400
+2026-01-06 12:05:29 | WARNING  | 获取 PAXUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 BCHABCUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 BCHSVUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 WAVESUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 BTTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 USDSUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 NANOUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 OMGUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 MATICUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 MITHUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 TFUELUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 FTMUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 USDSBUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 GTOUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 ERDUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 WINUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 COCOSUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 NPXSUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 TOMOUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 PERLUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 MFTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 KEYUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 STORMUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 DOCKUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 WANUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 BEAMUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 BUSDUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 RENUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 HCUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 MCOUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 CTXCUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 VITEUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 EURUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 FTTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 TROYUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 DREPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 BULLUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 ETHBEARUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 BEARUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 ETHBULLUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 TCTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 BTSUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 WRXUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 LTOUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 EOSBULLUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 EOSBEARUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 STRATUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 AIONUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 XRPBULLUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 XRPBEARUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 MBLUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 BNBBULLUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 BNBBEARUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 STPTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 WTCUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 DATAUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 XZCUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 BTCUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:30 | WARNING  | 获取 BTCDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 ARDRUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 GXSUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 LENDUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 MDTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 STMXUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 REPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 PNTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 BKRWUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 ETHUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 ETHDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 ADAUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 LINKUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 ADADOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 LINKDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 DGBUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 SXPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 MKRUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 DAIUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 DCRUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 BNBUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 BNBDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 XTZUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 SCUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 XTZDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 AUDUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 BALUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 BLZUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 IRISUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 SRMUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 ANTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 GBPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 OCEANUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 LUNAUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 WNXMUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 BZRXUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 YFIIUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 EOSUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 KMDUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 EOSDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 TRXUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 TRXDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 XRPUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 XRPDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 DOTUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 DOTDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 WINGUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 LTCDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 LTCUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 NBSUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 UNIUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 HNTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 FLMUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 UNIDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 ORNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 UTKUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 ALPHAUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 SXPDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 SXPUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 FILUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 FILDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 YFIUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:31 | WARNING  | 获取 YFIDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 AUDIOUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 BCHUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 BCHDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 DNTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 AKROUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 HARDUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 STRAXUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 UNFIUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 XEMUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 AAVEUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 AAVEDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 SUSHIUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 SUSDUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 SUSHIDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 XLMUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 XLMDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 JUVUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 REEFUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 PSGUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 ATMUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 BTCSTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 FIROUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 DODOUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 ACMUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 BADGERUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 FISUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 PONDUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 LINAUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 PERPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 RAMPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 EPSUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 AUTOUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 TKOUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 1INCHUPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 1INCHDOWNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 BTGUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 MIRUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 BARUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 BURGERUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 BAKEUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 SHIBUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 POLSUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 MDXUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 NUUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 TORNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 KEEPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 ERNUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 KLAYUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 BONDUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 CLVUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 TVKUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 QUICKUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 ALPACAUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 RAYUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 FARMUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 FORUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 REQUSDT OI 失败: HTTP 400
+2026-01-06 12:05:32 | WARNING  | 获取 TRIBEUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 GNOUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 XECUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 ELFUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 POLYUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 IDEXUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 VIDTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 USDPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 CVPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 FRONTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 RADUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 BETAUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 LAZIOUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 DARUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 ADXUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 BNXUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 RGTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 CITYUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 KP3RUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 QIUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 PORTOUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 VGXUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 AMPUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 PLAUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 PYRUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 RNDRUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 ALCXUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 MCUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 ANYUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 VOXELUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 OOKIUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 USTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 LOKAUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 GLMRUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 BTTCUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 ACAUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 ANCUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 XNOUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 NBTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 KDAUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 BSWUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 BIFIUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 MULTIUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 MOBUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 NEXOUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 REIUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 EPXUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 LEVERUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 LUNCUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 NEBLUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 OSMOUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 HIFIUSDT OI 失败: HTTP 400
+2026-01-06 12:05:33 | WARNING  | 获取 PROSUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 AGIXUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 GALUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 GNSUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 VIBUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 BETHUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 QKCUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 UFTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 LOOMUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 OAXUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 WBTCUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 PEPEUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 FLOKIUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 ASTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 SNTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 COMBOUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 AMBUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 WBETHUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 FDUSDUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 GFTUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 CREAMUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 IQUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 PIVXUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 AEURUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 BONKUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 PDAUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 OMNIUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 EURIUSDT OI 失败: HTTP 400
+2026-01-06 12:05:34 | WARNING  | 获取 SLFUSDT OI 失败: HTTP 400
+2026-01-06 12:05:35 | WARNING  | 获取 BNSOLUSDT OI 失败: HTTP 400
+2026-01-06 12:05:35 | WARNING  | 获取 XUSDUSDT OI 失败: HTTP 400
+2026-01-06 12:05:35 | WARNING  | 获取 USD1USDT OI 失败: HTTP 400
+2026-01-06 12:05:35 | WARNING  | 获取 BFUSDUSDT OI 失败: HTTP 400
+2026-01-06 12:05:35 | WARNING  | 获取 USDEUSDT OI 失败: HTTP 400
+2026-01-06 12:05:36 | WARNING  | 获取 KGSTUSDT OI 失败: HTTP 400
