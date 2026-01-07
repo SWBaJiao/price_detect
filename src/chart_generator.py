@@ -12,6 +12,7 @@ matplotlib.use('Agg')  # 无头模式，不需要显示器
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from matplotlib.patches import Rectangle
+from matplotlib.ticker import FuncFormatter, MaxNLocator
 import numpy as np
 
 
@@ -34,6 +35,39 @@ class ChartGenerator:
     def __init__(self, width: int = 10, height: int = 6):
         self.width = width
         self.height = height
+
+    def _format_price(self, price: float) -> str:
+        """
+        根据价格大小动态格式化显示精度
+
+        - 价格 >= 1000: 2 位小数 ($1,234.56)
+        - 价格 >= 100: 3 位小数 ($123.456)
+        - 价格 >= 1: 4 位小数 ($12.3456)
+        - 价格 < 1: 6 位小数 ($0.123456)
+        """
+        if price >= 1000:
+            return f"${price:,.2f}"
+        elif price >= 100:
+            return f"${price:,.3f}"
+        elif price >= 1:
+            return f"${price:,.4f}"
+        elif price >= 0.01:
+            return f"${price:,.6f}"
+        else:
+            return f"${price:,.8f}"
+
+    def _price_formatter(self, x, pos):
+        """Y 轴价格格式化器"""
+        if x >= 1000:
+            return f"${x:,.2f}"
+        elif x >= 100:
+            return f"{x:.3f}"
+        elif x >= 1:
+            return f"{x:.4f}"
+        elif x >= 0.01:
+            return f"{x:.6f}"
+        else:
+            return f"{x:.8f}"
 
     def generate_kline_chart(
         self,
@@ -145,8 +179,9 @@ class ChartGenerator:
             price_change = ((closes[-1] - opens[0]) / opens[0]) * 100
             change_color = self.COLORS["up"] if price_change >= 0 else self.COLORS["down"]
 
-            # 标题
-            title = f"{symbol} | {interval} | ${current_price:,.2f} ({price_change:+.2f}%)"
+            # 标题（使用精确的价格格式）
+            price_str = self._format_price(current_price)
+            title = f"{symbol} | {interval} | {price_str} ({price_change:+.2f}%)"
             ax1.set_title(
                 title,
                 color=change_color,
@@ -157,6 +192,12 @@ class ChartGenerator:
 
             # Y 轴标签
             ax1.set_ylabel('Price (USDT)', color=self.COLORS["text"], fontsize=10)
+
+            # 设置 Y 轴价格格式化器（更精确的小数位）
+            ax1.yaxis.set_major_formatter(FuncFormatter(self._price_formatter))
+
+            # 增加 Y 轴刻度密度（显示更多价格刻度）
+            ax1.yaxis.set_major_locator(MaxNLocator(nbins=12, prune='both'))
 
             # 绘制成交量
             if show_volume and ax2:

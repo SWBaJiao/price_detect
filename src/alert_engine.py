@@ -280,6 +280,68 @@ class AlertEngine:
         self._record_alert(symbol, AlertType.SPOT_FUTURES_SPREAD)
         return event
 
+    def check_price_reversal(self, symbol: str) -> Optional[AlertEvent]:
+        """检测价格反转（见顶/见底反转）"""
+        if not self.settings.alerts.price_reversal.enabled:
+            return None
+
+        if self._should_filter(symbol):
+            return None
+
+        if not self._is_cooled_down(symbol, AlertType.PRICE_REVERSAL):
+            return None
+
+        # 获取反转数据
+        time_window = self.settings.alerts.price_reversal.time_window
+        reversal_data = self.tracker.get_price_reversal(symbol, time_window)
+        if reversal_data is None:
+            return None
+
+        # 获取分层阈值
+        quote_volume = self.tracker.get_quote_volume(symbol)
+        tier = self._get_tier(quote_volume)
+        if tier is None:
+            return None
+
+        rise_percent = reversal_data["rise_percent"]
+        fall_percent = reversal_data["fall_percent"]
+        threshold = tier.price_threshold
+
+        # 判断是否超过阈值（涨幅和跌幅都需要超过阈值才算有效反转）
+        if rise_percent < threshold or fall_percent < threshold:
+            return None
+
+        reversal_type = reversal_data["type"]
+        current_price = reversal_data["current_price"]
+
+        # 构建附加信息
+        if reversal_type == "top":
+            extreme_price = reversal_data["high_price"]
+        else:
+            extreme_price = reversal_data["low_price"]
+
+        # 触发告警
+        event = AlertEvent(
+            symbol=symbol,
+            alert_type=AlertType.PRICE_REVERSAL,
+            tier_label=tier.label,
+            current_price=current_price,
+            change_percent=rise_percent if reversal_type == "bottom" else -fall_percent,
+            threshold=threshold,
+            time_window=time_window,
+            extra_info={
+                "反转类型": reversal_type,
+                "起始价": reversal_data["start_price"],
+                "极值价": extreme_price,
+                "上涨幅度": rise_percent,
+                "下跌幅度": fall_percent,
+                "24h成交额": f"${quote_volume:,.0f}"
+            }
+        )
+
+        self._record_alert(symbol, AlertType.PRICE_REVERSAL)
+        return event
+
     def check_all(self, symbol: str) -> List[AlertEvent]:
         """
         检查所有类型的异动
@@ -313,6 +375,13 @@ class AlertEngine:
             events.append(spread_event)
             direction = "现货溢价" if spread_event.change_percent > 0 else "合约溢价"
             logger.info(f"[现货-合约价差] {symbol}: {spread_event.change_percent:+.2f}% ({direction})")
+
+        # 价格反转
+        reversal_event = self.check_price_reversal(symbol)
+        if reversal_event:
+            events.append(reversal_event)
+            reversal_type = "见顶反转" if reversal_event.extra_info.get("反转类型") == "top" else "见底反转"
+            logger.info(f"[价格反转] {symbol}: {reversal_type} (涨{reversal_event.extra_info.get('上涨幅度', 0):.2f}%/跌{reversal_event.extra_info.get('下跌幅度', 0):.2f}%)")
 
         # 回调通知
         if self.on_alert:

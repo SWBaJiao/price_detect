@@ -14,6 +14,7 @@ class AlertType(Enum):
     VOLUME_SPIKE = "volume_spike"          # 成交量突增
     OI_CHANGE = "oi_change"                # 持仓量变化
     SPOT_FUTURES_SPREAD = "spot_futures_spread"  # 现货合约价差
+    PRICE_REVERSAL = "price_reversal"      # 价格反转
 
 
 @dataclass
@@ -87,6 +88,10 @@ class AlertEvent:
         # 现货合约价差专用格式
         if self.alert_type == AlertType.SPOT_FUTURES_SPREAD:
             return self._format_spread_message()
+
+        # 价格反转专用格式
+        if self.alert_type == AlertType.PRICE_REVERSAL:
+            return self._format_reversal_message()
 
         # 原有的合约告警格式
         emoji_map = {
@@ -173,6 +178,61 @@ class AlertEvent:
             "",
             "═" * 30,
             f"💬 回复 `/info {base_symbol}` 查看详情"
+        ])
+
+        return "\n".join(lines)
+
+    def _format_reversal_message(self) -> str:
+        """
+        格式化价格反转告警消息
+        """
+        reversal_type = self.extra_info.get("反转类型", "unknown")
+        start_price = self.extra_info.get("起始价", 0)
+        extreme_price = self.extra_info.get("极值价", 0)
+        rise_percent = self.extra_info.get("上涨幅度", 0)
+        fall_percent = self.extra_info.get("下跌幅度", 0)
+
+        if reversal_type == "top":
+            # 见顶反转（涨转跌）
+            emoji = "📉"
+            type_name = "见顶反转 (涨转跌)"
+            path_lines = [
+                f"• 起始价: ${start_price:,.4f}",
+                f"• 冲高至: ${extreme_price:,.4f} (+{rise_percent:.2f}%)",
+                f"• 回落至: ${self.current_price:,.4f} (-{fall_percent:.2f}%)"
+            ]
+        else:
+            # 见底反转（跌转涨）
+            emoji = "📈"
+            type_name = "见底反转 (跌转涨)"
+            path_lines = [
+                f"• 起始价: ${start_price:,.4f}",
+                f"• 探底至: ${extreme_price:,.4f} (-{fall_percent:.2f}%)",
+                f"• 反弹至: ${self.current_price:,.4f} (+{rise_percent:.2f}%)"
+            ]
+
+        lines = [
+            f"🔄 *价格反转告警* {emoji}",
+            "",
+            f"📌 币种: `{self.symbol}`",
+            f"📊 层级: {self.tier_label}",
+            f"⚠️ 类型: {type_name}",
+            "",
+            "💹 *行情路径:*",
+        ]
+        lines.extend(path_lines)
+        lines.extend([
+            "",
+            f"⚡ 触发阈值: {self.threshold:.2f}%",
+            f"⏱ 检测窗口: {self.time_window}秒",
+            f"🕐 时间: {self.timestamp.strftime('%H:%M:%S')}",
+        ])
+
+        # 添加查询提示
+        base_symbol = self.symbol.replace("USDT", "")
+        lines.extend([
+            "",
+            f"💬 回复 `/info {base_symbol}` 查看K线详情"
         ])
 
         return "\n".join(lines)

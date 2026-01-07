@@ -10,7 +10,7 @@ volume_tiers:
     price_threshold: 1.5      # 价格变化 1.5% 触发
     volume_threshold: 3.0     # 成交量 3 倍于均值触发
     oi_threshold: 5.0         # 持仓量变化 5% 触发
-    spread_threshold: 0.5    # 现货-合约价差 0.15% 触发
+    spread_threshold: 1.0    # 现货-合约价差 1% 触发
     label: "超大盘"
 
   # 大盘：24h成交额 >= 1亿U
@@ -18,7 +18,7 @@ volume_tiers:
     price_threshold: 2.5      # 价格变化 2.5% 触发
     volume_threshold: 4.0     # 成交量 4 倍于均值触发
     oi_threshold: 8.0         # 持仓量变化 8% 触发
-    spread_threshold: 1.0    # 现货-合约价差 0.25% 触发
+    spread_threshold: 2.0    # 现货-合约价差 2% 触发
     label: "大盘"
 
   # 中盘：24h成交额 >= 1000万U
@@ -26,7 +26,7 @@ volume_tiers:
     price_threshold: 4.0      # 价格变化 4% 触发
     volume_threshold: 5.0     # 成交量 5 倍于均值触发
     oi_threshold: 10.0        # 持仓量变化 10% 触发
-    spread_threshold: 2.0     # 现货-合约价差 0.5% 触发
+    spread_threshold: 5.0     # 现货-合约价差 5% 触发
     label: "中盘"
 
   # 小盘：24h成交额 < 1000万U
@@ -34,7 +34,7 @@ volume_tiers:
     price_threshold: 6.0      # 价格变化 6% 触发
     volume_threshold: 6.0     # 成交量 6 倍于均值触发
     oi_threshold: 15.0        # 持仓量变化 15% 触发
-    spread_threshold: 5.0     # 现货-合约价差 1.0% 触发
+    spread_threshold: 10.0     # 现货-合约价差 10% 触发
     label: "小盘"
 
 # 告警配置
@@ -57,10 +57,15 @@ alerts:
 
   # 现货-合约价差告警
   spot_futures_spread:
-    enabled: true
+    enabled: false
     threshold: 3.0            # 价差阈值（%），现货价格相对合约价格的差异
     time_window: 60           # 检测窗口（秒）
     poll_interval: 30         # 现货价格轮询间隔（秒）
+
+  # 价格反转告警
+  price_reversal:
+    enabled: true
+    time_window: 300          # 检测窗口（秒），默认5分钟
 
   # 告警冷却时间（秒）- 同一币种同类型告警的最小间隔
   cooldown: 300

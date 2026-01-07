@@ -49,12 +49,19 @@ class SpotFuturesSpreadAlert(BaseModel):
     poll_interval: int = 30   # 现货价格轮询间隔（秒）
 
 
+class PriceReversalAlert(BaseModel):
+    """价格反转告警配置"""
+    enabled: bool = True
+    time_window: int = 300    # 检测窗口（秒），默认5分钟
+
+
 class AlertsConfig(BaseModel):
     """告警配置"""
     price_change: PriceChangeAlert = Field(default_factory=PriceChangeAlert)
     volume_spike: VolumeSpikeAlert = Field(default_factory=VolumeSpikeAlert)
     open_interest: OpenInterestAlert = Field(default_factory=OpenInterestAlert)
     spot_futures_spread: SpotFuturesSpreadAlert = Field(default_factory=SpotFuturesSpreadAlert)
+    price_reversal: PriceReversalAlert = Field(default_factory=PriceReversalAlert)
     # 告警冷却时间（秒）
     cooldown: int = 300
 

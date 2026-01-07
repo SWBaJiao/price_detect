@@ -261,6 +261,101 @@ class PriceTracker:
 
         return (spread_percent, spot_price, futures_price)
 
+    def get_price_reversal(self, symbol: str, time_window: int = 300) -> Optional[dict]:
+        """
+        检测价格反转
+
+        在指定时间窗口内检测：
+        - 见顶反转：先涨后跌，最高点在窗口前半段
+        - 见底反转：先跌后涨，最低点在窗口前半段
+
+        Args:
+            symbol: 交易对
+            time_window: 检测窗口（秒），默认5分钟
+
+        Returns:
+            {
+                "type": "top" | "bottom",  # 反转类型
+                "start_price": float,       # 窗口起始价
+                "high_price": float,        # 窗口最高价
+                "low_price": float,         # 窗口最低价
+                "current_price": float,     # 当前价格
+                "rise_percent": float,      # 上涨幅度 (从起点到高点 或 从低点到当前)
+                "fall_percent": float,      # 下跌幅度 (从高点到当前 或 从起点到低点)
+                "extreme_time": datetime,   # 极值出现时间
+            }
+            或 None（无反转）
+        """
+        tracker = self._trackers.get(symbol)
+        if not tracker or len(tracker.price_history) < 5:
+            return None
+
+        now = datetime.now()
+        window_start = now - timedelta(seconds=time_window)
+        window_mid = now - timedelta(seconds=time_window / 2)
+
+        # 筛选窗口内的价格点
+        window_prices = [
+            p for p in tracker.price_history
+            if p.timestamp >= window_start
+        ]
+
+        if len(window_prices) < 5:
+            return None
+
+        start_price = window_prices[0].price
+        current_price = tracker.latest_price
+
+        if start_price == 0:
+            return None
+
+        # 找到最高点和最低点及其时间
+        high_point = max(window_prices, key=lambda p: p.price)
+        low_point = min(window_prices, key=lambda p: p.price)
+
+        high_price = high_point.price
+        low_price = low_point.price
+        high_time = high_point.timestamp
+        low_time = low_point.timestamp
+
+        # 判断见顶反转：先涨后跌
+        # 条件：最高点在窗口前半段，且从起点涨幅、从高点跌幅都足够
+        if high_time <= window_mid and high_time > window_start:
+            rise_from_start = ((high_price - start_price) / start_price) * 100
+            fall_from_high = ((high_price - current_price) / high_price) * 100
+
+            if rise_from_start > 0 and fall_from_high > 0:
+                return {
+                    "type": "top",
+                    "start_price": start_price,
+                    "high_price": high_price,
+                    "low_price": low_price,
+                    "current_price": current_price,
+                    "rise_percent": rise_from_start,
+                    "fall_percent": fall_from_high,
+                    "extreme_time": high_time,
+                }
+
+        # 判断见底反转：先跌后涨
+        # 条件：最低点在窗口前半段，且从起点跌幅、从低点涨幅都足够
+        if low_time <= window_mid and low_time > window_start:
+            fall_from_start = ((start_price - low_price) / start_price) * 100
+            rise_from_low = ((current_price - low_price) / low_price) * 100
+
+            if fall_from_start > 0 and rise_from_low > 0:
+                return {
+                    "type": "bottom",
+                    "start_price": start_price,
+                    "high_price": high_price,
+                    "low_price": low_price,
+                    "current_price": current_price,
+                    "rise_percent": rise_from_low,
+                    "fall_percent": fall_from_start,
+                    "extreme_time": low_time,
+                }
+
+        return None
+
     # ==================== 数据访问 ====================
 
     def get_latest(self, symbol: str) -> Optional[TickerData]:
