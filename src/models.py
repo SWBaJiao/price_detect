@@ -15,6 +15,10 @@ class AlertType(Enum):
     OI_CHANGE = "oi_change"                # 持仓量变化
     SPOT_FUTURES_SPREAD = "spot_futures_spread"  # 现货合约价差
     PRICE_REVERSAL = "price_reversal"      # 价格反转
+    # 订单簿相关
+    ORDERBOOK_WALL = "orderbook_wall"      # 大单墙（买墙/卖墙）
+    ORDERBOOK_IMBALANCE = "orderbook_imbalance"  # 深度失衡
+    ORDERBOOK_SWEEP = "orderbook_sweep"    # 大单扫盘
 
 
 @dataclass
@@ -92,6 +96,10 @@ class AlertEvent:
         # 价格反转专用格式
         if self.alert_type == AlertType.PRICE_REVERSAL:
             return self._format_reversal_message()
+
+        # 订单簿告警专用格式
+        if self.alert_type in (AlertType.ORDERBOOK_WALL, AlertType.ORDERBOOK_IMBALANCE, AlertType.ORDERBOOK_SWEEP):
+            return self._format_orderbook_message()
 
         # 原有的合约告警格式
         emoji_map = {
@@ -237,6 +245,55 @@ class AlertEvent:
 
         return "\n".join(lines)
 
+    def _format_orderbook_message(self) -> str:
+        """
+        格式化订单簿异动告警消息
+        """
+        # 根据告警类型选择表情和标题
+        if self.alert_type == AlertType.ORDERBOOK_WALL:
+            side = self.extra_info.get("类型", "大单墙")
+            emoji = "🧱" if "买墙" in side else "🏔️"
+            title = f"*订单簿大单墙告警* {emoji}"
+        elif self.alert_type == AlertType.ORDERBOOK_IMBALANCE:
+            direction = self.extra_info.get("方向", "")
+            emoji = "📊"
+            title = f"*订单簿深度失衡* {emoji}"
+        elif self.alert_type == AlertType.ORDERBOOK_SWEEP:
+            side = self.extra_info.get("类型", "扫盘")
+            emoji = "💥"
+            title = "*订单簿扫盘告警* 💥"
+        else:
+            emoji = "📋"
+            title = "*订单簿异动*"
+
+        lines = [
+            "=" * 28,
+            title,
+            "=" * 28,
+            "",
+            f"📌 币种: `{self.symbol}`",
+        ]
+
+        # 添加附加信息
+        if self.extra_info:
+            for key, value in self.extra_info.items():
+                lines.append(f"• {key}: {value}")
+
+        lines.extend([
+            "",
+            f"🕐 时间: {self.timestamp.strftime('%H:%M:%S')}",
+        ])
+
+        # 添加查询提示
+        base_symbol = self.symbol.replace("USDT", "")
+        lines.extend([
+            "",
+            "=" * 28,
+            f"💬 回复 `/info {base_symbol}` 查看详情"
+        ])
+
+        return "\n".join(lines)
+
 
 @dataclass
 class ContractInfo:
@@ -246,3 +303,107 @@ class ContractInfo:
     quote_asset: str                   # 报价资产，如 USDT
     price_precision: int               # 价格精度
     quantity_precision: int            # 数量精度
+
+
+# ==================== 订单簿相关模型 ====================
+
+@dataclass
+class OrderBookLevel:
+    """订单簿单个价格档位"""
+    price: float                       # 价格
+    quantity: float                    # 数量
+    value: float = 0                   # 价值(USDT) = price * quantity
+
+    def __post_init__(self):
+        self.value = self.price * self.quantity
+
+
+@dataclass
+class OrderBookSnapshot:
+    """
+    订单簿快照
+    包含买卖盘各若干档位
+    """
+    symbol: str
+    bids: list                         # 买盘 [(price, qty), ...] 降序
+    asks: list                         # 卖盘 [(price, qty), ...] 升序
+    last_update_id: int = 0
+    timestamp: datetime = field(default_factory=datetime.now)
+
+    @property
+    def best_bid(self) -> Optional[float]:
+        """最高买价"""
+        return self.bids[0][0] if self.bids else None
+
+    @property
+    def best_ask(self) -> Optional[float]:
+        """最低卖价"""
+        return self.asks[0][0] if self.asks else None
+
+    @property
+    def spread(self) -> Optional[float]:
+        """买卖价差"""
+        if self.best_bid and self.best_ask:
+            return self.best_ask - self.best_bid
+        return None
+
+    @property
+    def spread_percent(self) -> Optional[float]:
+        """买卖价差百分比"""
+        if self.best_bid and self.best_ask:
+            mid_price = (self.best_bid + self.best_ask) / 2
+            return (self.best_ask - self.best_bid) / mid_price * 100
+        return None
+
+    def bid_depth(self, levels: int = 10) -> float:
+        """买盘深度（USDT价值）"""
+        return sum(p * q for p, q in self.bids[:levels])
+
+    def ask_depth(self, levels: int = 10) -> float:
+        """卖盘深度（USDT价值）"""
+        return sum(p * q for p, q in self.asks[:levels])
+
+    def imbalance_ratio(self, levels: int = 10) -> float:
+        """
+        深度失衡比率
+        正值表示买盘强，负值表示卖盘强
+        范围: -1 到 1
+        """
+        bid_depth = self.bid_depth(levels)
+        ask_depth = self.ask_depth(levels)
+        total = bid_depth + ask_depth
+        if total == 0:
+            return 0
+        return (bid_depth - ask_depth) / total
+
+
+@dataclass
+class OrderBookWall:
+    """
+    大单墙信息
+    检测订单簿中的大额挂单
+    """
+    symbol: str
+    side: str                          # "bid" 或 "ask"
+    price: float                       # 价格
+    quantity: float                    # 数量
+    value: float                       # 价值(USDT)
+    distance_percent: float            # 距离当前价格的百分比
+    timestamp: datetime = field(default_factory=datetime.now)
+
+
+@dataclass
+class OrderBookEvent:
+    """
+    订单簿异动事件
+    用于告警系统
+    """
+    symbol: str
+    event_type: str                    # "wall_detected", "wall_removed", "imbalance", "sweep"
+    side: Optional[str] = None         # "bid", "ask", None
+    price: Optional[float] = None
+    quantity: Optional[float] = None
+    value: Optional[float] = None
+    imbalance_ratio: Optional[float] = None
+    extra_info: dict = field(default_factory=dict)
+    timestamp: datetime = field(default_factory=datetime.now)

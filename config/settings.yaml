@@ -67,6 +67,27 @@ alerts:
     enabled: true
     time_window: 300          # 检测窗口（秒），默认5分钟
 
+  # 订单簿异动告警
+  orderbook:
+    enabled: false
+    # 监控的交易对（留空则使用全局配置）
+    symbols: []
+    # 大单墙检测
+    wall_detection: true
+    wall_value_threshold: 500000    # 大单墙最小价值阈值(USDT)
+    wall_ratio_threshold: 3.0       # 单档挂单量 > 平均值 N 倍
+    wall_distance_max: 2.0          # 距离当前价格最大百分比
+    # 深度失衡检测
+    imbalance_detection: true
+    imbalance_threshold: 0.6        # 失衡比率阈值 (0-1)，0.6表示60%
+    imbalance_depth_levels: 10      # 计算失衡的档位数
+    # 扫盘检测（大单墙被吃）
+    sweep_detection: true
+    sweep_value_threshold: 300000   # 被吃掉的最小价值(USDT)
+    # 订单簿更新速度
+    update_speed: "500ms"           # "100ms" 或 "500ms"
+    depth_levels: 20                # 订阅档位数 5/10/20
+
   # 告警冷却时间（秒）- 同一币种同类型告警的最小间隔
   cooldown: 300
 

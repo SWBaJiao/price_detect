@@ -14,7 +14,7 @@ import aiohttp
 from aiohttp_socks import ProxyConnector
 from loguru import logger
 
-from .models import TickerData
+from .models import TickerData, OrderBookSnapshot
 
 
 class BinanceClient:
@@ -627,3 +627,227 @@ class BinanceClient:
             logger.debug(f"获取现货 {symbol} 价格失败: {e}")
 
         return None
+
+    # ==================== 订单簿 API ====================
+
+    async def get_orderbook_snapshot(
+        self,
+        symbol: str,
+        limit: int = 20
+    ) -> Optional[OrderBookSnapshot]:
+        """
+        获取订单簿快照（REST API）
+
+        Args:
+            symbol: 交易对
+            limit: 档位数，可选 5, 10, 20, 50, 100, 500, 1000
+
+        Returns:
+            订单簿快照
+        """
+        symbol = symbol.upper()
+        if not symbol.endswith("USDT"):
+            symbol = f"{symbol}USDT"
+
+        url = f"{self.REST_BASE_URL}/fapi/v1/depth"
+        params = {"symbol": symbol, "limit": limit}
+
+        try:
+            resp = await self._request_with_retry("GET", url, params=params)
+            if resp and resp.status == 200:
+                data = await resp.json()
+                await resp.release()
+
+                # 解析订单簿数据
+                bids = [(float(p), float(q)) for p, q in data.get("bids", [])]
+                asks = [(float(p), float(q)) for p, q in data.get("asks", [])]
+
+                return OrderBookSnapshot(
+                    symbol=symbol,
+                    bids=bids,
+                    asks=asks,
+                    last_update_id=data.get("lastUpdateId", 0)
+                )
+            elif resp:
+                await resp.release()
+        except Exception as e:
+            logger.error(f"获取 {symbol} 订单簿快照失败: {e}")
+
+        return None
+
+    async def subscribe_orderbook(
+        self,
+        symbols: List[str],
+        callback: Callable[[OrderBookSnapshot], None],
+        depth_levels: int = 20,
+        update_speed: str = "500ms"
+    ) -> None:
+        """
+        订阅多个交易对的订单簿深度流
+
+        Args:
+            symbols: 交易对列表
+            callback: 接收订单簿数据的回调函数
+            depth_levels: 深度档位 5, 10, 20
+            update_speed: 更新速度 "100ms", "250ms", "500ms"
+
+        深度流格式: <symbol>@depth<levels>@<speed>
+        例如: btcusdt@depth20@500ms
+        """
+        # 构建订阅流名称
+        # 合约深度流支持 @100ms 和 @500ms（默认）
+        speed_suffix = "" if update_speed == "500ms" else f"@{update_speed.replace('ms', '')}"
+        streams = [
+            f"{s.lower()}@depth{depth_levels}{speed_suffix}"
+            for s in symbols
+        ]
+
+        # 使用组合流
+        url = f"{self.WS_BASE_URL}/stream?streams={'/'.join(streams)}"
+        self._running = True
+
+        while self._running:
+            try:
+                session = await self._get_session()
+                ws_kwargs = {"heartbeat": 30}
+                http_proxy = self._get_http_proxy()
+                if http_proxy:
+                    ws_kwargs["proxy"] = http_proxy
+
+                async with session.ws_connect(url, **ws_kwargs) as ws:
+                    self._reconnect_delay = 1
+                    logger.info(f"订单簿 WebSocket 已连接: {len(symbols)} 个交易对")
+
+                    async for msg in ws:
+                        if msg.type == aiohttp.WSMsgType.TEXT:
+                            try:
+                                data = json.loads(msg.data)
+                                # 组合流返回格式: {"stream": "...", "data": {...}}
+                                stream_data = data.get("data", data)
+                                snapshot = self._parse_depth_stream(stream_data)
+                                if snapshot:
+                                    await callback(snapshot)
+                            except Exception as e:
+                                logger.debug(f"解析订单簿数据失败: {e}")
+                        elif msg.type in (aiohttp.WSMsgType.ERROR, aiohttp.WSMsgType.CLOSED):
+                            logger.warning("订单簿 WebSocket 断开")
+                            break
+
+            except aiohttp.ClientError as e:
+                logger.error(f"订单簿 WebSocket 连接失败: {e}")
+            except Exception as e:
+                logger.error(f"订单簿 WebSocket 未知错误: {e}")
+
+            if self._running:
+                logger.info(f"订单簿 WebSocket 将在 {self._reconnect_delay}s 后重连...")
+                await asyncio.sleep(self._reconnect_delay)
+                self._reconnect_delay = min(
+                    self._reconnect_delay * 2,
+                    self._max_reconnect_delay
+                )
+
+    async def subscribe_single_orderbook(
+        self,
+        symbol: str,
+        callback: Callable[[OrderBookSnapshot], None],
+        depth_levels: int = 20
+    ) -> None:
+        """
+        订阅单个交易对的订单簿（简化版）
+
+        Args:
+            symbol: 交易对
+            callback: 回调函数
+            depth_levels: 深度档位
+        """
+        await self.subscribe_orderbook([symbol], callback, depth_levels)
+
+    def _parse_depth_stream(self, data: dict) -> Optional[OrderBookSnapshot]:
+        """
+        解析深度流数据
+
+        深度流数据格式:
+        {
+            "e": "depthUpdate",
+            "E": 1672515782136,
+            "T": 1672515782129,
+            "s": "BTCUSDT",
+            "U": 12345,
+            "u": 12346,
+            "pu": 12344,
+            "b": [["price", "qty"], ...],  // 买盘
+            "a": [["price", "qty"], ...]   // 卖盘
+        }
+        """
+        try:
+            symbol = data.get("s", "")
+            if not symbol:
+                return None
+
+            bids = [(float(p), float(q)) for p, q in data.get("b", [])]
+            asks = [(float(p), float(q)) for p, q in data.get("a", [])]
+
+            # 按价格排序
+            bids.sort(key=lambda x: x[0], reverse=True)  # 买盘降序
+            asks.sort(key=lambda x: x[0])                 # 卖盘升序
+
+            return OrderBookSnapshot(
+                symbol=symbol,
+                bids=bids,
+                asks=asks,
+                last_update_id=data.get("u", 0)
+            )
+        except (ValueError, KeyError) as e:
+            logger.debug(f"解析深度数据失败: {e}")
+            return None
+
+    async def subscribe_orderbook_diff(
+        self,
+        symbols: List[str],
+        callback: Callable[[dict], None]
+    ) -> None:
+        """
+        订阅订单簿增量更新流（用于维护本地订单簿）
+
+        增量流推送订单簿变化，需要配合 REST 快照使用
+
+        Args:
+            symbols: 交易对列表
+            callback: 接收增量数据的回调函数
+        """
+        streams = [f"{s.lower()}@depth@100ms" for s in symbols]
+        url = f"{self.WS_BASE_URL}/stream?streams={'/'.join(streams)}"
+        self._running = True
+
+        while self._running:
+            try:
+                session = await self._get_session()
+                ws_kwargs = {"heartbeat": 30}
+                http_proxy = self._get_http_proxy()
+                if http_proxy:
+                    ws_kwargs["proxy"] = http_proxy
+
+                async with session.ws_connect(url, **ws_kwargs) as ws:
+                    self._reconnect_delay = 1
+                    logger.info(f"订单簿增量流已连接: {len(symbols)} 个交易对")
+
+                    async for msg in ws:
+                        if msg.type == aiohttp.WSMsgType.TEXT:
+                            try:
+                                data = json.loads(msg.data)
+                                stream_data = data.get("data", data)
+                                await callback(stream_data)
+                            except Exception as e:
+                                logger.debug(f"处理增量数据失败: {e}")
+                        elif msg.type in (aiohttp.WSMsgType.ERROR, aiohttp.WSMsgType.CLOSED):
+                            break
+
+            except Exception as e:
+                logger.error(f"增量流连接错误: {e}")
+
+            if self._running:
+                await asyncio.sleep(self._reconnect_delay)
+                self._reconnect_delay = min(
+                    self._reconnect_delay * 2,
+                    self._max_reconnect_delay
+                )

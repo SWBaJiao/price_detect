@@ -19,7 +19,8 @@ from src.price_tracker import PriceTracker
 from src.alert_engine import AlertEngine
 from src.telegram_bot import TelegramBot, AlertNotifier
 from src.bot_handler import BotCommandHandler
-from src.models import TickerData, AlertEvent
+from src.models import TickerData, AlertEvent, OrderBookSnapshot, OrderBookEvent
+from src.orderbook_monitor import OrderBookMonitor, OrderBookConfig, create_orderbook_alert
 
 
 class MonitorApp:
@@ -61,16 +62,47 @@ class MonitorApp:
             binance=self.binance
         )
 
+        # 订单簿监控器
+        orderbook_cfg = settings.alerts.orderbook
+        self.orderbook_monitor = OrderBookMonitor(
+            config=OrderBookConfig(
+                enabled=orderbook_cfg.enabled,
+                wall_detection=orderbook_cfg.wall_detection,
+                wall_value_threshold=orderbook_cfg.wall_value_threshold,
+                wall_ratio_threshold=orderbook_cfg.wall_ratio_threshold,
+                wall_distance_max=orderbook_cfg.wall_distance_max,
+                imbalance_detection=orderbook_cfg.imbalance_detection,
+                imbalance_threshold=orderbook_cfg.imbalance_threshold,
+                imbalance_depth_levels=orderbook_cfg.imbalance_depth_levels,
+                sweep_detection=orderbook_cfg.sweep_detection,
+                sweep_value_threshold=orderbook_cfg.sweep_value_threshold,
+                cooldown_seconds=settings.alerts.cooldown
+            ),
+            on_event=self._on_orderbook_event
+        )
+
         # OI 轮询任务
         self._oi_task = None
         # 现货价格轮询任务
         self._spot_price_task = None
         # Bot 命令处理任务
         self._bot_task = None
+        # 订单簿 WebSocket 任务
+        self._orderbook_task = None
 
     def _on_alert(self, event: AlertEvent):
         """告警回调"""
         asyncio.create_task(self.notifier.notify(event))
+
+    def _on_orderbook_event(self, event: OrderBookEvent):
+        """订单簿事件回调"""
+        # 转换为标准告警事件并发送
+        alert = create_orderbook_alert(event, tier_label="订单簿")
+        asyncio.create_task(self.notifier.notify(alert))
+
+    async def _handle_orderbook(self, snapshot: OrderBookSnapshot):
+        """处理订单簿数据"""
+        await self.orderbook_monitor.process_snapshot(snapshot)
 
     async def _handle_tickers(self, tickers: List[TickerData]):
         """处理行情数据"""
@@ -154,6 +186,29 @@ class MonitorApp:
             self._bot_task = asyncio.create_task(self.bot_handler.start_polling())
             logger.info("Bot 查询功能已启动")
 
+        # 启动订单簿监控（如果启用）
+        orderbook_cfg = self.settings.alerts.orderbook
+        if orderbook_cfg.enabled:
+            # 确定要监控的交易对
+            symbols = orderbook_cfg.symbols
+            if not symbols:
+                # 如果没有指定，使用白名单或默认的大盘币
+                if self.settings.filter.mode == "whitelist":
+                    symbols = self.settings.filter.whitelist
+                else:
+                    symbols = ["BTCUSDT", "ETHUSDT", "SOLUSDT", "BNBUSDT", "XRPUSDT"]
+
+            logger.info(f"准备启动订单簿监控: {symbols}")
+            self._orderbook_task = asyncio.create_task(
+                self.binance.subscribe_orderbook(
+                    symbols=symbols,
+                    callback=self._handle_orderbook,
+                    depth_levels=orderbook_cfg.depth_levels,
+                    update_speed=orderbook_cfg.update_speed
+                )
+            )
+            logger.info(f"订单簿监控已启动: {len(symbols)} 个交易对")
+
         # 定时清理过期数据
         asyncio.create_task(self._cleanup_task())
 
@@ -190,6 +245,14 @@ class MonitorApp:
             except asyncio.CancelledError:
                 pass
             await self.bot_handler.close()
+
+        # 取消订单簿监控
+        if self._orderbook_task:
+            self._orderbook_task.cancel()
+            try:
+                await self._orderbook_task
+            except asyncio.CancelledError:
+                pass
 
         # 关闭连接
         await self.binance.close()

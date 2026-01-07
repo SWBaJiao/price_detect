@@ -10604,3 +10604,749 @@
 2026-01-07 10:25:51 | INFO     | 正在停止监控系统...
 2026-01-07 10:25:52 | ERROR    | Telegram 网络错误: Server disconnected
 2026-01-07 10:25:52 | INFO     | 监控系统已停止
+2026-01-07 10:26:30 | INFO     | ==================================================
+2026-01-07 10:26:30 | INFO     | 合约价格异动监控系统启动
+2026-01-07 10:26:30 | INFO     | ==================================================
+2026-01-07 10:26:31 | INFO     | Telegram Bot 连接成功: @price_Pbot
+2026-01-07 10:26:31 | INFO     | Telegram 连接正常
+2026-01-07 10:26:32 | INFO     | 持仓量轮询已启动
+2026-01-07 10:26:32 | INFO     | Bot 查询功能已启动
+2026-01-07 10:26:32 | INFO     | 开始订阅 Binance 行情...
+2026-01-07 10:26:32 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-07 10:26:32 | INFO     | Bot 命令处理器已启动: @price_Pbot
+2026-01-07 10:31:05 | INFO     | [价格异动] RIVERUSDT: -1.56%
+2026-01-07 10:33:19 | INFO     | [价格异动] FHEUSDT: +4.03%
+2026-01-07 10:35:06 | INFO     | [价格反转] RIVERUSDT: 见底反转 (涨1.83%/跌1.56%)
+2026-01-07 10:39:12 | INFO     | [价格异动] CYSUSDT: -4.22%
+2026-01-07 10:41:32 | INFO     | [价格异动] LYNUSDT: -4.28%
+2026-01-07 10:52:01 | INFO     | [价格反转] BREVUSDT: 见底反转 (涨2.69%/跌2.64%)
+2026-01-07 11:00:09 | INFO     | [价格反转] CLOUSDT: 见顶反转 (涨2.59%/跌2.68%)
+2026-01-07 11:14:50 | INFO     | [价格反转] RIVERUSDT: 见底反转 (涨2.99%/跌1.57%)
+2026-01-07 11:23:06 | INFO     | [价格异动] BROCCOLI714USDT: -2.80%
+2026-01-07 11:32:38 | INFO     | 将在 1s 后重连...
+2026-01-07 11:32:39 | ERROR    | WebSocket 连接失败: Cannot connect to host fstream.binance.com:443 ssl:default [None]
+2026-01-07 11:32:39 | INFO     | 将在 2s 后重连...
+2026-01-07 11:32:41 | ERROR    | WebSocket 连接失败: Cannot connect to host fstream.binance.com:443 ssl:default [None]
+2026-01-07 11:32:41 | INFO     | 将在 4s 后重连...
+2026-01-07 11:32:56 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 11:32:56 | INFO     | 将在 8s 后重连...
+2026-01-07 11:33:15 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 11:33:15 | INFO     | 将在 16s 后重连...
+2026-01-07 11:33:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SOMIUSDT
+2026-01-07 11:33:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=JASMYUSDT
+2026-01-07 11:33:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=QUSDT
+2026-01-07 11:33:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=AEVOUSDT
+2026-01-07 11:33:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=IPUSDT
+2026-01-07 11:33:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=VICUSDT
+2026-01-07 11:33:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BROCCOLI714USDT
+2026-01-07 11:33:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SWARMSUSDT
+2026-01-07 11:33:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=RECALLUSDT
+2026-01-07 11:33:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=1000FLOKIUSDT
+2026-01-07 11:33:42 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 11:33:42 | INFO     | 将在 32s 后重连...
+2026-01-07 11:33:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LIGHTUSDT
+2026-01-07 11:33:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ESPORTSUSDT
+2026-01-07 11:33:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=FOLKSUSDT
+2026-01-07 11:33:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TNSRUSDT
+2026-01-07 11:33:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BCHUSDT
+2026-01-07 11:33:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PIEVERSEUSDT
+2026-01-07 11:33:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ICXUSDT
+2026-01-07 11:33:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=XRPUSDT
+2026-01-07 11:33:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BREVUSDT
+2026-01-07 11:33:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=XPLUSDT
+2026-01-07 11:34:25 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 11:34:25 | INFO     | 将在 60s 后重连...
+2026-01-07 11:34:31 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CVCUSDT
+2026-01-07 11:34:31 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=USELESSUSDT
+2026-01-07 11:34:31 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TSTUSDT
+2026-01-07 11:34:31 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=XMRUSDT
+2026-01-07 11:34:31 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=HAEDALUSDT
+2026-01-07 11:34:31 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZECUSDT
+2026-01-07 11:34:31 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PORTALUSDT
+2026-01-07 11:34:31 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PENGUUSDT
+2026-01-07 11:34:31 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ANIMEUSDT
+2026-01-07 11:34:31 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=IRUSDT
+2026-01-07 11:35:07 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=INITUSDT
+2026-01-07 11:35:07 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BNBUSDT
+2026-01-07 11:35:07 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=WETUSDT
+2026-01-07 11:35:07 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=GUNUSDT
+2026-01-07 11:35:07 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=VIRTUALUSDT
+2026-01-07 11:35:07 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZKPUSDT
+2026-01-07 11:35:07 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=RAVEUSDT
+2026-01-07 11:35:07 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LYNUSDT
+2026-01-07 11:35:07 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BEATUSDT
+2026-01-07 11:35:07 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ICNTUSDT
+2026-01-07 11:35:36 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 11:35:36 | INFO     | 将在 60s 后重连...
+2026-01-07 11:35:43 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CLOUSDT
+2026-01-07 11:35:43 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PENDLEUSDT
+2026-01-07 11:35:43 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=VVVUSDT
+2026-01-07 11:35:43 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LUNA2USDT
+2026-01-07 11:35:43 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=DOGEUSDT
+2026-01-07 11:35:43 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PTBUSDT
+2026-01-07 11:35:43 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=UNIUSDT
+2026-01-07 11:35:43 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=AUCTIONUSDT
+2026-01-07 11:35:43 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ARIAUSDT
+2026-01-07 11:35:43 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LITUSDT
+2026-01-07 11:36:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SUIUSDT
+2026-01-07 11:36:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=AAVEUSDT
+2026-01-07 11:36:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ICPUSDT
+2026-01-07 11:36:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LAYERUSDT
+2026-01-07 11:36:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=MLNUSDT
+2026-01-07 11:36:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TIAUSDT
+2026-01-07 11:36:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=VELODROMEUSDT
+2026-01-07 11:36:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=USDCUSDT
+2026-01-07 11:36:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=JELLYJELLYUSDT
+2026-01-07 11:36:19 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ATUSDT
+2026-01-07 11:36:47 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 11:36:47 | INFO     | 将在 60s 后重连...
+2026-01-07 11:36:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SANDUSDT
+2026-01-07 11:36:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=HYPEUSDT
+2026-01-07 11:36:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=RIVERUSDT
+2026-01-07 11:36:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=FILUSDT
+2026-01-07 11:36:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=IOTXUSDT
+2026-01-07 11:36:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TRUUSDT
+2026-01-07 11:36:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=VTHOUSDT
+2026-01-07 11:36:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=1000PEPEUSDT
+2026-01-07 11:36:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=FHEUSDT
+2026-01-07 11:36:55 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BBUSDT
+2026-01-07 11:37:47 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-07 11:38:20 | INFO     | [价格异动] RIVERUSDT: +1.54%
+2026-01-07 11:41:35 | INFO     | [价格反转] RIVERUSDT: 见顶反转 (涨2.03%/跌1.55%)
+2026-01-07 11:45:07 | INFO     | 将在 1s 后重连...
+2026-01-07 11:45:08 | ERROR    | WebSocket 连接失败: Cannot connect to host fstream.binance.com:443 ssl:default [None]
+2026-01-07 11:45:08 | INFO     | 将在 2s 后重连...
+2026-01-07 11:45:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 11:45:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 11:45:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 11:45:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 11:45:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 11:45:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 11:45:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 11:45:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 11:45:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 11:45:10 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 11:45:10 | ERROR    | WebSocket 连接失败: Cannot connect to host fstream.binance.com:443 ssl:default [None]
+2026-01-07 11:45:10 | INFO     | 将在 4s 后重连...
+2026-01-07 11:45:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TRUTHUSDT
+2026-01-07 11:45:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=B3USDT
+2026-01-07 11:45:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LINKUSDT
+2026-01-07 11:45:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=FARTCOINUSDT
+2026-01-07 11:45:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=POLYXUSDT
+2026-01-07 11:45:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ETHUSDT
+2026-01-07 11:45:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=WOOUSDT
+2026-01-07 11:45:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PAXGUSDT
+2026-01-07 11:45:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=AKTUSDT
+2026-01-07 11:45:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BANKUSDT
+2026-01-07 11:45:25 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 11:45:25 | INFO     | 将在 8s 后重连...
+2026-01-07 11:45:44 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 11:45:44 | INFO     | 将在 16s 后重连...
+2026-01-07 11:46:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZBTUSDT
+2026-01-07 11:46:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CCUSDT
+2026-01-07 11:46:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=VINEUSDT
+2026-01-07 11:46:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TRXUSDT
+2026-01-07 11:46:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TAKEUSDT
+2026-01-07 11:46:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=WLFIUSDT
+2026-01-07 11:46:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=FUSDT
+2026-01-07 11:46:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LTCUSDT
+2026-01-07 11:46:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SOLVUSDT
+2026-01-07 11:46:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=AEROUSDT
+2026-01-07 11:46:11 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 11:46:11 | INFO     | 将在 32s 后重连...
+2026-01-07 11:46:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LPTUSDT
+2026-01-07 11:46:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SQDUSDT
+2026-01-07 11:46:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=MEMEUSDT
+2026-01-07 11:46:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=HANAUSDT
+2026-01-07 11:46:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SAPIENUSDT
+2026-01-07 11:46:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BASUSDT
+2026-01-07 11:46:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=OPUSDT
+2026-01-07 11:46:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=KASUSDT
+2026-01-07 11:46:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BROCCOLIF3BUSDT
+2026-01-07 11:46:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=%E5%B8%81%E5%AE%89%E4%BA%BA%E7%94%9FUSDT
+2026-01-07 11:46:54 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 11:46:54 | INFO     | 将在 60s 后重连...
+2026-01-07 11:47:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SSVUSDT
+2026-01-07 11:47:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=POLUSDT
+2026-01-07 11:47:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CGPTUSDT
+2026-01-07 11:47:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BRETTUSDT
+2026-01-07 11:47:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BANDUSDT
+2026-01-07 11:47:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=IMXUSDT
+2026-01-07 11:47:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=STBLUSDT
+2026-01-07 11:47:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=OXTUSDT
+2026-01-07 11:47:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SAGAUSDT
+2026-01-07 11:47:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZKJUSDT
+2026-01-07 11:47:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CUSDT
+2026-01-07 11:47:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PUMPUSDT
+2026-01-07 11:47:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CAKEUSDT
+2026-01-07 11:47:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=YBUSDT
+2026-01-07 11:47:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=MOODENGUSDT
+2026-01-07 11:47:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=IOTAUSDT
+2026-01-07 11:47:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=MMTUSDT
+2026-01-07 11:47:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TAUSDT
+2026-01-07 11:47:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ENSUSDT
+2026-01-07 11:47:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=POWRUSDT
+2026-01-07 11:48:05 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 11:48:05 | INFO     | 将在 60s 后重连...
+2026-01-07 11:48:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ONDOUSDT
+2026-01-07 11:48:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SOPHUSDT
+2026-01-07 11:48:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ETCUSDT
+2026-01-07 11:48:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZENUSDT
+2026-01-07 11:48:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=RUNEUSDT
+2026-01-07 11:48:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BOMEUSDT
+2026-01-07 11:48:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SIGNUSDT
+2026-01-07 11:48:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LINEAUSDT
+2026-01-07 11:48:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LRCUSDT
+2026-01-07 11:48:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PLUMEUSDT
+2026-01-07 11:49:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CHRUSDT
+2026-01-07 11:49:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=HBARUSDT
+2026-01-07 11:49:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=DOGSUSDT
+2026-01-07 11:49:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=MONUSDT
+2026-01-07 11:49:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ACXUSDT
+2026-01-07 11:49:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=0GUSDT
+2026-01-07 11:49:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=YFIUSDT
+2026-01-07 11:49:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SUPERUSDT
+2026-01-07 11:49:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TOSHIUSDT
+2026-01-07 11:49:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ENAUSDT
+2026-01-07 11:49:16 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 11:49:16 | INFO     | 将在 60s 后重连...
+2026-01-07 11:49:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=METISUSDT
+2026-01-07 11:49:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=EIGENUSDT
+2026-01-07 11:49:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CYSUSDT
+2026-01-07 11:49:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CFXUSDT
+2026-01-07 11:49:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=UAIUSDT
+2026-01-07 11:49:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=2ZUSDT
+2026-01-07 11:49:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=VFYUSDT
+2026-01-07 11:49:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=STOUSDT
+2026-01-07 11:49:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=QTUMUSDT
+2026-01-07 11:49:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SYRUPUSDT
+2026-01-07 11:50:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ALCHUSDT
+2026-01-07 11:50:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LABUSDT
+2026-01-07 11:50:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TRBUSDT
+2026-01-07 11:50:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=MELANIAUSDT
+2026-01-07 11:50:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=A2ZUSDT
+2026-01-07 11:50:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BTRUSDT
+2026-01-07 11:50:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=HUSDT
+2026-01-07 11:50:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SONICUSDT
+2026-01-07 11:50:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=IOUSDT
+2026-01-07 11:50:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=WCTUSDT
+2026-01-07 11:50:27 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 11:50:27 | INFO     | 将在 60s 后重连...
+2026-01-07 11:50:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CHESSUSDT
+2026-01-07 11:50:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ALICEUSDT
+2026-01-07 11:50:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=KAITOUSDT
+2026-01-07 11:50:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CETUSUSDT
+2026-01-07 11:50:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=EDENUSDT
+2026-01-07 11:50:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CHILLGUYUSDT
+2026-01-07 11:50:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CELOUSDT
+2026-01-07 11:50:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=STABLEUSDT
+2026-01-07 11:50:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=MUSDT
+2026-01-07 11:50:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=IRYSUSDT
+2026-01-07 11:51:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TOWNSUSDT
+2026-01-07 11:51:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=DEGENUSDT
+2026-01-07 11:51:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=IDOLUSDT
+2026-01-07 11:51:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ALPINEUSDT
+2026-01-07 11:51:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=USUALUSDT
+2026-01-07 11:51:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=IDUSDT
+2026-01-07 11:51:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=XVSUSDT
+2026-01-07 11:51:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TRADOORUSDT
+2026-01-07 11:51:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PUFFERUSDT
+2026-01-07 11:51:24 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=GLMUSDT
+2026-01-07 11:51:38 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 11:51:38 | INFO     | 将在 60s 后重连...
+2026-01-07 11:52:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=FIOUSDT
+2026-01-07 11:52:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=1000WHYUSDT
+2026-01-07 11:52:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=DYMUSDT
+2026-01-07 11:52:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LDOUSDT
+2026-01-07 11:52:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=COMPUSDT
+2026-01-07 11:52:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CARVUSDT
+2026-01-07 11:52:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CROSSUSDT
+2026-01-07 11:52:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BELUSDT
+2026-01-07 11:52:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=1000000MOGUSDT
+2026-01-07 11:52:00 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=VETUSDT
+2026-01-07 11:52:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=RPLUSDT
+2026-01-07 11:52:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=DOTUSDT
+2026-01-07 11:52:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=NMRUSDT
+2026-01-07 11:52:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=WLDUSDT
+2026-01-07 11:52:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ALGOUSDT
+2026-01-07 11:52:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ARUSDT
+2026-01-07 11:52:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=MAVUSDT
+2026-01-07 11:52:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SEIUSDT
+2026-01-07 11:52:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZRXUSDT
+2026-01-07 11:52:36 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CLANKERUSDT
+2026-01-07 11:52:49 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 11:52:49 | INFO     | 将在 60s 后重连...
+2026-01-07 11:53:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ARCUSDT
+2026-01-07 11:53:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=1MBABYDOGEUSDT
+2026-01-07 11:53:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ATAUSDT
+2026-01-07 11:53:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=COAIUSDT
+2026-01-07 11:53:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TURTLEUSDT
+2026-01-07 11:53:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ONUSDT
+2026-01-07 11:53:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=NILUSDT
+2026-01-07 11:53:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=42USDT
+2026-01-07 11:53:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ETHFIUSDT
+2026-01-07 11:53:12 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BLURUSDT
+2026-01-07 11:53:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BOBUSDT
+2026-01-07 11:53:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=NFPUSDT
+2026-01-07 11:53:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZRCUSDT
+2026-01-07 11:53:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SKYAIUSDT
+2026-01-07 11:53:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TRUMPUSDT
+2026-01-07 11:53:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=DASHUSDT
+2026-01-07 11:53:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=MANTAUSDT
+2026-01-07 11:53:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZETAUSDT
+2026-01-07 11:53:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=GTCUSDT
+2026-01-07 11:53:48 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=1000CHEEMSUSDT
+2026-01-07 11:54:00 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 11:54:00 | INFO     | 将在 60s 后重连...
+2026-01-07 12:00:46 | INFO     | ==================================================
+2026-01-07 12:00:46 | INFO     | 合约价格异动监控系统启动
+2026-01-07 12:00:46 | INFO     | ==================================================
+2026-01-07 12:01:17 | ERROR    | Telegram Bot 连接测试失败: Connection timeout to host https://api.telegram.org/bot8467440980:AAE5Z7QguVogpcrYXryj-xty4ien1YM2Tik/getMe
+2026-01-07 12:01:17 | WARNING  | Telegram 连接失败，消息推送可能不可用
+2026-01-07 12:01:47 | ERROR    | Telegram 网络错误: Connection timeout to host https://api.telegram.org/bot8467440980:AAE5Z7QguVogpcrYXryj-xty4ien1YM2Tik/sendMessage
+2026-01-07 12:01:47 | INFO     | 持仓量轮询已启动
+2026-01-07 12:01:47 | INFO     | Bot 查询功能已启动
+2026-01-07 12:01:47 | INFO     | 开始订阅 Binance 行情...
+2026-01-07 12:01:58 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:01:58 | INFO     | 将在 1s 后重连...
+2026-01-07 12:02:10 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:02:10 | INFO     | 将在 2s 后重连...
+2026-01-07 12:02:18 | ERROR    | 获取 Bot 信息失败: Connection timeout to host https://api.telegram.org/bot8467440980:AAE5Z7QguVogpcrYXryj-xty4ien1YM2Tik/getMe
+2026-01-07 12:02:18 | INFO     | Bot 命令处理器已启动: @None
+2026-01-07 12:02:23 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:02:23 | INFO     | 将在 4s 后重连...
+2026-01-07 12:02:38 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:02:38 | INFO     | 将在 8s 后重连...
+2026-01-07 12:07:56 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:07:56 | INFO     | 将在 16s 后重连...
+2026-01-07 12:13:21 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:13:21 | INFO     | 将在 32s 后重连...
+2026-01-07 12:14:04 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:14:04 | INFO     | 将在 60s 后重连...
+2026-01-07 12:20:13 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:20:13 | INFO     | 将在 60s 后重连...
+2026-01-07 12:21:24 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:21:24 | INFO     | 将在 60s 后重连...
+2026-01-07 12:22:35 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:22:35 | INFO     | 将在 60s 后重连...
+2026-01-07 12:23:46 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:23:46 | INFO     | 将在 60s 后重连...
+2026-01-07 12:24:57 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:24:57 | INFO     | 将在 60s 后重连...
+2026-01-07 12:26:08 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:26:08 | INFO     | 将在 60s 后重连...
+2026-01-07 12:27:19 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:27:19 | INFO     | 将在 60s 后重连...
+2026-01-07 12:28:30 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:28:30 | INFO     | 将在 60s 后重连...
+2026-01-07 12:29:41 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:29:41 | INFO     | 将在 60s 后重连...
+2026-01-07 12:30:52 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:30:52 | INFO     | 将在 60s 后重连...
+2026-01-07 12:32:03 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:32:03 | INFO     | 将在 60s 后重连...
+2026-01-07 12:33:14 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:33:14 | INFO     | 将在 60s 后重连...
+2026-01-07 12:34:25 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:34:25 | INFO     | 将在 60s 后重连...
+2026-01-07 12:35:36 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:35:36 | INFO     | 将在 60s 后重连...
+2026-01-07 12:36:47 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:36:47 | INFO     | 将在 60s 后重连...
+2026-01-07 12:37:58 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:37:58 | INFO     | 将在 60s 后重连...
+2026-01-07 12:39:09 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:39:09 | INFO     | 将在 60s 后重连...
+2026-01-07 12:40:20 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:40:20 | INFO     | 将在 60s 后重连...
+2026-01-07 12:41:31 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:41:31 | INFO     | 将在 60s 后重连...
+2026-01-07 12:42:42 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:42:42 | INFO     | 将在 60s 后重连...
+2026-01-07 12:43:42 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-07 12:55:03 | ERROR    | WebSocket 错误: No PONG received after 15.0 seconds
+2026-01-07 12:55:03 | INFO     | 将在 1s 后重连...
+2026-01-07 12:55:05 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-07 12:59:03 | INFO     | 将在 1s 后重连...
+2026-01-07 12:59:03 | ERROR    | 获取 BRUSDT OI 异常: Response payload is not completed: <TransferEncodingError: 400, message='Not enough data to satisfy transfer length header.'>
+2026-01-07 12:59:04 | ERROR    | WebSocket 连接失败: Cannot connect to host fstream.binance.com:443 ssl:default [None]
+2026-01-07 12:59:04 | INFO     | 将在 2s 后重连...
+2026-01-07 12:59:06 | ERROR    | WebSocket 连接失败: Cannot connect to host fstream.binance.com:443 ssl:default [None]
+2026-01-07 12:59:06 | INFO     | 将在 4s 后重连...
+2026-01-07 12:59:06 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 12:59:06 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 12:59:06 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 12:59:06 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 12:59:06 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 12:59:06 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 12:59:06 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 12:59:09 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 12:59:09 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 12:59:16 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=MUSDT
+2026-01-07 12:59:16 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SENTUSDT
+2026-01-07 12:59:16 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=1000XECUSDT
+2026-01-07 12:59:20 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 12:59:20 | INFO     | 将在 8s 后重连...
+2026-01-07 12:59:28 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-07 13:05:42 | ERROR    | WebSocket 错误: No PONG received after 15.0 seconds
+2026-01-07 13:05:42 | INFO     | 将在 1s 后重连...
+2026-01-07 13:11:01 | ERROR    | WebSocket 连接失败: Timeout on reading data from socket
+2026-01-07 13:11:01 | INFO     | 将在 2s 后重连...
+2026-01-07 13:11:03 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-07 13:17:12 | ERROR    | WebSocket 错误: No PONG received after 15.0 seconds
+2026-01-07 13:17:12 | INFO     | 将在 1s 后重连...
+2026-01-07 13:17:14 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-07 13:35:50 | INFO     | [价格异动] BREVUSDT: -2.68%
+2026-01-07 13:42:27 | ERROR    | WebSocket 错误: No PONG received after 15.0 seconds
+2026-01-07 13:42:27 | INFO     | 将在 1s 后重连...
+2026-01-07 13:42:28 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-07 13:48:13 | ERROR    | WebSocket 错误: No PONG received after 15.0 seconds
+2026-01-07 13:48:13 | INFO     | 将在 1s 后重连...
+2026-01-07 13:48:34 | ERROR    | WebSocket 连接失败: Timeout on reading data from socket
+2026-01-07 13:48:34 | INFO     | 将在 2s 后重连...
+2026-01-07 13:48:36 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-07 13:59:42 | ERROR    | WebSocket 错误: No PONG received after 15.0 seconds
+2026-01-07 13:59:42 | INFO     | 将在 1s 后重连...
+2026-01-07 13:59:44 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-07 14:05:16 | INFO     | [价格异动] BREVUSDT: +2.53%
+2026-01-07 14:05:25 | INFO     | 将在 1s 后重连...
+2026-01-07 14:05:26 | ERROR    | WebSocket 连接失败: Cannot connect to host fstream.binance.com:443 ssl:default [None]
+2026-01-07 14:05:26 | INFO     | 将在 2s 后重连...
+2026-01-07 14:05:28 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 14:05:28 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 14:05:28 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 14:05:28 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 14:05:28 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 14:05:28 | ERROR    | WebSocket 连接失败: Cannot connect to host fstream.binance.com:443 ssl:default [None]
+2026-01-07 14:05:28 | INFO     | 将在 4s 后重连...
+2026-01-07 14:05:28 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 14:05:28 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 14:05:28 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 14:05:28 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 14:05:28 | ERROR    | 请求失败，已达最大重试次数: Cannot connect to host fapi.binance.com:443 ssl:default [None]
+2026-01-07 14:05:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=JOEUSDT
+2026-01-07 14:05:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=THETAUSDT
+2026-01-07 14:05:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=1000XECUSDT
+2026-01-07 14:05:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=OLUSDT
+2026-01-07 14:05:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=USUALUSDT
+2026-01-07 14:05:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BNTUSDT
+2026-01-07 14:05:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=EGLDUSDT
+2026-01-07 14:05:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=UMAUSDT
+2026-01-07 14:05:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SKYAIUSDT
+2026-01-07 14:05:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CTSIUSDT
+2026-01-07 14:05:42 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 14:05:42 | INFO     | 将在 8s 后重连...
+2026-01-07 14:06:01 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 14:06:01 | INFO     | 将在 16s 后重连...
+2026-01-07 14:06:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SAHARAUSDT
+2026-01-07 14:06:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CVXUSDT
+2026-01-07 14:06:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=XAIUSDT
+2026-01-07 14:06:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SAFEUSDT
+2026-01-07 14:06:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=RVNUSDT
+2026-01-07 14:06:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=MASKUSDT
+2026-01-07 14:06:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=WALUSDT
+2026-01-07 14:06:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=MOVRUSDT
+2026-01-07 14:06:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=NXPCUSDT
+2026-01-07 14:06:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=GUAUSDT
+2026-01-07 14:06:28 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 14:06:28 | INFO     | 将在 32s 后重连...
+2026-01-07 14:06:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=QNTUSDT
+2026-01-07 14:06:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=RLCUSDT
+2026-01-07 14:06:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PLUMEUSDT
+2026-01-07 14:06:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LINEAUSDT
+2026-01-07 14:06:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=VELODROMEUSDT
+2026-01-07 14:06:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ARPAUSDT
+2026-01-07 14:06:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=COAIUSDT
+2026-01-07 14:06:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=IOTAUSDT
+2026-01-07 14:06:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PHBUSDT
+2026-01-07 14:06:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=EULUSDT
+2026-01-07 14:07:11 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 14:07:11 | INFO     | 将在 60s 后重连...
+2026-01-07 14:07:29 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZETAUSDT
+2026-01-07 14:07:29 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=1000CHEEMSUSDT
+2026-01-07 14:07:29 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=YFIUSDT
+2026-01-07 14:07:29 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SXTUSDT
+2026-01-07 14:07:29 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SUSHIUSDT
+2026-01-07 14:07:29 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=USUSDT
+2026-01-07 14:07:29 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LAUSDT
+2026-01-07 14:07:29 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=METUSDT
+2026-01-07 14:07:29 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=GOATUSDT
+2026-01-07 14:07:29 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PROMPTUSDT
+2026-01-07 14:08:05 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=MANTAUSDT
+2026-01-07 14:08:05 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=AVAAIUSDT
+2026-01-07 14:08:05 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PUFFERUSDT
+2026-01-07 14:08:05 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PROMUSDT
+2026-01-07 14:08:05 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=MANAUSDT
+2026-01-07 14:08:05 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ENJUSDT
+2026-01-07 14:08:05 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TRUSTUSDT
+2026-01-07 14:08:05 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=VANRYUSDT
+2026-01-07 14:08:05 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ASTRUSDT
+2026-01-07 14:08:05 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SHELLUSDT
+2026-01-07 14:08:22 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 14:08:22 | INFO     | 将在 60s 后重连...
+2026-01-07 14:08:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=AGTUSDT
+2026-01-07 14:08:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ONGUSDT
+2026-01-07 14:08:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=KAIAUSDT
+2026-01-07 14:08:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CUDISUSDT
+2026-01-07 14:08:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SYNUSDT
+2026-01-07 14:08:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZRCUSDT
+2026-01-07 14:08:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=HIGHUSDT
+2026-01-07 14:08:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=AUSDT
+2026-01-07 14:08:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=AXSUSDT
+2026-01-07 14:08:41 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=JSTUSDT
+2026-01-07 14:09:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=DEGOUSDT
+2026-01-07 14:09:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=STOUSDT
+2026-01-07 14:09:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CARVUSDT
+2026-01-07 14:09:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=IOSTUSDT
+2026-01-07 14:09:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=DOODUSDT
+2026-01-07 14:09:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TAGUSDT
+2026-01-07 14:09:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=IOTXUSDT
+2026-01-07 14:09:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=EDUUSDT
+2026-01-07 14:09:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BSVUSDT
+2026-01-07 14:09:17 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=RDNTUSDT
+2026-01-07 14:09:33 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 14:09:33 | INFO     | 将在 60s 后重连...
+2026-01-07 14:09:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=GTCUSDT
+2026-01-07 14:09:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SYSUSDT
+2026-01-07 14:09:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TAIKOUSDT
+2026-01-07 14:09:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ALLUSDT
+2026-01-07 14:09:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=HYPERUSDT
+2026-01-07 14:09:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BRUSDT
+2026-01-07 14:09:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TACUSDT
+2026-01-07 14:09:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=AXLUSDT
+2026-01-07 14:09:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=KOMAUSDT
+2026-01-07 14:09:53 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=DAMUSDT
+2026-01-07 14:10:29 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SENTUSDT
+2026-01-07 14:10:29 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ATAUSDT
+2026-01-07 14:10:29 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BIDUSDT
+2026-01-07 14:10:29 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SCRTUSDT
+2026-01-07 14:10:29 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BTCDOMUSDT
+2026-01-07 14:10:44 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 14:10:44 | INFO     | 将在 60s 后重连...
+2026-01-07 14:11:35 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BROCCOLI714USDT
+2026-01-07 14:11:35 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=QUSDT
+2026-01-07 14:11:35 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=WCTUSDT
+2026-01-07 14:11:35 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=XPLUSDT
+2026-01-07 14:11:35 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=FORMUSDT
+2026-01-07 14:11:35 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=IOUSDT
+2026-01-07 14:11:35 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TRXUSDT
+2026-01-07 14:11:35 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZBTUSDT
+2026-01-07 14:11:35 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=JASMYUSDT
+2026-01-07 14:11:35 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BREVUSDT
+2026-01-07 14:11:55 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 14:11:55 | INFO     | 将在 60s 后重连...
+2026-01-07 14:12:11 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=NEARUSDT
+2026-01-07 14:12:11 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=XRPUSDT
+2026-01-07 14:12:11 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=WIFUSDT
+2026-01-07 14:12:11 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PLAYUSDT
+2026-01-07 14:12:11 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=HIPPOUSDT
+2026-01-07 14:12:11 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=AVNTUSDT
+2026-01-07 14:12:11 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=FOLKSUSDT
+2026-01-07 14:12:11 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ETHFIUSDT
+2026-01-07 14:12:11 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ALGOUSDT
+2026-01-07 14:12:11 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PIEVERSEUSDT
+2026-01-07 14:12:47 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=WAXPUSDT
+2026-01-07 14:12:47 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LYNUSDT
+2026-01-07 14:12:47 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PORTALUSDT
+2026-01-07 14:12:47 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=MINAUSDT
+2026-01-07 14:12:47 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CETUSUSDT
+2026-01-07 14:12:47 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZECUSDT
+2026-01-07 14:12:47 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=HAEDALUSDT
+2026-01-07 14:12:47 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZORAUSDT
+2026-01-07 14:12:47 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=USELESSUSDT
+2026-01-07 14:12:47 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=NEIROUSDT
+2026-01-07 14:13:06 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 14:13:06 | INFO     | 将在 60s 后重连...
+2026-01-07 14:13:23 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=STBLUSDT
+2026-01-07 14:13:23 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=RAVEUSDT
+2026-01-07 14:13:23 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=KAITOUSDT
+2026-01-07 14:13:23 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ARIAUSDT
+2026-01-07 14:13:23 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=WETUSDT
+2026-01-07 14:13:23 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=AKEUSDT
+2026-01-07 14:13:23 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=GUNUSDT
+2026-01-07 14:13:23 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BANDUSDT
+2026-01-07 14:13:23 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CGPTUSDT
+2026-01-07 14:13:23 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PENDLEUSDT
+2026-01-07 14:13:59 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZKCUSDT
+2026-01-07 14:13:59 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=1000PEPEUSDT
+2026-01-07 14:13:59 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=MOODENGUSDT
+2026-01-07 14:13:59 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=HYPEUSDT
+2026-01-07 14:13:59 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=JELLYJELLYUSDT
+2026-01-07 14:13:59 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=RIVERUSDT
+2026-01-07 14:13:59 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TIAUSDT
+2026-01-07 14:13:59 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ICPUSDT
+2026-01-07 14:13:59 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SUIUSDT
+2026-01-07 14:13:59 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ATHUSDT
+2026-01-07 14:14:07 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-07 14:16:27 | INFO     | [价格异动] RIVERUSDT: -1.55%
+2026-01-07 14:21:53 | INFO     | 收到终止信号...
+2026-01-07 14:21:53 | INFO     | 正在停止监控系统...
+2026-01-07 14:21:53 | INFO     | 正在停止监控系统...
+2026-01-07 14:21:53 | INFO     | 监控系统已停止
+2026-01-07 14:21:53 | INFO     | 监控系统已停止
+2026-01-07 14:21:56 | INFO     | ==================================================
+2026-01-07 14:21:56 | INFO     | 合约价格异动监控系统启动
+2026-01-07 14:21:56 | INFO     | ==================================================
+2026-01-07 14:21:57 | INFO     | Telegram Bot 连接成功: @price_Pbot
+2026-01-07 14:21:57 | INFO     | Telegram 连接正常
+2026-01-07 14:21:57 | INFO     | 持仓量轮询已启动
+2026-01-07 14:21:57 | INFO     | Bot 查询功能已启动
+2026-01-07 14:21:57 | INFO     | 开始订阅 Binance 行情...
+2026-01-07 14:21:57 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-07 14:21:58 | INFO     | Bot 命令处理器已启动: @price_Pbot
+2026-01-07 14:22:36 | INFO     | [价格异动] BREVUSDT: -2.62%
+2026-01-07 14:36:15 | INFO     | [价格异动] BREVUSDT: -2.59%
+2026-01-07 14:39:11 | INFO     | [价格反转] BREVUSDT: 见底反转 (涨3.99%/跌5.86%)
+2026-01-07 14:47:54 | INFO     | [价格异动] RIVERUSDT: +1.51%
+2026-01-07 14:56:06 | INFO     | [价格异动] BREVUSDT: +2.72%
+2026-01-07 14:59:32 | INFO     | [价格反转] BREVUSDT: 见顶反转 (涨3.85%/跌2.65%)
+2026-01-07 15:21:15 | INFO     | 将在 1s 后重连...
+2026-01-07 15:21:16 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-07 15:26:47 | INFO     | [价格异动] RIVERUSDT: +1.66%
+2026-01-07 15:31:07 | INFO     | [价格异动] BREVUSDT: -2.85%
+2026-01-07 15:37:12 | INFO     | [价格异动] ALCHUSDT: -4.22%
+2026-01-07 15:37:13 | INFO     | [价格异动] BREVUSDT: -3.34%
+2026-01-07 15:44:56 | INFO     | [价格反转] BREVUSDT: 见底反转 (涨2.75%/跌4.08%)
+2026-01-07 15:48:55 | INFO     | 将在 1s 后重连...
+2026-01-07 15:48:56 | ERROR    | WebSocket 连接失败: Cannot connect to host fstream.binance.com:443 ssl:default [None]
+2026-01-07 15:48:56 | INFO     | 将在 2s 后重连...
+2026-01-07 15:48:58 | ERROR    | WebSocket 连接失败: Cannot connect to host fstream.binance.com:443 ssl:default [None]
+2026-01-07 15:48:58 | INFO     | 将在 4s 后重连...
+2026-01-07 15:49:12 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 15:49:12 | INFO     | 将在 8s 后重连...
+2026-01-07 15:49:31 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 15:49:31 | INFO     | 将在 16s 后重连...
+2026-01-07 15:49:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=FORMUSDT
+2026-01-07 15:49:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=WLFIUSDT
+2026-01-07 15:49:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ARUSDT
+2026-01-07 15:49:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SAFEUSDT
+2026-01-07 15:49:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZRXUSDT
+2026-01-07 15:49:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=AEVOUSDT
+2026-01-07 15:49:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SKLUSDT
+2026-01-07 15:49:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=IOUSDT
+2026-01-07 15:49:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SOMIUSDT
+2026-01-07 15:49:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=JASMYUSDT
+2026-01-07 15:49:58 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 15:49:58 | INFO     | 将在 32s 后重连...
+2026-01-07 15:50:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BEAMXUSDT
+2026-01-07 15:50:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BROCCOLI714USDT
+2026-01-07 15:50:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PHAUSDT
+2026-01-07 15:50:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SOLVUSDT
+2026-01-07 15:50:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CELOUSDT
+2026-01-07 15:50:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=1000FLOKIUSDT
+2026-01-07 15:50:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=HIVEUSDT
+2026-01-07 15:50:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=IPUSDT
+2026-01-07 15:50:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=RECALLUSDT
+2026-01-07 15:50:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BREVUSDT
+2026-01-07 15:50:41 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 15:50:41 | INFO     | 将在 60s 后重连...
+2026-01-07 15:50:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=%E5%B8%81%E5%AE%89%E4%BA%BA%E7%94%9FUSDT
+2026-01-07 15:50:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=XRPUSDT
+2026-01-07 15:50:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LPTUSDT
+2026-01-07 15:50:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=WIFUSDT
+2026-01-07 15:50:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BIDUSDT
+2026-01-07 15:50:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=HANAUSDT
+2026-01-07 15:50:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=NMRUSDT
+2026-01-07 15:50:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SEIUSDT
+2026-01-07 15:50:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=OPUSDT
+2026-01-07 15:50:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BCHUSDT
+2026-01-07 15:51:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=FFUSDT
+2026-01-07 15:51:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=HUMAUSDT
+2026-01-07 15:51:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=GRASSUSDT
+2026-01-07 15:51:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=DRIFTUSDT
+2026-01-07 15:51:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=NEARUSDT
+2026-01-07 15:51:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CHESSUSDT
+2026-01-07 15:51:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ETHFIUSDT
+2026-01-07 15:51:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZROUSDT
+2026-01-07 15:51:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ACHUSDT
+2026-01-07 15:51:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=KASUSDT
+2026-01-07 15:51:52 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 15:51:52 | INFO     | 将在 60s 后重连...
+2026-01-07 15:52:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PENGUUSDT
+2026-01-07 15:52:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=POLUSDT
+2026-01-07 15:52:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ANIMEUSDT
+2026-01-07 15:52:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZECUSDT
+2026-01-07 15:52:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=OMUSDT
+2026-01-07 15:52:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=DOLOUSDT
+2026-01-07 15:52:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZORAUSDT
+2026-01-07 15:52:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=KERNELUSDT
+2026-01-07 15:52:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=REDUSDT
+2026-01-07 15:52:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=MEMEUSDT
+2026-01-07 15:52:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BLURUSDT
+2026-01-07 15:52:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BNBUSDT
+2026-01-07 15:52:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BEATUSDT
+2026-01-07 15:52:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LYNUSDT
+2026-01-07 15:52:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PEOPLEUSDT
+2026-01-07 15:52:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=GUNUSDT
+2026-01-07 15:52:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=VIRTUALUSDT
+2026-01-07 15:52:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZKPUSDT
+2026-01-07 15:52:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=1MBABYDOGEUSDT
+2026-01-07 15:52:44 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=DOODUSDT
+2026-01-07 15:53:03 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 15:53:03 | INFO     | 将在 60s 后重连...
+2026-01-07 15:53:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PENDLEUSDT
+2026-01-07 15:53:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CLOUSDT
+2026-01-07 15:53:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=APTUSDT
+2026-01-07 15:53:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=STBLUSDT
+2026-01-07 15:53:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=HOLOUSDT
+2026-01-07 15:53:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=WETUSDT
+2026-01-07 15:53:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=DOGEUSDT
+2026-01-07 15:53:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ARPAUSDT
+2026-01-07 15:53:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=BANDUSDT
+2026-01-07 15:53:20 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LITUSDT
+2026-01-07 15:53:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ZKCUSDT
+2026-01-07 15:53:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=VVVUSDT
+2026-01-07 15:53:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CAKEUSDT
+2026-01-07 15:53:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SYNUSDT
+2026-01-07 15:53:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=UNIUSDT
+2026-01-07 15:53:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=LUNA2USDT
+2026-01-07 15:53:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=TURTLEUSDT
+2026-01-07 15:53:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ENSUSDT
+2026-01-07 15:53:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=CUSDT
+2026-01-07 15:53:56 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=IMXUSDT
+2026-01-07 15:54:14 | ERROR    | WebSocket 连接失败: Connection timeout to host wss://fstream.binance.com/ws/!miniTicker@arr
+2026-01-07 15:54:14 | INFO     | 将在 60s 后重连...
+2026-01-07 15:54:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SUIUSDT
+2026-01-07 15:54:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=COAIUSDT
+2026-01-07 15:54:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=AAVEUSDT
+2026-01-07 15:54:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=POWRUSDT
+2026-01-07 15:54:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=EGLDUSDT
+2026-01-07 15:54:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=MOODENGUSDT
+2026-01-07 15:54:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ATUSDT
+2026-01-07 15:54:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ATHUSDT
+2026-01-07 15:54:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=NEWTUSDT
+2026-01-07 15:54:32 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=JELLYJELLYUSDT
+2026-01-07 15:55:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=FHEUSDT
+2026-01-07 15:55:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=RIVERUSDT
+2026-01-07 15:55:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=ICPUSDT
+2026-01-07 15:55:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=PUMPUSDT
+2026-01-07 15:55:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=NOTUSDT
+2026-01-07 15:55:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=1000PEPEUSDT
+2026-01-07 15:55:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=VTHOUSDT
+2026-01-07 15:55:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=SANDUSDT
+2026-01-07 15:55:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=YBUSDT
+2026-01-07 15:55:08 | ERROR    | 请求失败，已达最大重试次数: Connection timeout to host https://fapi.binance.com/fapi/v1/openInterest?symbol=FILUSDT
+2026-01-07 15:55:15 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-07 15:56:37 | INFO     | 收到终止信号...
+2026-01-07 15:56:37 | INFO     | 正在停止监控系统...
+2026-01-07 15:56:37 | INFO     | 正在停止监控系统...
+2026-01-07 15:56:38 | ERROR    | Telegram 网络错误: Server disconnected
+2026-01-07 15:56:38 | INFO     | 监控系统已停止
+2026-01-07 15:56:41 | INFO     | ==================================================
+2026-01-07 15:56:41 | INFO     | 合约价格异动监控系统启动
+2026-01-07 15:56:41 | INFO     | ==================================================
+2026-01-07 15:56:41 | INFO     | Telegram Bot 连接成功: @price_Pbot
+2026-01-07 15:56:41 | INFO     | Telegram 连接正常
+2026-01-07 15:56:42 | INFO     | 持仓量轮询已启动
+2026-01-07 15:56:42 | INFO     | Bot 查询功能已启动
+2026-01-07 15:56:42 | INFO     | 开始订阅 Binance 行情...
+2026-01-07 15:56:42 | INFO     | WebSocket 已连接: !miniTicker@arr
+2026-01-07 15:56:42 | INFO     | Bot 命令处理器已启动: @price_Pbot
+2026-01-07 16:00:03 | INFO     | [价格异动] BREVUSDT: -2.55%
+2026-01-07 16:05:07 | INFO     | [价格异动] 1000PEPEUSDT: +1.54%
+2026-01-07 16:07:44 | INFO     | [价格异动] BREVUSDT: +2.76%
+2026-01-07 16:08:01 | INFO     | [持仓量变化] 1000PEPEUSDT: +5.88%
+2026-01-07 16:11:53 | INFO     | [价格异动] RIVERUSDT: -1.59%
+2026-01-07 16:12:03 | INFO     | [价格反转] BREVUSDT: 见顶反转 (涨2.61%/跌3.08%)
+2026-01-07 16:12:04 | INFO     | [价格反转] 1000PEPEUSDT: 见顶反转 (涨1.62%/跌1.50%)
+2026-01-07 16:16:08 | INFO     | [价格异动] CYSUSDT: -4.10%

@@ -55,6 +55,28 @@ class PriceReversalAlert(BaseModel):
     time_window: int = 300    # 检测窗口（秒），默认5分钟
 
 
+class OrderBookAlert(BaseModel):
+    """订单簿异动告警配置"""
+    enabled: bool = True
+    # 监控的交易对
+    symbols: List[str] = []
+    # 大单墙检测
+    wall_detection: bool = True
+    wall_value_threshold: float = 500000    # 大单墙最小价值阈值(USDT)
+    wall_ratio_threshold: float = 3.0       # 单档挂单量 > 平均值 N 倍
+    wall_distance_max: float = 2.0          # 距离当前价格最大百分比
+    # 深度失衡检测
+    imbalance_detection: bool = True
+    imbalance_threshold: float = 0.6        # 失衡比率阈值 (0-1)
+    imbalance_depth_levels: int = 10        # 计算失衡的档位数
+    # 扫盘检测
+    sweep_detection: bool = True
+    sweep_value_threshold: float = 300000   # 被吃掉的最小价值(USDT)
+    # WebSocket 配置
+    update_speed: str = "500ms"             # "100ms" 或 "500ms"
+    depth_levels: int = 20                  # 订阅档位数 5/10/20
+
+
 class AlertsConfig(BaseModel):
     """告警配置"""
     price_change: PriceChangeAlert = Field(default_factory=PriceChangeAlert)
@@ -62,6 +84,7 @@ class AlertsConfig(BaseModel):
     open_interest: OpenInterestAlert = Field(default_factory=OpenInterestAlert)
     spot_futures_spread: SpotFuturesSpreadAlert = Field(default_factory=SpotFuturesSpreadAlert)
     price_reversal: PriceReversalAlert = Field(default_factory=PriceReversalAlert)
+    orderbook: OrderBookAlert = Field(default_factory=OrderBookAlert)
     # 告警冷却时间（秒）
     cooldown: int = 300
 
