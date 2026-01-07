@@ -281,16 +281,23 @@ class MonitorApp:
             format="<green>{time:HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{message}</cyan>"
         )
 
-        # 文件输出
+        # 文件输出（按日期分割）
         if log_cfg.file_output:
             log_path = Path(log_cfg.file_path)
             log_path.parent.mkdir(parents=True, exist_ok=True)
 
+            # 构建带日期的日志文件名: logs/monitor_2024-01-07.log
+            log_dir = log_path.parent
+            log_name = log_path.stem  # "monitor"
+            log_ext = log_path.suffix  # ".log"
+            daily_log_path = log_dir / f"{log_name}_{{time:YYYY-MM-DD}}{log_ext}"
+
             logger.add(
-                str(log_path),
+                str(daily_log_path),
                 level=log_cfg.level,
-                rotation="10 MB",
-                retention="7 days",
+                rotation="00:00",       # 每天午夜轮转
+                retention="30 days",    # 保留30天日志
+                compression="gz",       # 旧日志压缩为 .gz
                 format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {message}"
             )
 
