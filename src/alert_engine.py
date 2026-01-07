@@ -4,13 +4,16 @@
 """
 from collections import defaultdict
 from datetime import datetime, timedelta
-from typing import Callable, List, Optional
+from typing import Callable, List, Optional, TYPE_CHECKING
 
 from loguru import logger
 
 from .config_manager import Settings, VolumeTierConfig
 from .models import AlertEvent, AlertType, TickerData
 from .price_tracker import PriceTracker
+
+if TYPE_CHECKING:
+    from .ml.risk_filter import RiskFilter
 
 
 class AlertEngine:
@@ -33,6 +36,9 @@ class AlertEngine:
         self.tracker = tracker
         self.on_alert = on_alert
 
+        # 风险过滤器（可选，用于过滤假异动）
+        self._risk_filter: Optional["RiskFilter"] = None
+
         # 告警冷却记录: {(symbol, alert_type): last_alert_time}
         self._cooldowns: dict = defaultdict(lambda: datetime.min)
 
@@ -42,6 +48,11 @@ class AlertEngine:
             key=lambda t: t.min_quote_volume,
             reverse=True
         )
+
+    def set_risk_filter(self, risk_filter: "RiskFilter"):
+        """设置风险过滤器"""
+        self._risk_filter = risk_filter
+        logger.info("风险过滤器已设置到AlertEngine")
 
     def _get_tier(self, quote_volume: float) -> Optional[VolumeTierConfig]:
         """
@@ -383,15 +394,59 @@ class AlertEngine:
             reversal_type = "见顶反转" if reversal_event.extra_info.get("反转类型") == "top" else "见底反转"
             logger.info(f"[价格反转] {symbol}: {reversal_type} (涨{reversal_event.extra_info.get('上涨幅度', 0):.2f}%/跌{reversal_event.extra_info.get('下跌幅度', 0):.2f}%)")
 
-        # 回调通知
+        # 回调通知（集成风险过滤）
         if self.on_alert:
             for event in events:
                 try:
-                    self.on_alert(event)
+                    # 风险过滤检查
+                    should_send = self._check_risk_filter(event.symbol, event.alert_type)
+
+                    if should_send:
+                        self.on_alert(event)
+                    else:
+                        logger.info(f"[风险过滤] {event.symbol} {event.alert_type.value} 告警已过滤")
+
                 except Exception as e:
                     logger.error(f"告警回调失败: {e}")
 
         return events
+
+    def _check_risk_filter(self, symbol: str, alert_type: AlertType) -> bool:
+        """
+        检查是否应该发送告警（风险过滤）
+
+        Args:
+            symbol: 交易对
+            alert_type: 告警类型
+
+        Returns:
+            True=应该发送, False=应该过滤
+        """
+        if not self._risk_filter:
+            return True
+
+        try:
+            # 获取当前ticker数据
+            ticker = self.tracker.get_latest(symbol)
+
+            # 执行风险检查
+            risk_result = self._risk_filter.check_risk(
+                symbol=symbol,
+                ticker=ticker
+            )
+
+            # 判断是否应该过滤
+            should_filter, filter_reason = self._risk_filter.should_filter_alert(risk_result)
+
+            if should_filter:
+                logger.debug(f"风险过滤触发 {symbol}: {filter_reason}")
+                return False
+
+            return True
+
+        except Exception as e:
+            logger.error(f"风险检查失败 {symbol}: {e}")
+            return True  # 失败时不过滤，保守处理
 
     async def process_tickers(self, tickers: List[TickerData]) -> List[AlertEvent]:
         """

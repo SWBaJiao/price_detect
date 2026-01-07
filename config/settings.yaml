@@ -120,3 +120,154 @@ logging:
   level: "INFO"               # DEBUG | INFO | WARNING | ERROR
   file_output: true
   file_path: "logs/monitor.log"
+
+# ========================================
+# ML量化模块配置
+# ========================================
+ml:
+  # 是否启用ML模块
+  enabled: false
+
+  # SQLite数据库路径
+  db_path: "data/ml_data.db"
+
+  # 特征计算配置
+  feature:
+    # 特征时间窗口（秒）
+    windows: [60, 300, 900, 1800]
+    # 特征保存间隔（秒）
+    save_interval: 1
+
+  # 标签生成配置
+  label:
+    # 标签时间窗口（秒）
+    windows: [60, 300, 900, 1800]
+    # 方向标签阈值（%），超过此值才判定为涨/跌
+    direction_threshold: 0.1
+
+  # 技术指标配置
+  indicators:
+    # 移动平均周期
+    ma_periods: [5, 20, 60]
+    # RSI周期
+    rsi_period: 14
+    # MACD参数
+    macd_fast: 12
+    macd_slow: 26
+    macd_signal: 9
+    # 布林带参数
+    bb_period: 20
+    bb_std: 2.0
+
+  # 风险过滤配置
+  risk:
+    # 是否启用风险过滤
+    enabled: true
+    # 检测到假异动时是否过滤告警推送
+    filter_alerts: true
+    # 最大WebSocket延迟（毫秒）
+    max_ws_latency_ms: 500
+    # 最大价差（基点）
+    max_spread_bps: 50
+    # 最小深度价值（USDT）
+    min_depth_value: 50000
+    # 假异动检测窗口（秒）
+    fake_signal_window: 30
+    # 假异动反转比例阈值（回撤/涨幅 > 80%）
+    fake_signal_revert_ratio: 0.8
+    # 假异动最小变化幅度（%）
+    fake_signal_min_change: 1.0
+
+# ========================================
+# 模拟交易模块配置
+# ========================================
+trading:
+  # 是否启用模拟交易
+  enabled: false
+
+  # 运行模式: "backtest" | "realtime" | "both"
+  mode: "realtime"
+
+  # 账户配置
+  account:
+    # 初始资金(USDT)
+    initial_balance: 10000
+    # 固定杠杆倍数
+    leverage: 15
+    # 挂单手续费(0.02%)
+    maker_fee: 0.0002
+    # 吃单手续费(0.05%)
+    taker_fee: 0.0005
+    # 最大同时持仓数
+    max_positions: 5
+    # 单笔风险占权益百分比
+    position_risk_pct: 2.0
+
+  # 策略配置
+  strategy:
+    # 最小信号置信度 (0-1)
+    min_confidence: 0.5
+    # 信号分数阈值
+    signal_threshold: 0.4
+    # 是否使用ML模型（暂用规则策略）
+    use_ml_model: false
+    # 是否启用技术指标过滤
+    indicator_filter: true
+    # RSI超卖阈值（低于此值考虑做多）
+    rsi_oversold: 30
+    # RSI超买阈值（高于此值考虑做空）
+    rsi_overbought: 70
+    # 最小波动率(%)，波动太小不开仓
+    min_volatility: 0.3
+    # 最小成交量倍数，量能不足不开仓
+    min_volume_ratio: 0.5
+    # 订单簿买盘强阈值
+    imbalance_long_threshold: 0.65
+    # 订单簿卖盘强阈值
+    imbalance_short_threshold: 0.35
+    # 趋势一致性过滤阈值(%)
+    trend_filter_pct: 1.0
+
+  # 止损配置
+  stop_loss:
+    # 止损方法: "fixed" | "atr" | "trailing" | "multiple"
+    # multiple = 综合使用多种止损方式
+    method: "multiple"
+    # 固定止损百分比
+    fixed_stop_pct: 1.5
+    # 固定止盈百分比
+    take_profit_pct: 3.0
+    # ATR止损倍数
+    atr_multiplier: 2.0
+    # ATR计算周期
+    atr_period: 14
+    # 移动止损距离(%)
+    trailing_distance: 1.0
+    # 激活移动止损的盈利阈值(%)
+    trailing_activation: 1.0
+    # 最大持仓时间（秒），默认15分钟
+    max_hold_seconds: 900
+
+  # 回测配置
+  backtest:
+    # 回测开始日期
+    start_date: "2024-01-01"
+    # 回测结束日期
+    end_date: "2024-12-31"
+    # 回测币种列表，空列表表示全部
+    symbols: []
+    # 是否保存交易记录到数据库
+    save_trades: true
+
+  # 实时模拟配置
+  realtime:
+    # 是否启用实时模拟
+    enabled: true
+    # 账户状态保存间隔（秒）
+    save_interval: 60
+    # 是否记录交易日志
+    log_trades: true
+    # 每个交易对最大持仓数
+    max_positions_per_symbol: 1
+    # 允许交易的币种，空列表表示全部
+    allowed_symbols: []

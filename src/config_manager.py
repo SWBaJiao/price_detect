@@ -113,6 +113,124 @@ class LoggingConfig(BaseModel):
     file_path: str = "logs/monitor.log"
 
 
+# ==================== ML量化配置 ====================
+
+class MLFeatureConfig(BaseModel):
+    """ML特征计算配置"""
+    windows: List[int] = [60, 300, 900, 1800]  # 特征时间窗口(秒)
+    save_interval: int = 1                      # 特征保存间隔(秒)
+
+
+class MLLabelConfig(BaseModel):
+    """ML标签生成配置"""
+    windows: List[int] = [60, 300, 900, 1800]  # 标签时间窗口(秒)
+    direction_threshold: float = 0.1            # 方向标签阈值(%)
+
+
+class MLIndicatorConfig(BaseModel):
+    """技术指标配置"""
+    ma_periods: List[int] = [5, 20, 60]        # 移动平均周期
+    rsi_period: int = 14                        # RSI周期
+    macd_fast: int = 12                         # MACD快线周期
+    macd_slow: int = 26                         # MACD慢线周期
+    macd_signal: int = 9                        # MACD信号线周期
+    bb_period: int = 20                         # 布林带周期
+    bb_std: float = 2.0                         # 布林带标准差倍数
+
+
+class MLRiskConfig(BaseModel):
+    """ML风险过滤配置"""
+    enabled: bool = True                        # 是否启用风险过滤
+    filter_alerts: bool = True                  # 假异动时是否过滤告警
+    max_ws_latency_ms: float = 500              # 最大WebSocket延迟(ms)
+    max_spread_bps: float = 50                  # 最大价差(基点)
+    min_depth_value: float = 50000              # 最小深度价值(USDT)
+    fake_signal_window: int = 30                # 假异动检测窗口(秒)
+    fake_signal_revert_ratio: float = 0.8       # 反转比例阈值
+    fake_signal_min_change: float = 1.0         # 最小变化幅度(%)
+
+
+class MLConfig(BaseModel):
+    """ML量化模块总配置"""
+    enabled: bool = False                       # 是否启用ML模块
+    db_path: str = "data/ml_data.db"           # SQLite数据库路径
+    feature: MLFeatureConfig = Field(default_factory=MLFeatureConfig)
+    label: MLLabelConfig = Field(default_factory=MLLabelConfig)
+    indicators: MLIndicatorConfig = Field(default_factory=MLIndicatorConfig)
+    risk: MLRiskConfig = Field(default_factory=MLRiskConfig)
+
+
+# ==================== 模拟交易配置 ====================
+
+class TradingAccountConfig(BaseModel):
+    """交易账户配置"""
+    initial_balance: float = 10000.0            # 初始资金(USDT)
+    leverage: int = 15                          # 固定杠杆倍数
+    maker_fee: float = 0.0002                   # 挂单手续费(0.02%)
+    taker_fee: float = 0.0005                   # 吃单手续费(0.05%)
+    max_positions: int = 5                      # 最大同时持仓数
+    position_risk_pct: float = 2.0              # 单笔风险占权益百分比
+
+
+class TradingStrategyConfig(BaseModel):
+    """交易策略配置"""
+    min_confidence: float = 0.5                 # 最小信号置信度
+    signal_threshold: float = 0.4               # 信号分数阈值
+    use_ml_model: bool = False                  # 是否使用ML模型（暂用规则）
+    indicator_filter: bool = True               # 启用技术指标过滤
+    # RSI阈值
+    rsi_oversold: float = 30                    # RSI超卖阈值
+    rsi_overbought: float = 70                  # RSI超买阈值
+    # 波动率和成交量过滤
+    min_volatility: float = 0.3                 # 最小波动率(%)
+    min_volume_ratio: float = 0.5               # 最小成交量倍数
+    # 订单簿失衡阈值
+    imbalance_long_threshold: float = 0.65      # 买盘强阈值
+    imbalance_short_threshold: float = 0.35     # 卖盘强阈值
+    # 趋势过滤
+    trend_filter_pct: float = 1.0               # 趋势一致性过滤阈值(%)
+
+
+class TradingStopLossConfig(BaseModel):
+    """止损配置"""
+    method: str = "multiple"                    # "fixed" | "atr" | "trailing" | "multiple"
+    fixed_stop_pct: float = 1.5                 # 固定止损(%)
+    take_profit_pct: float = 3.0                # 固定止盈(%)
+    atr_multiplier: float = 2.0                 # ATR止损倍数
+    atr_period: int = 14                        # ATR计算周期
+    trailing_distance: float = 1.0              # 移动止损距离(%)
+    trailing_activation: float = 1.0            # 激活移动止损的盈利阈值(%)
+    max_hold_seconds: int = 900                 # 最大持仓时间(秒)，默认15分钟
+
+
+class TradingBacktestConfig(BaseModel):
+    """回测配置"""
+    start_date: str = "2024-01-01"              # 回测开始日期
+    end_date: str = "2024-12-31"                # 回测结束日期
+    symbols: List[str] = []                     # 回测币种列表，空为全部
+    save_trades: bool = True                    # 是否保存交易记录到数据库
+
+
+class TradingRealtimeConfig(BaseModel):
+    """实时模拟配置"""
+    enabled: bool = True                        # 是否启用实时模拟
+    save_interval: int = 60                     # 账户状态保存间隔(秒)
+    log_trades: bool = True                     # 是否记录交易日志
+    max_positions_per_symbol: int = 1           # 每个交易对最大持仓数
+    allowed_symbols: List[str] = []             # 允许交易的币种，空为全部
+
+
+class TradingConfig(BaseModel):
+    """模拟交易模块总配置"""
+    enabled: bool = False                       # 是否启用交易模块
+    mode: str = "realtime"                      # "backtest" | "realtime" | "both"
+    account: TradingAccountConfig = Field(default_factory=TradingAccountConfig)
+    strategy: TradingStrategyConfig = Field(default_factory=TradingStrategyConfig)
+    stop_loss: TradingStopLossConfig = Field(default_factory=TradingStopLossConfig)
+    backtest: TradingBacktestConfig = Field(default_factory=TradingBacktestConfig)
+    realtime: TradingRealtimeConfig = Field(default_factory=TradingRealtimeConfig)
+
+
 class Settings(BaseSettings):
     """
     主配置类
@@ -128,6 +246,8 @@ class Settings(BaseSettings):
     volume_tiers: List[VolumeTierConfig] = []
     filter: FilterConfig = Field(default_factory=FilterConfig)
     logging: LoggingConfig = Field(default_factory=LoggingConfig)
+    ml: MLConfig = Field(default_factory=MLConfig)  # ML量化模块配置
+    trading: TradingConfig = Field(default_factory=TradingConfig)  # 模拟交易模块配置
 
     class Config:
         env_file = ".env"

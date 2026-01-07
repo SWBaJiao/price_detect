@@ -407,3 +407,158 @@ class OrderBookEvent:
     imbalance_ratio: Optional[float] = None
     extra_info: dict = field(default_factory=dict)
     timestamp: datetime = field(default_factory=datetime.now)
+
+
+# ==================== ML量化交易模型 ====================
+
+from typing import List
+
+
+@dataclass
+class MLFeatureVector:
+    """
+    ML特征向量 - 单个时间点的全量特征
+    用于机器学习训练和实时预测
+    """
+    symbol: str
+    timestamp: datetime
+
+    # === 基础价格特征 ===
+    price: float                       # 当前价格
+    price_change_1m: float = 0.0       # 1分钟价格变化%
+    price_change_5m: float = 0.0       # 5分钟价格变化%
+    price_change_15m: float = 0.0      # 15分钟价格变化%
+    volatility_1m: float = 0.0         # 1分钟波动率（标准差）
+    volatility_5m: float = 0.0         # 5分钟波动率
+
+    # === 成交量特征 ===
+    volume_ratio_1m: float = 1.0       # 1分钟成交量倍数
+    volume_ratio_5m: float = 1.0       # 5分钟成交量倍数
+    quote_volume: float = 0.0          # 24h成交额(USDT)
+
+    # === 持仓量特征 ===
+    oi_change_5m: float = 0.0          # 5分钟OI变化%
+    oi_change_15m: float = 0.0         # 15分钟OI变化%
+
+    # === 价差特征 ===
+    spot_futures_spread: float = 0.0   # 现货-合约价差%
+    funding_rate: Optional[float] = None  # 资金费率
+
+    # === 订单簿特征 ===
+    imbalance_ratio_5: float = 0.0     # 5档失衡比
+    imbalance_ratio_10: float = 0.0    # 10档失衡比
+    imbalance_ratio_20: float = 0.0    # 20档失衡比
+    bid_wall_distance: Optional[float] = None  # 最近买墙距离%
+    ask_wall_distance: Optional[float] = None  # 最近卖墙距离%
+    bid_wall_value: Optional[float] = None     # 买墙价值(USDT)
+    ask_wall_value: Optional[float] = None     # 卖墙价值(USDT)
+    spread_bps: float = 0.0            # 买卖价差(基点)
+
+    # === 技术指标特征 ===
+    ma_5: float = 0.0                  # 5周期简单移动平均
+    ma_20: float = 0.0                 # 20周期简单移动平均
+    ma_60: float = 0.0                 # 60周期简单移动平均
+    ema_12: float = 0.0                # 12周期指数移动平均
+    ema_26: float = 0.0                # 26周期指数移动平均
+    rsi_14: float = 50.0               # 14周期RSI
+    macd_line: float = 0.0             # MACD线
+    macd_signal: float = 0.0           # MACD信号线
+    macd_histogram: float = 0.0        # MACD柱状图
+    bollinger_upper: float = 0.0       # 布林带上轨
+    bollinger_middle: float = 0.0      # 布林带中轨
+    bollinger_lower: float = 0.0       # 布林带下轨
+
+    # === 反转特征 ===
+    reversal_type: Optional[str] = None  # "top" / "bottom" / None
+    reversal_rise_pct: float = 0.0       # 反转上涨幅度
+    reversal_fall_pct: float = 0.0       # 反转下跌幅度
+
+    # === 元数据 ===
+    tier_label: str = ""               # 分层标签
+    alert_triggered: bool = False      # 是否触发告警
+    alert_types: List[str] = field(default_factory=list)  # 触发的告警类型
+
+
+@dataclass
+class MLLabel:
+    """
+    ML标签 - 用于训练
+    严格避免未来函数：标签只能在T+N时刻之后生成
+
+    关键字段:
+    - timestamp: 特征时间点T
+    - label_generated_at: 标签实际生成时间（必须 > timestamp + max_window）
+    """
+    symbol: str
+    timestamp: datetime                # 特征时间点T
+
+    # === 未来收益标签（T+N分钟后的收益率）===
+    return_1m: float = 0.0             # T+1分钟收益%
+    return_5m: float = 0.0             # T+5分钟收益%
+    return_15m: float = 0.0            # T+15分钟收益%
+    return_30m: float = 0.0            # T+30分钟收益%
+
+    # === 分类标签 ===
+    direction_5m: int = 0              # 5分钟方向: 1=涨, 0=平, -1=跌
+    direction_15m: int = 0             # 15分钟方向
+
+    # === 最大回撤/收益 ===
+    max_profit_5m: float = 0.0         # 5分钟内最大浮盈%
+    max_drawdown_5m: float = 0.0       # 5分钟内最大回撤%
+
+    # === 标签生成时间（用于验证无未来函数）===
+    label_generated_at: Optional[datetime] = None
+
+
+@dataclass
+class RiskCheckResult:
+    """
+    风险检查结果
+    包含各类风险指标
+    """
+    symbol: str
+    timestamp: datetime
+
+    # === 假异动检测 ===
+    is_fake_signal: bool = False       # 是否假异动
+    fake_reason: Optional[str] = None  # 假异动原因
+
+    # === 延迟监控 ===
+    ws_latency_ms: float = 0.0         # WebSocket延迟(毫秒)
+    data_age_ms: float = 0.0           # 数据年龄(毫秒)
+
+    # === 流动性检查 ===
+    spread_too_wide: bool = False      # 价差过大
+    depth_too_thin: bool = False       # 深度过浅
+
+    # === 操纵检测 ===
+    wall_manipulation: bool = False    # 挂单墙操纵嫌疑
+    volume_manipulation: bool = False  # 成交量操纵嫌疑
+
+    def should_filter(self) -> bool:
+        """是否应该过滤该信号"""
+        return (
+            self.is_fake_signal or
+            self.spread_too_wide or
+            self.depth_too_thin or
+            self.wall_manipulation or
+            self.volume_manipulation or
+            self.ws_latency_ms > 500  # 延迟超过500ms
+        )
+
+    def get_filter_reasons(self) -> List[str]:
+        """获取过滤原因列表"""
+        reasons = []
+        if self.is_fake_signal:
+            reasons.append(f"假异动: {self.fake_reason}")
+        if self.ws_latency_ms > 500:
+            reasons.append(f"延迟过高: {self.ws_latency_ms:.0f}ms")
+        if self.spread_too_wide:
+            reasons.append("价差过大")
+        if self.depth_too_thin:
+            reasons.append("深度不足")
+        if self.wall_manipulation:
+            reasons.append("疑似挂单操纵")
+        if self.volume_manipulation:
+            reasons.append("疑似成交量操纵")
+        return reasons
