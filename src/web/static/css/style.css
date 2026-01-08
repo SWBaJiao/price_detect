@@ -1,0 +1,189 @@
+/* ML量化交易系统 - 自定义样式 */
+
+/* 全局 */
+body {
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+/* 导航栏 */
+.navbar-brand {
+    font-weight: bold;
+}
+
+/* 状态指示器 */
+.status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+    background-color: #6c757d;
+}
+
+.status-dot.online {
+    background-color: #28a745;
+    animation: pulse 2s infinite;
+}
+
+.status-dot.offline {
+    background-color: #dc3545;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    }
+}
+
+/* 卡片 */
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 1rem;
+}
+
+.card-header {
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    font-weight: 500;
+}
+
+/* 表格 */
+.table {
+    margin-bottom: 0;
+}
+
+.table th {
+    font-weight: 600;
+    font-size: 0.875rem;
+    white-space: nowrap;
+}
+
+.table td {
+    vertical-align: middle;
+    font-size: 0.875rem;
+}
+
+/* 徽章 */
+.badge {
+    font-weight: 500;
+}
+
+/* 盈亏颜色 */
+.text-profit {
+    color: #28a745 !important;
+}
+
+.text-loss {
+    color: #dc3545 !important;
+}
+
+/* 数字显示 */
+.number-display {
+    font-family: 'SF Mono', Monaco, 'Consolas', monospace;
+    font-variant-numeric: tabular-nums;
+}
+
+/* 图表容器 */
+.chart-container {
+    position: relative;
+    height: 300px;
+}
+
+/* 加载动画 */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .card-body h4 {
+        font-size: 1.25rem;
+    }
+
+    .table-responsive {
+        font-size: 0.75rem;
+    }
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* 页脚 */
+.footer {
+    margin-top: auto;
+}
+
+/* 统计卡片 */
+.stat-card {
+    transition: transform 0.2s;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+}
+
+/* 表格行高亮 */
+.table-hover tbody tr:hover {
+    background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* 筛选表单 */
+#filter-form .form-label {
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+}
+
+/* 时间显示 */
+.time-display {
+    font-size: 0.75rem;
+    color: #6c757d;
+}
+
+/* 持仓行根据盈亏着色 */
+.position-profit {
+    background-color: rgba(40, 167, 69, 0.05);
+}
+
+.position-loss {
+    background-color: rgba(220, 53, 69, 0.05);
+}

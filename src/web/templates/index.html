@@ -1,0 +1,532 @@
+{% extends "base.html" %}
+
+{% block title %}仪表板 - ML量化交易系统{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4><i class="bi bi-speedometer2"></i> 仪表板</h4>
+    </div>
+</div>
+
+<!-- 账户概览卡片 -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-subtitle mb-2">账户权益</h6>
+                        <h4 class="card-title" id="equity">$0.00</h4>
+                    </div>
+                    <i class="bi bi-wallet2 fs-1 opacity-50"></i>
+                </div>
+                <small id="return-pct">收益率: 0.00%</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-subtitle mb-2">累计盈亏</h6>
+                        <h4 class="card-title" id="total-pnl">$0.00</h4>
+                    </div>
+                    <i class="bi bi-cash-coin fs-1 opacity-50"></i>
+                </div>
+                <small id="win-rate">胜率: 0.00%</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-subtitle mb-2">总交易次数</h6>
+                        <h4 class="card-title" id="total-trades">0</h4>
+                    </div>
+                    <i class="bi bi-arrow-left-right fs-1 opacity-50"></i>
+                </div>
+                <small id="win-trades">盈利: 0 | 亏损: 0</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h6 class="card-subtitle mb-2">当前持仓</h6>
+                        <h4 class="card-title" id="open-positions">0</h4>
+                    </div>
+                    <i class="bi bi-box fs-1 opacity-50"></i>
+                </div>
+                <small id="margin-used">占用保证金: $0.00</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 权益曲线图表 -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-graph-up"></i> 权益曲线</span>
+                <div class="btn-group btn-group-sm" role="group">
+                    <button type="button" class="btn btn-outline-primary active" data-days="1">1天</button>
+                    <button type="button" class="btn btn-outline-primary" data-days="7">7天</button>
+                    <button type="button" class="btn btn-outline-primary" data-days="30">30天</button>
+                </div>
+            </div>
+            <div class="card-body">
+                <canvas id="equity-chart" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 最近交易和持仓 -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-clock-history"></i> 最近交易
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover table-sm mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>交易对</th>
+                            <th>方向</th>
+                            <th>盈亏</th>
+                            <th>ROI</th>
+                            <th>时间</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recent-trades">
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">加载中...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer text-center">
+                <a href="/trades" class="btn btn-sm btn-link">查看全部</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-wallet2"></i> 当前持仓
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover table-sm mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>交易对</th>
+                            <th>方向</th>
+                            <th>开仓价</th>
+                            <th>当前价</th>
+                            <th>盈亏%</th>
+                        </tr>
+                    </thead>
+                    <tbody id="current-positions">
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">暂无持仓</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer text-center">
+                <a href="/positions" class="btn btn-sm btn-link">查看详情</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 交易统计 -->
+<div class="row mt-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-pie-chart"></i> 交易统计
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <canvas id="win-loss-chart"></canvas>
+                    </div>
+                    <div class="col-6">
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <strong>平均盈利:</strong>
+                                <span id="avg-win" class="text-success">$0.00</span>
+                            </li>
+                            <li class="mb-2">
+                                <strong>平均亏损:</strong>
+                                <span id="avg-loss" class="text-danger">$0.00</span>
+                            </li>
+                            <li class="mb-2">
+                                <strong>盈亏比:</strong>
+                                <span id="profit-factor">0.00</span>
+                            </li>
+                            <li class="mb-2">
+                                <strong>最大单笔盈利:</strong>
+                                <span id="max-win" class="text-success">$0.00</span>
+                            </li>
+                            <li class="mb-2">
+                                <strong>最大单笔亏损:</strong>
+                                <span id="max-loss" class="text-danger">$0.00</span>
+                            </li>
+                            <li class="mb-2">
+                                <strong>最大回撤:</strong>
+                                <span id="max-drawdown" class="text-warning">0.00%</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-info-circle"></i> 系统信息
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li class="mb-2">
+                        <strong>初始资金:</strong>
+                        <span id="initial-balance">$10,000.00</span>
+                    </li>
+                    <li class="mb-2">
+                        <strong>杠杆倍数:</strong>
+                        <span id="leverage">15x</span>
+                    </li>
+                    <li class="mb-2">
+                        <strong>可用保证金:</strong>
+                        <span id="margin-available">$0.00</span>
+                    </li>
+                    <li class="mb-2">
+                        <strong>交易状态:</strong>
+                        <span id="trading-status" class="badge bg-secondary">未知</span>
+                    </li>
+                    <li class="mb-2">
+                        <strong>ML模块:</strong>
+                        <span id="ml-status" class="badge bg-secondary">未知</span>
+                    </li>
+                    <li class="mb-2">
+                        <strong>更新时间:</strong>
+                        <span id="update-time">-</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// 页面初始化
+document.addEventListener('DOMContentLoaded', function() {
+    // 初始加载
+    loadAccountData();
+    loadTradeStatistics();
+    loadRecentTrades();
+    loadPositions();
+    loadEquityCurve(1);
+    loadSystemStatus();
+
+    // 定时刷新
+    setInterval(loadAccountData, 5000);
+    setInterval(loadPositions, 5000);
+    setInterval(loadRecentTrades, 10000);
+
+    // 权益曲线时间范围按钮
+    document.querySelectorAll('[data-days]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('[data-days]').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            loadEquityCurve(parseInt(this.dataset.days));
+        });
+    });
+});
+
+// 加载账户数据
+function loadAccountData() {
+    fetch('/api/account')
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                const d = data.data;
+                document.getElementById('equity').textContent = '$' + formatNumber(d.equity);
+                document.getElementById('return-pct').textContent = '收益率: ' + formatPercent(d.return_pct);
+                document.getElementById('total-pnl').textContent = '$' + formatNumber(d.total_pnl);
+                document.getElementById('total-pnl').className = d.total_pnl >= 0 ? 'card-title text-white' : 'card-title text-danger';
+                document.getElementById('win-rate').textContent = '胜率: ' + formatPercent(d.win_rate * 100);
+                document.getElementById('total-trades').textContent = d.total_trades;
+                document.getElementById('win-trades').textContent = '盈利: ' + d.win_trades + ' | 亏损: ' + (d.total_trades - d.win_trades);
+                document.getElementById('open-positions').textContent = d.open_positions;
+                document.getElementById('margin-used').textContent = '占用保证金: $' + formatNumber(d.margin_used);
+                document.getElementById('initial-balance').textContent = '$' + formatNumber(d.initial_balance);
+                document.getElementById('leverage').textContent = d.leverage + 'x';
+                document.getElementById('margin-available').textContent = '$' + formatNumber(d.margin_available);
+                document.getElementById('max-drawdown').textContent = formatPercent(d.max_drawdown);
+                document.getElementById('update-time').textContent = new Date().toLocaleTimeString();
+            }
+        })
+        .catch(err => console.error('加载账户数据失败:', err));
+}
+
+// 加载交易统计
+function loadTradeStatistics() {
+    fetch('/api/trades/statistics?days=30')
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                const d = data.data;
+                document.getElementById('avg-win').textContent = '$' + formatNumber(d.avg_win);
+                document.getElementById('avg-loss').textContent = '$' + formatNumber(d.avg_loss);
+                document.getElementById('profit-factor').textContent = d.profit_factor.toFixed(2);
+                document.getElementById('max-win').textContent = '$' + formatNumber(d.max_win);
+                document.getElementById('max-loss').textContent = '$' + formatNumber(Math.abs(d.max_loss));
+
+                // 更新胜负饼图
+                updateWinLossChart(d.win_trades, d.loss_trades);
+            }
+        })
+        .catch(err => console.error('加载交易统计失败:', err));
+}
+
+// 安全创建表格行 - 交易记录
+function createTradeRow(t) {
+    const tr = document.createElement('tr');
+
+    const tdSymbol = document.createElement('td');
+    tdSymbol.textContent = t.symbol.replace('USDT', '');
+
+    const tdSide = document.createElement('td');
+    const badge = document.createElement('span');
+    badge.className = 'badge ' + (t.side === 'long' ? 'bg-success' : 'bg-danger');
+    badge.textContent = t.side === 'long' ? '多' : '空';
+    tdSide.appendChild(badge);
+
+    const tdPnl = document.createElement('td');
+    tdPnl.className = t.realized_pnl >= 0 ? 'text-success' : 'text-danger';
+    tdPnl.textContent = '$' + formatNumber(t.realized_pnl);
+
+    const tdRoi = document.createElement('td');
+    tdRoi.className = t.roi >= 0 ? 'text-success' : 'text-danger';
+    tdRoi.textContent = formatPercent(t.roi);
+
+    const tdTime = document.createElement('td');
+    tdTime.textContent = formatTime(t.exit_time);
+
+    tr.appendChild(tdSymbol);
+    tr.appendChild(tdSide);
+    tr.appendChild(tdPnl);
+    tr.appendChild(tdRoi);
+    tr.appendChild(tdTime);
+
+    return tr;
+}
+
+// 安全创建表格行 - 持仓
+function createPositionRow(p) {
+    const tr = document.createElement('tr');
+
+    const tdSymbol = document.createElement('td');
+    tdSymbol.textContent = p.symbol.replace('USDT', '');
+
+    const tdSide = document.createElement('td');
+    const badge = document.createElement('span');
+    badge.className = 'badge ' + (p.side === 'long' ? 'bg-success' : 'bg-danger');
+    badge.textContent = p.side === 'long' ? '多' : '空';
+    tdSide.appendChild(badge);
+
+    const tdEntry = document.createElement('td');
+    tdEntry.textContent = '$' + formatPrice(p.entry_price);
+
+    const tdCurrent = document.createElement('td');
+    tdCurrent.textContent = '$' + formatPrice(p.current_price);
+
+    const tdPnlPct = document.createElement('td');
+    tdPnlPct.className = p.unrealized_pnl_pct >= 0 ? 'text-success' : 'text-danger';
+    tdPnlPct.textContent = formatPercent(p.unrealized_pnl_pct);
+
+    tr.appendChild(tdSymbol);
+    tr.appendChild(tdSide);
+    tr.appendChild(tdEntry);
+    tr.appendChild(tdCurrent);
+    tr.appendChild(tdPnlPct);
+
+    return tr;
+}
+
+// 创建空状态行
+function createEmptyRow(message, colspan) {
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.setAttribute('colspan', colspan);
+    td.className = 'text-center text-muted';
+    td.textContent = message;
+    tr.appendChild(td);
+    return tr;
+}
+
+// 加载最近交易
+function loadRecentTrades() {
+    fetch('/api/trades?limit=5')
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById('recent-trades');
+            tbody.replaceChildren(); // 清空
+
+            if (data.success && data.data.length > 0) {
+                data.data.forEach(t => {
+                    tbody.appendChild(createTradeRow(t));
+                });
+            } else {
+                tbody.appendChild(createEmptyRow('暂无交易记录', 5));
+            }
+        })
+        .catch(err => console.error('加载最近交易失败:', err));
+}
+
+// 加载持仓
+function loadPositions() {
+    fetch('/api/positions')
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById('current-positions');
+            tbody.replaceChildren(); // 清空
+
+            if (data.success && data.data.length > 0) {
+                data.data.forEach(p => {
+                    tbody.appendChild(createPositionRow(p));
+                });
+            } else {
+                tbody.appendChild(createEmptyRow('暂无持仓', 5));
+            }
+        })
+        .catch(err => console.error('加载持仓失败:', err));
+}
+
+// 加载系统状态
+function loadSystemStatus() {
+    fetch('/api/system/status')
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                const d = data.data;
+                document.getElementById('trading-status').textContent = d.trading_running ? '运行中' : '已停止';
+                document.getElementById('trading-status').className = 'badge ' + (d.trading_running ? 'bg-success' : 'bg-secondary');
+                document.getElementById('ml-status').textContent = d.ml_enabled ? '已启用' : '未启用';
+                document.getElementById('ml-status').className = 'badge ' + (d.ml_enabled ? 'bg-success' : 'bg-secondary');
+
+                // 更新导航栏状态
+                const statusDot = document.querySelector('.status-dot');
+                const statusText = document.querySelector('.status-text');
+                statusDot.className = 'status-dot ' + (d.trading_running ? 'online' : 'offline');
+                statusText.textContent = d.trading_running ? '系统运行中' : '系统已停止';
+            }
+        })
+        .catch(err => {
+            document.querySelector('.status-dot').className = 'status-dot offline';
+            document.querySelector('.status-text').textContent = '连接失败';
+        });
+}
+
+// 权益曲线图表
+let equityChart = null;
+function loadEquityCurve(days) {
+    fetch('/api/equity-curve?days=' + days)
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                const labels = data.data.map(d => formatDateTime(d.timestamp));
+                const equityData = data.data.map(d => d.equity);
+                const balanceData = data.data.map(d => d.balance);
+
+                if (equityChart) {
+                    equityChart.destroy();
+                }
+
+                const ctx = document.getElementById('equity-chart').getContext('2d');
+                equityChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: '权益',
+                                data: equityData,
+                                borderColor: 'rgb(75, 192, 192)',
+                                backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                                fill: true,
+                                tension: 0.1
+                            },
+                            {
+                                label: '余额',
+                                data: balanceData,
+                                borderColor: 'rgb(54, 162, 235)',
+                                borderDash: [5, 5],
+                                fill: false,
+                                tension: 0.1
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                position: 'top'
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: false
+                            }
+                        }
+                    }
+                });
+            }
+        })
+        .catch(err => console.error('加载权益曲线失败:', err));
+}
+
+// 胜负饼图
+let winLossChart = null;
+function updateWinLossChart(wins, losses) {
+    if (winLossChart) {
+        winLossChart.destroy();
+    }
+
+    const ctx = document.getElementById('win-loss-chart').getContext('2d');
+    winLossChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['盈利', '亏损'],
+            datasets: [{
+                data: [wins, losses],
+                backgroundColor: ['rgb(75, 192, 192)', 'rgb(255, 99, 132)']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+}
+</script>
+{% endblock %}

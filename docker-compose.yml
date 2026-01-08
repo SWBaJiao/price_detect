@@ -24,6 +24,10 @@ services:
       - ./config:/app/config:ro
       - ./logs:/app/logs
 
+    # 端口映射（Web仪表板）
+    ports:
+      - "5000:5000"
+
     # 网络模式
     network_mode: bridge
 

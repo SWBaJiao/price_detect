@@ -126,7 +126,7 @@ logging:
 # ========================================
 ml:
   # 是否启用ML模块
-  enabled: false
+  enabled: true
 
   # SQLite数据库路径
   db_path: "data/ml_data.db"
@@ -210,7 +210,7 @@ trading:
     # 信号分数阈值
     signal_threshold: 0.4
     # 是否使用ML模型（暂用规则策略）
-    use_ml_model: false
+    use_ml_model: true
     # 是否启用技术指标过滤
     indicator_filter: true
     # RSI超卖阈值（低于此值考虑做多）

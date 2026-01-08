@@ -1,0 +1,337 @@
+{% extends "base.html" %}
+
+{% block title %}交易记录 - ML量化交易系统{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4><i class="bi bi-list-check"></i> 交易记录</h4>
+    </div>
+</div>
+
+<!-- 筛选条件 -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <form id="filter-form" class="row g-3 align-items-end">
+                    <div class="col-md-2">
+                        <label class="form-label">交易对</label>
+                        <input type="text" class="form-control" id="filter-symbol" placeholder="如: BTCUSDT">
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">时间范围</label>
+                        <select class="form-select" id="filter-days">
+                            <option value="1">最近1天</option>
+                            <option value="7" selected>最近7天</option>
+                            <option value="30">最近30天</option>
+                            <option value="90">最近90天</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">方向</label>
+                        <select class="form-select" id="filter-side">
+                            <option value="">全部</option>
+                            <option value="long">做多</option>
+                            <option value="short">做空</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">盈亏</label>
+                        <select class="form-select" id="filter-pnl">
+                            <option value="">全部</option>
+                            <option value="win">盈利</option>
+                            <option value="loss">亏损</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="form-label">数量</label>
+                        <select class="form-select" id="filter-limit">
+                            <option value="50">50条</option>
+                            <option value="100" selected>100条</option>
+                            <option value="200">200条</option>
+                            <option value="500">500条</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-search"></i> 查询
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 统计摘要 -->
+<div class="row mb-4">
+    <div class="col-md-2">
+        <div class="card bg-light">
+            <div class="card-body text-center py-2">
+                <small class="text-muted">总交易</small>
+                <h5 id="stat-total" class="mb-0">0</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-light">
+            <div class="card-body text-center py-2">
+                <small class="text-muted">胜率</small>
+                <h5 id="stat-winrate" class="mb-0">0%</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-light">
+            <div class="card-body text-center py-2">
+                <small class="text-muted">总盈亏</small>
+                <h5 id="stat-pnl" class="mb-0">$0</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-light">
+            <div class="card-body text-center py-2">
+                <small class="text-muted">平均盈利</small>
+                <h5 id="stat-avg-win" class="mb-0 text-success">$0</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-light">
+            <div class="card-body text-center py-2">
+                <small class="text-muted">平均亏损</small>
+                <h5 id="stat-avg-loss" class="mb-0 text-danger">$0</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-light">
+            <div class="card-body text-center py-2">
+                <small class="text-muted">盈亏比</small>
+                <h5 id="stat-pf" class="mb-0">0</h5>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 交易列表 -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body p-0">
+                <table class="table table-hover table-striped mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>交易ID</th>
+                            <th>交易对</th>
+                            <th>方向</th>
+                            <th>数量</th>
+                            <th>开仓价</th>
+                            <th>平仓价</th>
+                            <th>保证金</th>
+                            <th>盈亏</th>
+                            <th>ROI</th>
+                            <th>平仓原因</th>
+                            <th>开仓时间</th>
+                            <th>平仓时间</th>
+                        </tr>
+                    </thead>
+                    <tbody id="trades-table">
+                        <tr>
+                            <td colspan="12" class="text-center text-muted py-4">加载中...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    loadTrades();
+    loadStatistics();
+
+    document.getElementById('filter-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        loadTrades();
+        loadStatistics();
+    });
+});
+
+function loadTrades() {
+    const symbol = document.getElementById('filter-symbol').value;
+    const days = document.getElementById('filter-days').value;
+    const limit = document.getElementById('filter-limit').value;
+
+    let url = '/api/trades?days=' + days + '&limit=' + limit;
+    if (symbol) url += '&symbol=' + symbol;
+
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById('trades-table');
+            tbody.replaceChildren();
+
+            if (data.success && data.data.length > 0) {
+                // 客户端筛选
+                let trades = data.data;
+                const sideFilter = document.getElementById('filter-side').value;
+                const pnlFilter = document.getElementById('filter-pnl').value;
+
+                if (sideFilter) {
+                    trades = trades.filter(t => t.side === sideFilter);
+                }
+                if (pnlFilter === 'win') {
+                    trades = trades.filter(t => t.realized_pnl > 0);
+                } else if (pnlFilter === 'loss') {
+                    trades = trades.filter(t => t.realized_pnl <= 0);
+                }
+
+                if (trades.length === 0) {
+                    tbody.appendChild(createEmptyRow('没有符合条件的交易记录', 12));
+                } else {
+                    trades.forEach(t => {
+                        tbody.appendChild(createTradeTableRow(t));
+                    });
+                }
+            } else {
+                tbody.appendChild(createEmptyRow('暂无交易记录', 12));
+            }
+        })
+        .catch(err => console.error('加载交易记录失败:', err));
+}
+
+function loadStatistics() {
+    const symbol = document.getElementById('filter-symbol').value;
+    const days = document.getElementById('filter-days').value;
+
+    let url = '/api/trades/statistics?days=' + days;
+    if (symbol) url += '&symbol=' + symbol;
+
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                const d = data.data;
+                document.getElementById('stat-total').textContent = d.total_trades;
+                document.getElementById('stat-winrate').textContent = formatPercent(d.win_rate * 100);
+                document.getElementById('stat-pnl').textContent = '$' + formatNumber(d.total_pnl);
+                document.getElementById('stat-pnl').className = d.total_pnl >= 0 ? 'mb-0 text-success' : 'mb-0 text-danger';
+                document.getElementById('stat-avg-win').textContent = '$' + formatNumber(d.avg_win);
+                document.getElementById('stat-avg-loss').textContent = '$' + formatNumber(d.avg_loss);
+                document.getElementById('stat-pf').textContent = d.profit_factor.toFixed(2);
+            }
+        })
+        .catch(err => console.error('加载统计失败:', err));
+}
+
+function createEmptyRow(message, colspan) {
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.setAttribute('colspan', colspan);
+    td.className = 'text-center text-muted py-4';
+    td.textContent = message;
+    tr.appendChild(td);
+    return tr;
+}
+
+function createTradeTableRow(t) {
+    const tr = document.createElement('tr');
+
+    // 交易ID
+    const tdId = document.createElement('td');
+    const code = document.createElement('code');
+    code.textContent = t.trade_id.substring(0, 8);
+    tdId.appendChild(code);
+
+    // 交易对
+    const tdSymbol = document.createElement('td');
+    tdSymbol.textContent = t.symbol;
+
+    // 方向
+    const tdSide = document.createElement('td');
+    const badge = document.createElement('span');
+    badge.className = 'badge ' + (t.side === 'long' ? 'bg-success' : 'bg-danger');
+    badge.textContent = t.side === 'long' ? '多' : '空';
+    tdSide.appendChild(badge);
+
+    // 数量
+    const tdQty = document.createElement('td');
+    tdQty.textContent = t.quantity.toFixed(4);
+
+    // 开仓价
+    const tdEntry = document.createElement('td');
+    tdEntry.textContent = '$' + formatPrice(t.entry_price);
+
+    // 平仓价
+    const tdExit = document.createElement('td');
+    tdExit.textContent = '$' + formatPrice(t.exit_price);
+
+    // 保证金
+    const tdMargin = document.createElement('td');
+    tdMargin.textContent = '$' + formatNumber(t.margin);
+
+    // 盈亏
+    const tdPnl = document.createElement('td');
+    tdPnl.className = t.realized_pnl >= 0 ? 'text-success fw-bold' : 'text-danger fw-bold';
+    tdPnl.textContent = (t.realized_pnl >= 0 ? '+' : '') + '$' + formatNumber(t.realized_pnl);
+
+    // ROI
+    const tdRoi = document.createElement('td');
+    tdRoi.className = t.roi >= 0 ? 'text-success' : 'text-danger';
+    tdRoi.textContent = (t.roi >= 0 ? '+' : '') + formatPercent(t.roi);
+
+    // 平仓原因
+    const tdReason = document.createElement('td');
+    const reasonBadge = document.createElement('span');
+    reasonBadge.className = 'badge bg-secondary';
+    reasonBadge.textContent = getExitReasonText(t.exit_reason);
+    tdReason.appendChild(reasonBadge);
+
+    // 开仓时间
+    const tdEntryTime = document.createElement('td');
+    const entrySmall = document.createElement('small');
+    entrySmall.textContent = formatDateTime(t.entry_time);
+    tdEntryTime.appendChild(entrySmall);
+
+    // 平仓时间
+    const tdExitTime = document.createElement('td');
+    const exitSmall = document.createElement('small');
+    exitSmall.textContent = formatDateTime(t.exit_time);
+    tdExitTime.appendChild(exitSmall);
+
+    tr.appendChild(tdId);
+    tr.appendChild(tdSymbol);
+    tr.appendChild(tdSide);
+    tr.appendChild(tdQty);
+    tr.appendChild(tdEntry);
+    tr.appendChild(tdExit);
+    tr.appendChild(tdMargin);
+    tr.appendChild(tdPnl);
+    tr.appendChild(tdRoi);
+    tr.appendChild(tdReason);
+    tr.appendChild(tdEntryTime);
+    tr.appendChild(tdExitTime);
+
+    return tr;
+}
+
+function getExitReasonText(reason) {
+    const map = {
+        'take_profit': '止盈',
+        'stop_loss': '止损',
+        'trailing_stop': '移动止损',
+        'time_exit': '时间止损',
+        'signal_exit': '信号平仓',
+        'liquidation': '强平',
+        'manual': '手动'
+    };
+    return map[reason] || reason;
+}
+</script>
+{% endblock %}

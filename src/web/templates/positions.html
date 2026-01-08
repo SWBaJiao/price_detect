@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+
+{% block title %}持仓管理 - ML量化交易系统{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+        <h4><i class="bi bi-wallet2"></i> 持仓管理</h4>
+        <button class="btn btn-outline-primary btn-sm" onclick="loadPositions()">
+            <i class="bi bi-arrow-clockwise"></i> 刷新
+        </button>
+    </div>
+</div>
+
+<!-- 账户摘要 -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="text-muted">账户权益</h6>
+                <h4 id="equity" class="text-primary">$0.00</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="text-muted">可用保证金</h6>
+                <h4 id="available-margin" class="text-success">$0.00</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="text-muted">占用保证金</h6>
+                <h4 id="used-margin" class="text-warning">$0.00</h4>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h6 class="text-muted">未实现盈亏</h6>
+                <h4 id="unrealized-pnl">$0.00</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 当前持仓 -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-box"></i> 当前持仓 <span class="badge bg-primary" id="position-count">0</span>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>交易对</th>
+                            <th>方向</th>
+                            <th>数量</th>
+                            <th>开仓价</th>
+                            <th>当前价</th>
+                            <th>保证金</th>
+                            <th>未实现盈亏</th>
+                            <th>ROI</th>
+                            <th>止盈价</th>
+                            <th>止损价</th>
+                            <th>持仓时长</th>
+                            <th>信号</th>
+                        </tr>
+                    </thead>
+                    <tbody id="positions-table">
+                        <tr>
+                            <td colspan="12" class="text-center text-muted py-4">暂无持仓</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 持仓详情模态框 -->
+<div class="modal fade" id="positionModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">持仓详情</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="position-detail">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let positionsData = [];
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadPositions();
+    loadAccountData();
+    // 每5秒刷新
+    setInterval(loadPositions, 5000);
+    setInterval(loadAccountData, 5000);
+});
+
+function loadAccountData() {
+    fetch('/api/account')
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                const d = data.data;
+                document.getElementById('equity').textContent = '$' + formatNumber(d.equity);
+                document.getElementById('available-margin').textContent = '$' + formatNumber(d.margin_available);
+                document.getElementById('used-margin').textContent = '$' + formatNumber(d.margin_used);
+            }
+        })
+        .catch(err => console.error('加载账户数据失败:', err));
+}
+
+function loadPositions() {
+    fetch('/api/positions')
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById('positions-table');
+            tbody.replaceChildren();
+
+            if (data.success && data.data.length > 0) {
+                positionsData = data.data;
+                document.getElementById('position-count').textContent = data.data.length;
+
+                let totalUnrealizedPnl = 0;
+                data.data.forEach(p => {
+                    totalUnrealizedPnl += p.unrealized_pnl || 0;
+                    tbody.appendChild(createPositionRow(p));
+                });
+
+                const pnlElement = document.getElementById('unrealized-pnl');
+                pnlElement.textContent = '$' + formatNumber(totalUnrealizedPnl);
+                pnlElement.className = totalUnrealizedPnl >= 0 ? 'text-success' : 'text-danger';
+            } else {
+                document.getElementById('position-count').textContent = '0';
+                document.getElementById('unrealized-pnl').textContent = '$0.00';
+                tbody.appendChild(createEmptyRow('暂无持仓', 12));
+            }
+        })
+        .catch(err => console.error('加载持仓失败:', err));
+}
+
+function createEmptyRow(message, colspan) {
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.setAttribute('colspan', colspan);
+    td.className = 'text-center text-muted py-4';
+    td.textContent = message;
+    tr.appendChild(td);
+    return tr;
+}
+
+function createPositionRow(p) {
+    const tr = document.createElement('tr');
+
+    // 交易对
+    const tdSymbol = document.createElement('td');
+    const symbolStrong = document.createElement('strong');
+    symbolStrong.textContent = p.symbol;
+    tdSymbol.appendChild(symbolStrong);
+
+    // 方向
+    const tdSide = document.createElement('td');
+    const badge = document.createElement('span');
+    badge.className = 'badge ' + (p.side === 'long' ? 'bg-success' : 'bg-danger');
+    badge.textContent = p.side === 'long' ? '做多' : '做空';
+    tdSide.appendChild(badge);
+
+    // 数量
+    const tdQty = document.createElement('td');
+    tdQty.textContent = p.quantity.toFixed(4);
+
+    // 开仓价
+    const tdEntry = document.createElement('td');
+    tdEntry.textContent = '$' + formatPrice(p.entry_price);
+
+    // 当前价
+    const tdCurrent = document.createElement('td');
+    tdCurrent.textContent = '$' + formatPrice(p.current_price);
+
+    // 保证金
+    const tdMargin = document.createElement('td');
+    tdMargin.textContent = '$' + formatNumber(p.margin);
+
+    // 未实现盈亏
+    const tdPnl = document.createElement('td');
+    tdPnl.className = (p.unrealized_pnl || 0) >= 0 ? 'text-success fw-bold' : 'text-danger fw-bold';
+    tdPnl.textContent = ((p.unrealized_pnl || 0) >= 0 ? '+' : '') + '$' + formatNumber(p.unrealized_pnl || 0);
+
+    // ROI
+    const tdRoi = document.createElement('td');
+    const roi = (p.unrealized_pnl_pct || 0) * (p.leverage || 15);
+    tdRoi.className = roi >= 0 ? 'text-success' : 'text-danger';
+    tdRoi.textContent = (roi >= 0 ? '+' : '') + formatPercent(roi);
+
+    // 止盈价
+    const tdTp = document.createElement('td');
+    tdTp.textContent = p.take_profit_price ? '$' + formatPrice(p.take_profit_price) : '-';
+    tdTp.className = 'text-success';
+
+    // 止损价
+    const tdSl = document.createElement('td');
+    tdSl.textContent = p.stop_loss_price ? '$' + formatPrice(p.stop_loss_price) : '-';
+    tdSl.className = 'text-danger';
+
+    // 持仓时长
+    const tdDuration = document.createElement('td');
+    const duration = calculateDuration(p.entry_time);
+    tdDuration.textContent = duration;
+
+    // 信号
+    const tdSignal = document.createElement('td');
+    if (p.signal_confidence) {
+        const confBadge = document.createElement('span');
+        confBadge.className = 'badge bg-info';
+        confBadge.textContent = (p.signal_confidence * 100).toFixed(0) + '%';
+        tdSignal.appendChild(confBadge);
+    } else {
+        tdSignal.textContent = '-';
+    }
+
+    tr.appendChild(tdSymbol);
+    tr.appendChild(tdSide);
+    tr.appendChild(tdQty);
+    tr.appendChild(tdEntry);
+    tr.appendChild(tdCurrent);
+    tr.appendChild(tdMargin);
+    tr.appendChild(tdPnl);
+    tr.appendChild(tdRoi);
+    tr.appendChild(tdTp);
+    tr.appendChild(tdSl);
+    tr.appendChild(tdDuration);
+    tr.appendChild(tdSignal);
+
+    return tr;
+}
+
+function calculateDuration(entryTime) {
+    const entry = new Date(entryTime);
+    const now = new Date();
+    const diffMs = now - entry;
+    const diffSec = Math.floor(diffMs / 1000);
+
+    if (diffSec < 60) {
+        return diffSec + '秒';
+    } else if (diffSec < 3600) {
+        return Math.floor(diffSec / 60) + '分钟';
+    } else {
+        return Math.floor(diffSec / 3600) + '小时' + Math.floor((diffSec % 3600) / 60) + '分';
+    }
+}
+</script>
+{% endblock %}

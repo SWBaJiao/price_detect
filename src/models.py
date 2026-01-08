@@ -140,7 +140,7 @@ class AlertEvent:
         base_symbol = self.symbol.replace("USDT", "")
         lines.extend([
             "",
-            f"💬 回复 `/info {base_symbol}` 查看K线详情"
+            f"💬 回复 `/info {base_symbol} 5` 查看5分钟K线详情"
         ])
 
         return "\n".join(lines)
@@ -185,7 +185,7 @@ class AlertEvent:
         lines.extend([
             "",
             "═" * 30,
-            f"💬 回复 `/info {base_symbol}` 查看详情"
+            f"💬 回复 `/info {base_symbol} 5` 查看5分钟K线详情"
         ])
 
         return "\n".join(lines)
@@ -240,7 +240,7 @@ class AlertEvent:
         base_symbol = self.symbol.replace("USDT", "")
         lines.extend([
             "",
-            f"💬 回复 `/info {base_symbol}` 查看K线详情"
+            f"💬 回复 `/info {base_symbol} 5` 查看5分钟K线详情"
         ])
 
         return "\n".join(lines)
@@ -289,7 +289,7 @@ class AlertEvent:
         lines.extend([
             "",
             "=" * 28,
-            f"💬 回复 `/info {base_symbol}` 查看详情"
+            f"💬 回复 `/info {base_symbol} 5` 查看5分钟K线详情"
         ])
 
         return "\n".join(lines)

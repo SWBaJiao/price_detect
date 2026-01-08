@@ -33,6 +33,9 @@ from src.ml.trading import (
     AccountConfig, StrategyConfig, StopLossConfig
 )
 
+# Web仪表板模块
+from src.web import create_app, run_web_server
+
 
 class MonitorApp:
     """
@@ -110,6 +113,9 @@ class MonitorApp:
         if self.trading_enabled:
             self._init_trading_modules()
 
+        # 初始化Web服务器
+        self._init_web_server()
+
         # 最新特征缓存（用于交易引擎）
         self._last_features: dict = {}
 
@@ -171,13 +177,19 @@ class MonitorApp:
 
         # 初始化特征工程引擎
         ind_cfg = ml_cfg.indicators
+        indicator_config = {
+            'ma_periods': ind_cfg.ma_periods,
+            'rsi_period': ind_cfg.rsi_period,
+            'macd_fast': ind_cfg.macd_fast,
+            'macd_slow': ind_cfg.macd_slow,
+            'macd_signal': ind_cfg.macd_signal,
+            'bb_period': ind_cfg.bb_period,
+            'bb_std': ind_cfg.bb_std
+        }
         self.ml_feature_engine = FeatureEngine(
             tracker=self.tracker,
             orderbook_monitor=self.orderbook_monitor,
-            ma_periods=ind_cfg.ma_periods,
-            rsi_period=ind_cfg.rsi_period,
-            macd_params=(ind_cfg.macd_fast, ind_cfg.macd_slow, ind_cfg.macd_signal),
-            bb_params=(ind_cfg.bb_period, ind_cfg.bb_std)
+            indicator_config=indicator_config
         )
         logger.info("特征工程引擎初始化完成")
 
@@ -268,6 +280,33 @@ class MonitorApp:
             f"杠杆={account_cfg.leverage}x, "
             f"模式={trading_cfg.mode}"
         )
+
+    def _init_web_server(self):
+        """初始化Web仪表板服务器"""
+        # 获取虚拟账户引用（如果交易模块启用）
+        virtual_account = None
+        if self.trading_enabled and self.trading_engine:
+            virtual_account = self.trading_engine.account
+
+        # 创建Flask应用
+        self.web_app = create_app(
+            trading_store=self.trading_store,
+            ml_data_store=self.ml_data_store,
+            virtual_account=virtual_account,
+            realtime_engine=self.trading_engine
+        )
+
+        logger.info("Web仪表板初始化完成")
+
+    def _start_web_server(self):
+        """启动Web服务器（独立线程）"""
+        self._web_thread = run_web_server(
+            app=self.web_app,
+            host='0.0.0.0',
+            port=5000,
+            debug=False
+        )
+        logger.info("Web仪表板已启动: http://localhost:5000")
 
     async def _handle_orderbook(self, snapshot: OrderBookSnapshot):
         """处理订单簿数据"""
@@ -461,6 +500,9 @@ class MonitorApp:
                 logger.warning("模拟交易依赖ML特征，请同时启用 ml.enabled")
             self.trading_engine.start()
             logger.info("模拟交易引擎已启动")
+
+        # 启动Web仪表板服务器
+        self._start_web_server()
 
         # 启动订单簿监控（如果启用）
         orderbook_cfg = self.settings.alerts.orderbook

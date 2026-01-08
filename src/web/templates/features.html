@@ -1,0 +1,404 @@
+{% extends "base.html" %}
+
+{% block title %}特征统计 - ML量化交易系统{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4><i class="bi bi-bar-chart"></i> ML特征统计</h4>
+    </div>
+</div>
+
+<!-- 时间范围选择 -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="btn-group" role="group">
+            <button type="button" class="btn btn-outline-primary active" data-days="1">今天</button>
+            <button type="button" class="btn btn-outline-primary" data-days="7">7天</button>
+            <button type="button" class="btn btn-outline-primary" data-days="30">30天</button>
+        </div>
+    </div>
+</div>
+
+<!-- 特征统计卡片 -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h6>特征样本数</h6>
+                <h3 id="feature-count">0</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h6>已生成标签</h6>
+                <h3 id="label-count">0</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <h6>告警次数</h6>
+                <h3 id="alert-count">0</h3>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <h6>过滤告警</h6>
+                <h3 id="filtered-count">0</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 标签分布 -->
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-pie-chart"></i> 标签方向分布 (5分钟)
+            </div>
+            <div class="card-body">
+                <canvas id="label-direction-chart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-graph-up"></i> 标签收益分布
+            </div>
+            <div class="card-body">
+                <canvas id="label-return-chart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 特征详情 -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-table"></i> 特征统计详情
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-sm">
+                    <thead class="table-light">
+                        <tr>
+                            <th>特征名</th>
+                            <th>最小值</th>
+                            <th>最大值</th>
+                            <th>平均值</th>
+                            <th>标准差</th>
+                        </tr>
+                    </thead>
+                    <tbody id="feature-stats-table">
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">加载中...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 最近告警 -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-bell"></i> 最近告警
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover table-sm mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>时间</th>
+                            <th>交易对</th>
+                            <th>类型</th>
+                            <th>变化%</th>
+                            <th>是否过滤</th>
+                            <th>过滤原因</th>
+                        </tr>
+                    </thead>
+                    <tbody id="alerts-table">
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">加载中...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let currentDays = 1;
+let labelDirectionChart = null;
+let labelReturnChart = null;
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadAllData();
+
+    // 时间范围按钮
+    document.querySelectorAll('[data-days]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('[data-days]').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            currentDays = parseInt(this.dataset.days);
+            loadAllData();
+        });
+    });
+});
+
+function loadAllData() {
+    loadFeatureStats();
+    loadLabelStats();
+    loadAlerts();
+}
+
+function loadFeatureStats() {
+    fetch('/api/features/statistics?days=' + currentDays)
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                const d = data.data;
+                document.getElementById('feature-count').textContent = formatNumber(d.total_count || 0);
+
+                // 更新特征统计表
+                const tbody = document.getElementById('feature-stats-table');
+                tbody.replaceChildren();
+
+                if (d.features && d.features.length > 0) {
+                    d.features.forEach(f => {
+                        tbody.appendChild(createFeatureStatRow(f));
+                    });
+                } else {
+                    tbody.appendChild(createEmptyRow('暂无特征数据', 5));
+                }
+            }
+        })
+        .catch(err => {
+            console.error('加载特征统计失败:', err);
+            document.getElementById('feature-count').textContent = '0';
+        });
+}
+
+function loadLabelStats() {
+    fetch('/api/labels/statistics?days=' + currentDays)
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                const d = data.data;
+                document.getElementById('label-count').textContent = formatNumber(d.total_count || 0);
+
+                // 更新方向分布图
+                updateLabelDirectionChart(d.direction_distribution || {up: 0, flat: 0, down: 0});
+
+                // 更新收益分布图
+                updateLabelReturnChart(d.return_distribution || []);
+            }
+        })
+        .catch(err => {
+            console.error('加载标签统计失败:', err);
+            document.getElementById('label-count').textContent = '0';
+        });
+}
+
+function loadAlerts() {
+    fetch('/api/alerts?days=' + currentDays + '&limit=50')
+        .then(res => res.json())
+        .then(data => {
+            const tbody = document.getElementById('alerts-table');
+            tbody.replaceChildren();
+
+            if (data.success && data.data.length > 0) {
+                document.getElementById('alert-count').textContent = data.count;
+
+                // 统计过滤数量
+                const filteredCount = data.data.filter(a => a.was_filtered).length;
+                document.getElementById('filtered-count').textContent = filteredCount;
+
+                data.data.forEach(a => {
+                    tbody.appendChild(createAlertRow(a));
+                });
+            } else {
+                document.getElementById('alert-count').textContent = '0';
+                document.getElementById('filtered-count').textContent = '0';
+                tbody.appendChild(createEmptyRow('暂无告警记录', 6));
+            }
+        })
+        .catch(err => {
+            console.error('加载告警失败:', err);
+            document.getElementById('alert-count').textContent = '0';
+        });
+}
+
+function createEmptyRow(message, colspan) {
+    const tr = document.createElement('tr');
+    const td = document.createElement('td');
+    td.setAttribute('colspan', colspan);
+    td.className = 'text-center text-muted';
+    td.textContent = message;
+    tr.appendChild(td);
+    return tr;
+}
+
+function createFeatureStatRow(f) {
+    const tr = document.createElement('tr');
+
+    const tdName = document.createElement('td');
+    tdName.textContent = f.name;
+
+    const tdMin = document.createElement('td');
+    tdMin.textContent = f.min !== undefined ? f.min.toFixed(4) : '-';
+
+    const tdMax = document.createElement('td');
+    tdMax.textContent = f.max !== undefined ? f.max.toFixed(4) : '-';
+
+    const tdMean = document.createElement('td');
+    tdMean.textContent = f.mean !== undefined ? f.mean.toFixed(4) : '-';
+
+    const tdStd = document.createElement('td');
+    tdStd.textContent = f.std !== undefined ? f.std.toFixed(4) : '-';
+
+    tr.appendChild(tdName);
+    tr.appendChild(tdMin);
+    tr.appendChild(tdMax);
+    tr.appendChild(tdMean);
+    tr.appendChild(tdStd);
+
+    return tr;
+}
+
+function createAlertRow(a) {
+    const tr = document.createElement('tr');
+
+    const tdTime = document.createElement('td');
+    const small = document.createElement('small');
+    small.textContent = formatDateTime(a.timestamp);
+    tdTime.appendChild(small);
+
+    const tdSymbol = document.createElement('td');
+    tdSymbol.textContent = a.symbol;
+
+    const tdType = document.createElement('td');
+    const badge = document.createElement('span');
+    badge.className = 'badge bg-secondary';
+    badge.textContent = getAlertTypeText(a.alert_type);
+    tdType.appendChild(badge);
+
+    const tdChange = document.createElement('td');
+    tdChange.className = a.change_percent >= 0 ? 'text-success' : 'text-danger';
+    tdChange.textContent = formatPercent(a.change_percent);
+
+    const tdFiltered = document.createElement('td');
+    const filteredBadge = document.createElement('span');
+    filteredBadge.className = 'badge ' + (a.was_filtered ? 'bg-warning' : 'bg-success');
+    filteredBadge.textContent = a.was_filtered ? '已过滤' : '已推送';
+    tdFiltered.appendChild(filteredBadge);
+
+    const tdReason = document.createElement('td');
+    tdReason.textContent = a.filter_reason || '-';
+
+    tr.appendChild(tdTime);
+    tr.appendChild(tdSymbol);
+    tr.appendChild(tdType);
+    tr.appendChild(tdChange);
+    tr.appendChild(tdFiltered);
+    tr.appendChild(tdReason);
+
+    return tr;
+}
+
+function getAlertTypeText(type) {
+    const map = {
+        'price_change': '价格异动',
+        'volume_spike': '成交量突增',
+        'oi_change': '持仓量变化',
+        'spot_futures_spread': '价差异动',
+        'price_reversal': '价格反转'
+    };
+    return map[type] || type;
+}
+
+function updateLabelDirectionChart(distribution) {
+    if (labelDirectionChart) {
+        labelDirectionChart.destroy();
+    }
+
+    const ctx = document.getElementById('label-direction-chart').getContext('2d');
+    labelDirectionChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['上涨', '横盘', '下跌'],
+            datasets: [{
+                data: [distribution.up || 0, distribution.flat || 0, distribution.down || 0],
+                backgroundColor: ['rgb(75, 192, 192)', 'rgb(201, 203, 207)', 'rgb(255, 99, 132)']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+}
+
+function updateLabelReturnChart(distribution) {
+    if (labelReturnChart) {
+        labelReturnChart.destroy();
+    }
+
+    // 创建收益分布的直方图
+    const bins = ['-5%以下', '-5%~-2%', '-2%~0%', '0%~2%', '2%~5%', '5%以上'];
+    const defaultData = [0, 0, 0, 0, 0, 0];
+    const data = distribution.length > 0 ? distribution : defaultData;
+
+    const ctx = document.getElementById('label-return-chart').getContext('2d');
+    labelReturnChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: bins,
+            datasets: [{
+                label: '样本数',
+                data: data,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(255, 159, 64, 0.7)',
+                    'rgba(255, 205, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)',
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(153, 102, 255, 0.7)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+}
+</script>
+{% endblock %}

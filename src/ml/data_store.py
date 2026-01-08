@@ -520,6 +520,170 @@ class MLDataStore:
 
     # ==================== 统计信息 ====================
 
+    def get_feature_statistics(self, start_time: datetime = None) -> Dict:
+        """
+        获取特征统计信息
+
+        Args:
+            start_time: 开始时间
+
+        Returns:
+            统计字典
+        """
+        with self._connect() as conn:
+            # 构建时间条件
+            time_condition = ""
+            params = []
+            if start_time:
+                time_condition = "WHERE timestamp >= ?"
+                params.append(start_time.isoformat())
+
+            # 总数
+            row = conn.execute(
+                f"SELECT COUNT(*) as cnt FROM features {time_condition}",
+                params
+            ).fetchone()
+            total_count = row['cnt']
+
+            # 各特征的统计（从最近100条数据计算）
+            features_stats = []
+            if total_count > 0:
+                # 获取最近的特征样本
+                rows = conn.execute(f"""
+                    SELECT feature_json FROM features
+                    {time_condition}
+                    ORDER BY timestamp DESC
+                    LIMIT 100
+                """, params).fetchall()
+
+                if rows:
+                    # 解析特征并计算统计
+                    feature_values = {}
+                    for row in rows:
+                        feature_data = json.loads(row['feature_json'])
+                        for key, value in feature_data.items():
+                            if isinstance(value, (int, float)) and key not in ['timestamp', 'symbol']:
+                                if key not in feature_values:
+                                    feature_values[key] = []
+                                feature_values[key].append(value)
+
+                    # 计算每个特征的统计
+                    for name, values in feature_values.items():
+                        if values:
+                            import statistics
+                            features_stats.append({
+                                'name': name,
+                                'min': min(values),
+                                'max': max(values),
+                                'mean': statistics.mean(values),
+                                'std': statistics.stdev(values) if len(values) > 1 else 0
+                            })
+
+            return {
+                'total_count': total_count,
+                'features': features_stats[:20]  # 限制返回前20个特征
+            }
+
+    def get_label_statistics(self, start_time: datetime = None) -> Dict:
+        """
+        获取标签统计信息
+
+        Args:
+            start_time: 开始时间
+
+        Returns:
+            统计字典
+        """
+        with self._connect() as conn:
+            time_condition = ""
+            params = []
+            if start_time:
+                time_condition = "WHERE feature_timestamp >= ?"
+                params.append(start_time.isoformat())
+
+            # 总数
+            row = conn.execute(
+                f"SELECT COUNT(*) as cnt FROM labels {time_condition}",
+                params
+            ).fetchone()
+            total_count = row['cnt']
+
+            # 方向分布
+            direction_dist = {'up': 0, 'flat': 0, 'down': 0}
+            if total_count > 0:
+                rows = conn.execute(f"""
+                    SELECT direction_5m, COUNT(*) as cnt
+                    FROM labels
+                    {time_condition}
+                    GROUP BY direction_5m
+                """, params).fetchall()
+
+                for row in rows:
+                    direction = row['direction_5m']
+                    if direction == 1:
+                        direction_dist['up'] = row['cnt']
+                    elif direction == 0:
+                        direction_dist['flat'] = row['cnt']
+                    elif direction == -1:
+                        direction_dist['down'] = row['cnt']
+
+            # 收益分布（分成6个区间）
+            return_dist = [0, 0, 0, 0, 0, 0]  # <-5, -5~-2, -2~0, 0~2, 2~5, >5
+            if total_count > 0:
+                rows = conn.execute(f"""
+                    SELECT return_5m FROM labels
+                    {time_condition}
+                """, params).fetchall()
+
+                for row in rows:
+                    ret = row['return_5m'] or 0
+                    if ret < -5:
+                        return_dist[0] += 1
+                    elif ret < -2:
+                        return_dist[1] += 1
+                    elif ret < 0:
+                        return_dist[2] += 1
+                    elif ret < 2:
+                        return_dist[3] += 1
+                    elif ret < 5:
+                        return_dist[4] += 1
+                    else:
+                        return_dist[5] += 1
+
+            return {
+                'total_count': total_count,
+                'direction_distribution': direction_dist,
+                'return_distribution': return_dist
+            }
+
+    def get_alerts(
+        self,
+        start_time: datetime = None,
+        limit: int = 100
+    ) -> List[Dict]:
+        """
+        获取告警列表
+
+        Args:
+            start_time: 开始时间
+            limit: 最大数量
+
+        Returns:
+            告警列表
+        """
+        with self._connect() as conn:
+            query = "SELECT * FROM alerts"
+            params = []
+
+            if start_time:
+                query += " WHERE timestamp >= ?"
+                params.append(start_time.isoformat())
+
+            query += f" ORDER BY timestamp DESC LIMIT {limit}"
+
+            rows = conn.execute(query, params).fetchall()
+            return [dict(row) for row in rows]
+
     def get_stats(self) -> Dict:
         """获取数据库统计信息"""
         with self._connect() as conn:
@@ -597,3 +761,7 @@ class MLDataStore:
                 'labels_deleted': label_deleted,
                 'snapshots_deleted': snapshot_deleted
             }
+
+    def close(self):
+        """关闭数据存储（SQLite使用上下文管理器，无需显式关闭）"""
+        logger.debug(f"ML数据存储已关闭: {self.db_path}")

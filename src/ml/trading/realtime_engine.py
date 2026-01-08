@@ -243,7 +243,7 @@ class RealtimeSimEngine:
             timestamp=datetime.now(),
             balance=self.account.balance,
             equity=self.account.get_equity(),
-            margin_used=self.account.get_used_margin(),
+            margin_used=self.account.get_margin_used(),
             margin_available=self.account.get_available_margin(),
             margin_ratio=self.account.get_margin_ratio(),
             open_positions=len(self.account.positions),
