@@ -51,7 +51,7 @@ alerts:
 
   # 持仓量变化告警
   open_interest:
-    enabled: true
+    enabled: false
     poll_interval: 30         # 轮询间隔（秒）
     time_window: 300          # 检测窗口（秒）
 
@@ -126,7 +126,7 @@ logging:
 # ========================================
 ml:
   # 是否启用ML模块
-  enabled: true
+  enabled: false
 
   # SQLite数据库路径
   db_path: "data/ml_data.db"
@@ -262,7 +262,7 @@ trading:
   # 实时模拟配置
   realtime:
     # 是否启用实时模拟
-    enabled: true
+    enabled: false
     # 账户状态保存间隔（秒）
     save_interval: 60
     # 是否记录交易日志

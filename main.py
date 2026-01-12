@@ -134,7 +134,12 @@ class MonitorApp:
 
     def _on_alert(self, event: AlertEvent):
         """告警回调"""
-        asyncio.create_task(self.notifier.notify(event))
+        logger.info(f"[告警回调] 收到告警事件: {event.symbol} {event.alert_type.value}")
+        try:
+            task = asyncio.create_task(self.notifier.notify(event))
+            logger.info(f"[告警回调] 创建通知任务成功: {task}")
+        except Exception as e:
+            logger.error(f"[告警回调] 创建通知任务失败: {e}")
 
     def _on_orderbook_event(self, event: OrderBookEvent):
         """订单簿事件回调"""
@@ -303,10 +308,10 @@ class MonitorApp:
         self._web_thread = run_web_server(
             app=self.web_app,
             host='0.0.0.0',
-            port=5000,
+            port=15000,
             debug=False
         )
-        logger.info("Web仪表板已启动: http://localhost:5000")
+        logger.info("Web仪表板已启动: http://localhost:15000")
 
     async def _handle_orderbook(self, snapshot: OrderBookSnapshot):
         """处理订单簿数据"""

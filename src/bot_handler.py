@@ -4,6 +4,7 @@ Telegram Bot 命令处理器
 """
 import asyncio
 import io
+import os
 import re
 from datetime import datetime
 from typing import Optional, Tuple
@@ -38,6 +39,15 @@ class BotCommandHandler:
         self._running = False
         self._last_update_id = 0
         self._bot_username: Optional[str] = None
+
+        # 代理配置
+        self._proxy = os.getenv("PROXY_URL", "")
+
+    def _get_http_proxy(self) -> Optional[str]:
+        """获取 HTTP 代理地址"""
+        if self._proxy and self._proxy.startswith(("http://", "https://")):
+            return self._proxy
+        return None
 
     async def _get_session(self) -> aiohttp.ClientSession:
         if self._session is None or self._session.closed:
@@ -74,7 +84,8 @@ class BotCommandHandler:
         url = f"{self.API_BASE}{self.token}/getMe"
         try:
             session = await self._get_session()
-            async with session.get(url) as resp:
+            proxy = self._get_http_proxy()
+            async with session.get(url, proxy=proxy) as resp:
                 if resp.status == 200:
                     data = await resp.json()
                     self._bot_username = data.get("result", {}).get("username")
@@ -92,7 +103,8 @@ class BotCommandHandler:
 
         try:
             session = await self._get_session()
-            async with session.get(url, params=params, timeout=aiohttp.ClientTimeout(total=35)) as resp:
+            proxy = self._get_http_proxy()
+            async with session.get(url, params=params, proxy=proxy, timeout=aiohttp.ClientTimeout(total=35)) as resp:
                 if resp.status == 200:
                     data = await resp.json()
                     updates = data.get("result", [])
@@ -436,7 +448,8 @@ class BotCommandHandler:
 
         try:
             session = await self._get_session()
-            async with session.post(url, json=payload) as resp:
+            proxy = self._get_http_proxy()
+            async with session.post(url, json=payload, proxy=proxy) as resp:
                 if resp.status != 200:
                     error = await resp.text()
                     logger.error(f"发送回复失败: {error}")
@@ -461,7 +474,8 @@ class BotCommandHandler:
 
         try:
             session = await self._get_session()
-            async with session.post(url, data=data) as resp:
+            proxy = self._get_http_proxy()
+            async with session.post(url, data=data, proxy=proxy) as resp:
                 if resp.status != 200:
                     error = await resp.text()
                     logger.error(f"发送图片失败: {error}")

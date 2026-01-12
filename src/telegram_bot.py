@@ -3,6 +3,7 @@ Telegram 推送模块
 异步发送告警消息到指定频道/群组
 """
 import asyncio
+import os
 from typing import Optional
 
 import aiohttp
@@ -20,19 +21,38 @@ class TelegramBot:
 
     API_BASE = "https://api.telegram.org/bot"
 
-    def __init__(self, token: str, chat_id: str):
+    def __init__(self, token: str, chat_id: str, proxy: Optional[str] = None):
         """
         Args:
             token: Bot API Token
             chat_id: 目标频道/群组/用户 ID
+            proxy: 代理地址，如果为 None 则从环境变量 PROXY_URL 读取
         """
         self.token = token
         self.chat_id = chat_id
         self._session: Optional[aiohttp.ClientSession] = None
         self._enabled = bool(token and chat_id)
 
+        # 代理配置
+        self._proxy = proxy or os.getenv("PROXY_URL", "")
+        if self._proxy:
+            logger.info(f"Telegram 使用代理: {self._mask_proxy(self._proxy)}")
+
         if not self._enabled:
             logger.warning("Telegram 未配置或配置不完整，消息推送已禁用")
+
+    def _mask_proxy(self, proxy: str) -> str:
+        """隐藏代理中的敏感信息"""
+        if "@" in proxy:
+            parts = proxy.split("@")
+            return f"***@{parts[-1]}"
+        return proxy
+
+    def _get_http_proxy(self) -> Optional[str]:
+        """获取 HTTP 代理地址"""
+        if self._proxy and self._proxy.startswith(("http://", "https://")):
+            return self._proxy
+        return None
 
     async def _get_session(self) -> aiohttp.ClientSession:
         """获取或创建 HTTP 会话"""
@@ -81,7 +101,8 @@ class TelegramBot:
 
         try:
             session = await self._get_session()
-            async with session.post(url, json=payload) as resp:
+            proxy = self._get_http_proxy()
+            async with session.post(url, json=payload, proxy=proxy) as resp:
                 if resp.status == 200:
                     logger.debug(f"Telegram 消息发送成功")
                     return True
@@ -144,7 +165,8 @@ class TelegramBot:
 
         try:
             session = await self._get_session()
-            async with session.get(url) as resp:
+            proxy = self._get_http_proxy()
+            async with session.get(url, proxy=proxy) as resp:
                 if resp.status == 200:
                     data = await resp.json()
                     bot_name = data.get("result", {}).get("username", "Unknown")
@@ -172,10 +194,14 @@ class AlertNotifier:
     async def start(self):
         """启动通知队列处理"""
         self._running = True
+        logger.info("AlertNotifier 正在启动...")
         asyncio.create_task(self._process_queue())
+        logger.info("AlertNotifier 队列处理任务已创建")
 
         if self.telegram and self.telegram.is_enabled:
-            await self.telegram.send_startup_message()
+            logger.info("准备发送启动通知...")
+            result = await self.telegram.send_startup_message()
+            logger.info(f"启动通知发送结果: {result}")
 
     async def stop(self):
         """停止通知"""
@@ -192,21 +218,30 @@ class AlertNotifier:
         Args:
             event: 告警事件
         """
+        logger.info(f"[通知队列] 收到告警: {event.symbol} {event.alert_type.value}")
         await self._queue.put(event)
+        logger.info(f"[通知队列] 告警已入队, 队列大小: {self._queue.qsize()}")
 
     async def _process_queue(self):
         """处理通知队列"""
+        logger.info("[队列处理] 队列处理协程已启动")
         while self._running:
             try:
                 event = await asyncio.wait_for(
                     self._queue.get(),
                     timeout=1.0
                 )
+                logger.info(f"[队列处理] 从队列取出告警: {event.symbol}")
 
                 if self.telegram and self.telegram.is_enabled:
-                    await self.telegram.send_alert(event)
+                    logger.info(f"[队列处理] 正在发送到Telegram: {event.symbol}")
+                    result = await self.telegram.send_alert(event)
+                    logger.info(f"[队列处理] Telegram发送结果: {result}")
+                else:
+                    logger.warning("[队列处理] Telegram未启用，跳过发送")
 
             except asyncio.TimeoutError:
                 continue
             except Exception as e:
                 logger.error(f"处理通知队列出错: {e}")
+        logger.info("[队列处理] 队列处理协程已停止")

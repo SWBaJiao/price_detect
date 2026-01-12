@@ -10,6 +10,10 @@ import matplotlib
 matplotlib.use('Agg')  # 无头模式，不需要显示器
 
 import matplotlib.pyplot as plt
+
+# 配置中文字体支持
+plt.rcParams['font.sans-serif'] = ['Noto Sans CJK SC', 'SimHei', 'DejaVu Sans']
+plt.rcParams['axes.unicode_minus'] = False  # 解决负号显示问题
 import matplotlib.dates as mdates
 from matplotlib.patches import Rectangle
 from matplotlib.ticker import FuncFormatter, MaxNLocator

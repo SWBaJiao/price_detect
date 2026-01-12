@@ -12,9 +12,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     TZ=Asia/Shanghai
 
-# 安装系统依赖
+# 安装系统依赖（包括中文字体）
 RUN apt-get update && apt-get install -y --no-install-recommends \
     tzdata \
+    fonts-noto-cjk \
     && rm -rf /var/lib/apt/lists/* \
     && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo $TZ > /etc/timezone
