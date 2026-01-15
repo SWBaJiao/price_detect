@@ -2,10 +2,10 @@
 # 合约价格异动监控系统配置
 # ========================================
 
-# 按 24h 成交额分层阈值配置
+# 按持仓价值（现价×持仓量）分层阈值配置
 # 从高到低排列，匹配第一个满足条件的层级
 volume_tiers:
-  # 超大盘：24h成交额 >= 10亿U
+  # 超大盘：持仓价值 >= 10亿U（如BTC、ETH）
   - min_quote_volume: 1000000000
     price_threshold: 1.5      # 价格变化 1.5% 触发
     volume_threshold: 3.0     # 成交量 3 倍于均值触发
@@ -13,7 +13,7 @@ volume_tiers:
     spread_threshold: 1.0    # 现货-合约价差 1% 触发
     label: "超大盘"
 
-  # 大盘：24h成交额 >= 1亿U
+  # 大盘：持仓价值 >= 1亿U
   - min_quote_volume: 100000000
     price_threshold: 2.5      # 价格变化 2.5% 触发
     volume_threshold: 4.0     # 成交量 4 倍于均值触发
@@ -21,7 +21,7 @@ volume_tiers:
     spread_threshold: 2.0    # 现货-合约价差 2% 触发
     label: "大盘"
 
-  # 中盘：24h成交额 >= 1000万U
+  # 中盘：持仓价值 >= 1000万U
   - min_quote_volume: 10000000
     price_threshold: 4.0      # 价格变化 4% 触发
     volume_threshold: 5.0     # 成交量 5 倍于均值触发
@@ -29,7 +29,7 @@ volume_tiers:
     spread_threshold: 5.0     # 现货-合约价差 5% 触发
     label: "中盘"
 
-  # 小盘：24h成交额 < 1000万U
+  # 小盘：持仓价值 < 1000万U
   - min_quote_volume: 0
     price_threshold: 6.0      # 价格变化 6% 触发
     volume_threshold: 6.0     # 成交量 6 倍于均值触发

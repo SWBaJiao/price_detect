@@ -378,6 +378,24 @@ class PriceTracker:
         tracker = self._trackers.get(symbol)
         return tracker.latest_quote_volume if tracker else 0.0
 
+    def get_oi_value(self, symbol: str) -> float:
+        """
+        获取持仓价值（现价 × 持仓量）
+        用于大盘/超大盘分层判断
+
+        Returns:
+            持仓价值(USDT)，如果没有数据返回0.0
+        """
+        tracker = self._trackers.get(symbol)
+        if not tracker:
+            return 0.0
+
+        # 持仓价值 = 现价 × 持仓量
+        if tracker.latest_price > 0 and tracker.latest_oi > 0:
+            return tracker.latest_price * tracker.latest_oi
+
+        return 0.0
+
     def get_all_symbols(self) -> List[str]:
         """获取所有追踪中的交易对"""
         return list(self._trackers.keys())

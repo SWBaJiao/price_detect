@@ -546,6 +546,75 @@ class BinanceClient:
 
         return None
 
+    async def get_money_flow(
+        self,
+        symbol: str,
+        minutes: int = 5
+    ) -> Optional[dict]:
+        """
+        获取资金流入/流出统计
+
+        通过最近N分钟的1分钟K线计算资金流向：
+        - 资金流入 = 主动买入成交额 (Taker buy quote volume)
+        - 资金流出 = 总成交额 - 主动买入成交额
+        - 净流入 = 资金流入 - 资金流出
+
+        Args:
+            symbol: 交易对
+            minutes: 统计时间窗口（分钟），默认5分钟
+
+        Returns:
+            {
+                "inflow": float,      # 资金流入(USDT)
+                "outflow": float,     # 资金流出(USDT)
+                "net_flow": float,    # 净流入(USDT)
+                "total_volume": float # 总成交额(USDT)
+            }
+        """
+        symbol = symbol.upper()
+        if not symbol.endswith("USDT"):
+            symbol = f"{symbol}USDT"
+
+        url = f"{self.REST_BASE_URL}/fapi/v1/klines"
+        params = {
+            "symbol": symbol,
+            "interval": "1m",
+            "limit": minutes + 1  # 多取一根确保覆盖
+        }
+
+        try:
+            resp = await self._request_with_retry("GET", url, params=params, max_retries=2)
+            if resp and resp.status == 200:
+                data = await resp.json()
+                await resp.release()
+
+                # 统计资金流向（排除最后一根未完成的K线）
+                total_volume = 0.0
+                taker_buy_volume = 0.0
+
+                for k in data[:-1]:  # 排除最后一根
+                    # k[7]: Quote asset volume (总成交额)
+                    # k[10]: Taker buy quote asset volume (主动买入成交额)
+                    total_volume += float(k[7])
+                    taker_buy_volume += float(k[10])
+
+                inflow = taker_buy_volume
+                outflow = total_volume - taker_buy_volume
+                net_flow = inflow - outflow
+
+                return {
+                    "inflow": inflow,
+                    "outflow": outflow,
+                    "net_flow": net_flow,
+                    "total_volume": total_volume
+                }
+            elif resp:
+                await resp.release()
+        except Exception as e:
+            logger.debug(f"获取 {symbol} 资金流失败: {e}")
+
+        return None
+
     # ==================== 现货 API ====================
 
     async def get_spot_ticker_24h(self, symbol: str) -> Optional[dict]:

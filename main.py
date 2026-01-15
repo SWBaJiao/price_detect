@@ -134,12 +134,31 @@ class MonitorApp:
 
     def _on_alert(self, event: AlertEvent):
         """告警回调"""
-        logger.info(f"[告警回调] 收到告警事件: {event.symbol} {event.alert_type.value}")
+        # 异步获取资金流数据并发送告警
+        asyncio.create_task(self._send_alert_with_money_flow(event))
+
+    async def _send_alert_with_money_flow(self, event: AlertEvent):
+        """获取资金流数据后发送告警"""
         try:
-            task = asyncio.create_task(self.notifier.notify(event))
-            logger.info(f"[告警回调] 创建通知任务成功: {task}")
+            # 获取最近5分钟的资金流数据
+            money_flow = await self.binance.get_money_flow(event.symbol, minutes=5)
+
+            if money_flow:
+                # 格式化资金流数据并添加到extra_info
+                net_flow = money_flow["net_flow"]
+                flow_emoji = "🟢" if net_flow > 0 else "🔴"
+                flow_direction = "流入" if net_flow > 0 else "流出"
+
+                # 添加资金流信息
+                event.extra_info["资金流向"] = f"{flow_emoji} 净{flow_direction} ${abs(net_flow):,.0f}"
+                event.extra_info["5分钟流入"] = f"${money_flow['inflow']:,.0f}"
+                event.extra_info["5分钟流出"] = f"${money_flow['outflow']:,.0f}"
+
         except Exception as e:
-            logger.error(f"[告警回调] 创建通知任务失败: {e}")
+            logger.debug(f"获取 {event.symbol} 资金流失败: {e}")
+
+        # 发送告警
+        await self.notifier.notify(event)
 
     def _on_orderbook_event(self, event: OrderBookEvent):
         """订单簿事件回调"""

@@ -54,18 +54,18 @@ class AlertEngine:
         self._risk_filter = risk_filter
         logger.info("风险过滤器已设置到AlertEngine")
 
-    def _get_tier(self, quote_volume: float) -> Optional[VolumeTierConfig]:
+    def _get_tier(self, oi_value: float) -> Optional[VolumeTierConfig]:
         """
-        根据 24h 成交额确定分层
+        根据持仓价值（现价×持仓量）确定分层
 
         Args:
-            quote_volume: 24h 成交额(USDT)
+            oi_value: 持仓价值(USDT) = 现价 × 持仓量
 
         Returns:
             匹配的分层配置
         """
         for tier in self._tiers:
-            if quote_volume >= tier.min_quote_volume:
+            if oi_value >= tier.min_quote_volume:
                 return tier
         return None
 
@@ -113,9 +113,9 @@ class AlertEngine:
 
         change_percent, window_low, window_high = change_data
 
-        # 获取分层阈值
-        quote_volume = self.tracker.get_quote_volume(symbol)
-        tier = self._get_tier(quote_volume)
+        # 获取分层阈值（基于持仓价值）
+        oi_value = self.tracker.get_oi_value(symbol)
+        tier = self._get_tier(oi_value)
         if tier is None:
             return None
 
@@ -140,7 +140,7 @@ class AlertEngine:
             extra_info={
                 "窗口最低": f"${window_low:.4f}",
                 "窗口最高": f"${window_high:.4f}",
-                "24h成交额": f"${quote_volume:,.0f}"
+                "持仓价值": f"${oi_value:,.0f}"
             }
         )
 
@@ -163,9 +163,9 @@ class AlertEngine:
         if volume_ratio is None:
             return None
 
-        # 获取分层阈值
-        quote_volume = self.tracker.get_quote_volume(symbol)
-        tier = self._get_tier(quote_volume)
+        # 获取分层阈值（基于持仓价值）
+        oi_value = self.tracker.get_oi_value(symbol)
+        tier = self._get_tier(oi_value)
         if tier is None:
             return None
 
@@ -188,7 +188,7 @@ class AlertEngine:
             time_window=self.settings.alerts.price_change.time_window,
             extra_info={
                 "成交量倍数": f"{volume_ratio:.1f}x",
-                "24h成交额": f"${quote_volume:,.0f}"
+                "持仓价值": f"${oi_value:,.0f}"
             }
         )
 
@@ -211,9 +211,9 @@ class AlertEngine:
         if oi_change is None:
             return None
 
-        # 获取分层阈值
-        quote_volume = self.tracker.get_quote_volume(symbol)
-        tier = self._get_tier(quote_volume)
+        # 获取分层阈值（基于持仓价值）
+        oi_value = self.tracker.get_oi_value(symbol)
+        tier = self._get_tier(oi_value)
         if tier is None:
             return None
 
@@ -236,7 +236,7 @@ class AlertEngine:
             time_window=self.settings.alerts.open_interest.time_window,
             extra_info={
                 "当前持仓量": f"{latest.open_interest:,.0f}" if latest.open_interest else "N/A",
-                "24h成交额": f"${quote_volume:,.0f}"
+                "持仓价值": f"${oi_value:,.0f}"
             }
         )
 
@@ -261,9 +261,9 @@ class AlertEngine:
 
         spread_percent, spot_price, futures_price = spread_data
 
-        # 获取分层阈值
-        quote_volume = self.tracker.get_quote_volume(symbol)
-        tier = self._get_tier(quote_volume)
+        # 获取分层阈值（基于持仓价值）
+        oi_value = self.tracker.get_oi_value(symbol)
+        tier = self._get_tier(oi_value)
         if tier is None:
             return None
 
@@ -284,7 +284,7 @@ class AlertEngine:
             extra_info={
                 "现货价格": f"${spot_price:.4f}",
                 "合约价格": f"${futures_price:.4f}",
-                "24h成交额": f"${quote_volume:,.0f}"
+                "持仓价值": f"${oi_value:,.0f}"
             }
         )
 
@@ -308,9 +308,9 @@ class AlertEngine:
         if reversal_data is None:
             return None
 
-        # 获取分层阈值
-        quote_volume = self.tracker.get_quote_volume(symbol)
-        tier = self._get_tier(quote_volume)
+        # 获取分层阈值（基于持仓价值）
+        oi_value = self.tracker.get_oi_value(symbol)
+        tier = self._get_tier(oi_value)
         if tier is None:
             return None
 
@@ -346,7 +346,7 @@ class AlertEngine:
                 "极值价": extreme_price,
                 "上涨幅度": rise_percent,
                 "下跌幅度": fall_percent,
-                "24h成交额": f"${quote_volume:,.0f}"
+                "持仓价值": f"${oi_value:,.0f}"
             }
         )
 
