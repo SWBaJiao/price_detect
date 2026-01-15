@@ -194,14 +194,11 @@ class AlertNotifier:
     async def start(self):
         """启动通知队列处理"""
         self._running = True
-        logger.info("AlertNotifier 正在启动...")
         asyncio.create_task(self._process_queue())
-        logger.info("AlertNotifier 队列处理任务已创建")
+        logger.info("AlertNotifier 已启动")
 
         if self.telegram and self.telegram.is_enabled:
-            logger.info("准备发送启动通知...")
-            result = await self.telegram.send_startup_message()
-            logger.info(f"启动通知发送结果: {result}")
+            await self.telegram.send_startup_message()
 
     async def stop(self):
         """停止通知"""
@@ -218,30 +215,21 @@ class AlertNotifier:
         Args:
             event: 告警事件
         """
-        logger.info(f"[通知队列] 收到告警: {event.symbol} {event.alert_type.value}")
         await self._queue.put(event)
-        logger.info(f"[通知队列] 告警已入队, 队列大小: {self._queue.qsize()}")
 
     async def _process_queue(self):
         """处理通知队列"""
-        logger.info("[队列处理] 队列处理协程已启动")
         while self._running:
             try:
                 event = await asyncio.wait_for(
                     self._queue.get(),
                     timeout=1.0
                 )
-                logger.info(f"[队列处理] 从队列取出告警: {event.symbol}")
 
                 if self.telegram and self.telegram.is_enabled:
-                    logger.info(f"[队列处理] 正在发送到Telegram: {event.symbol}")
-                    result = await self.telegram.send_alert(event)
-                    logger.info(f"[队列处理] Telegram发送结果: {result}")
-                else:
-                    logger.warning("[队列处理] Telegram未启用，跳过发送")
+                    await self.telegram.send_alert(event)
 
             except asyncio.TimeoutError:
                 continue
             except Exception as e:
                 logger.error(f"处理通知队列出错: {e}")
-        logger.info("[队列处理] 队列处理协程已停止")
