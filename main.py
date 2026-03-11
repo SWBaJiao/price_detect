@@ -5,7 +5,7 @@
 import asyncio
 import signal
 import sys
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import List, Optional
 
@@ -138,13 +138,19 @@ class MonitorApp:
         asyncio.create_task(self._send_alert_with_money_flow(event))
 
     async def _send_alert_with_money_flow(self, event: AlertEvent):
-        """获取资金流数据后发送告警"""
+        """获取资金流和资金费率数据后发送告警"""
         try:
-            # 获取最近5分钟的资金流数据
-            money_flow = await self.binance.get_money_flow(event.symbol, minutes=5)
+            # 并发获取资金流和资金费率
+            money_flow_task = self.binance.get_money_flow(event.symbol, minutes=5)
+            funding_rate_task = self.binance._get_funding_rate(event.symbol)
 
-            if money_flow:
-                # 格式化资金流数据并添加到extra_info
+            money_flow, funding_rate = await asyncio.gather(
+                money_flow_task, funding_rate_task,
+                return_exceptions=True
+            )
+
+            # 处理资金流数据
+            if money_flow and not isinstance(money_flow, Exception):
                 net_flow = money_flow["net_flow"]
                 flow_emoji = "🟢" if net_flow > 0 else "🔴"
                 flow_direction = "流入" if net_flow > 0 else "流出"
@@ -154,8 +160,39 @@ class MonitorApp:
                 event.extra_info["5分钟流入"] = f"${money_flow['inflow']:,.0f}"
                 event.extra_info["5分钟流出"] = f"${money_flow['outflow']:,.0f}"
 
+            # 处理资金费率数据
+            if funding_rate is not None and not isinstance(funding_rate, Exception):
+                # 资金费率转换为百分比显示（原始值如0.0001表示0.01%）
+                rate_value = funding_rate.get("funding_rate", 0)
+                next_funding_time = funding_rate.get("next_funding_time", 0)
+                rate_percent = rate_value * 100
+
+                # 判断费率情绪
+                if rate_percent > 0.05:
+                    rate_emoji = "🔥"  # 费率偏高，市场偏多
+                    rate_hint = "偏多"
+                elif rate_percent < -0.05:
+                    rate_emoji = "❄️"  # 费率偏低，市场偏空
+                    rate_hint = "偏空"
+                else:
+                    rate_emoji = "➖"  # 费率中性
+                    rate_hint = "中性"
+
+                # 计算距离下次结算的时间
+                if next_funding_time > 0:
+                    now_ts = datetime.now(tz=timezone.utc).timestamp() * 1000
+                    remaining_ms = next_funding_time - now_ts
+                    if remaining_ms > 0:
+                        remaining_hours = remaining_ms / (1000 * 60 * 60)
+                        remaining_mins = (remaining_ms % (1000 * 60 * 60)) / (1000 * 60)
+                        event.extra_info["资金费率"] = f"{rate_emoji} {rate_percent:+.4f}% ({rate_hint}) | 距结算 {int(remaining_hours)}h{int(remaining_mins)}m"
+                    else:
+                        event.extra_info["资金费率"] = f"{rate_emoji} {rate_percent:+.4f}% ({rate_hint})"
+                else:
+                    event.extra_info["资金费率"] = f"{rate_emoji} {rate_percent:+.4f}% ({rate_hint})"
+
         except Exception as e:
-            logger.debug(f"获取 {event.symbol} 资金流失败: {e}")
+            logger.debug(f"获取 {event.symbol} 资金流/费率失败: {e}")
 
         # 发送告警
         await self.notifier.notify(event)

@@ -42,7 +42,7 @@ alerts:
   # 价格异动告警
   price_change:
     enabled: true
-    time_window: 60           # 检测窗口（秒）
+    time_window: 120          # 检测窗口（秒）
 
   # 成交量突增告警
   volume_spike:

@@ -414,6 +414,11 @@ class BinanceClient:
             if isinstance(ticker, Exception) or ticker is None:
                 return None
 
+            # 处理资金费率数据
+            funding_data = funding if not isinstance(funding, Exception) else None
+            funding_rate_value = funding_data.get("funding_rate") if funding_data else None
+            next_funding_time = funding_data.get("next_funding_time") if funding_data else None
+
             result = {
                 "symbol": symbol,
                 "price": float(ticker.get("lastPrice", 0)),
@@ -424,7 +429,8 @@ class BinanceClient:
                 "volume_24h": float(ticker.get("volume", 0)),
                 "quote_volume_24h": float(ticker.get("quoteVolume", 0)),
                 "open_interest": oi if not isinstance(oi, Exception) else None,
-                "funding_rate": funding if not isinstance(funding, Exception) else None,
+                "funding_rate": funding_rate_value,
+                "next_funding_time": next_funding_time,
             }
 
             # 添加标记价格和预估清算价格
@@ -442,10 +448,17 @@ class BinanceClient:
             logger.error(f"获取 {symbol} 完整信息失败: {e}")
             return None
 
-    async def _get_funding_rate(self, symbol: str) -> Optional[float]:
-        """获取资金费率"""
-        url = f"{self.REST_BASE_URL}/fapi/v1/fundingRate"
-        params = {"symbol": symbol, "limit": 1}
+    async def _get_funding_rate(self, symbol: str) -> Optional[dict]:
+        """获取资金费率 (使用 premiumIndex 接口获取实时费率)
+
+        返回:
+            {
+                "funding_rate": float,      # 当前资金费率
+                "next_funding_time": int,   # 下次结算时间戳(毫秒)
+            }
+        """
+        url = f"{self.REST_BASE_URL}/fapi/v1/premiumIndex"
+        params = {"symbol": symbol}
 
         try:
             resp = await self._request_with_retry("GET", url, params=params, max_retries=2)
@@ -453,7 +466,10 @@ class BinanceClient:
                 data = await resp.json()
                 await resp.release()
                 if data:
-                    return float(data[0].get("fundingRate", 0))
+                    return {
+                        "funding_rate": float(data.get("lastFundingRate", 0)),
+                        "next_funding_time": int(data.get("nextFundingTime", 0)),
+                    }
             elif resp:
                 await resp.release()
         except Exception as e:

@@ -322,7 +322,19 @@ class BotCommandHandler:
         if info.get("funding_rate") is not None:
             funding = info["funding_rate"] * 100
             funding_emoji = "🟢" if funding >= 0 else "🔴"
-            lines.append(f"{funding_emoji} *资金费率*: `{funding:+.4f}%`")
+            next_funding_time = info.get("next_funding_time")
+            if next_funding_time:
+                from datetime import datetime, timezone
+                now_ts = datetime.now(tz=timezone.utc).timestamp() * 1000
+                remaining_ms = next_funding_time - now_ts
+                if remaining_ms > 0:
+                    remaining_hours = int(remaining_ms / (1000 * 60 * 60))
+                    remaining_mins = int((remaining_ms % (1000 * 60 * 60)) / (1000 * 60))
+                    lines.append(f"{funding_emoji} *资金费率*: `{funding:+.4f}%` | 距结算 {remaining_hours}h{remaining_mins}m")
+                else:
+                    lines.append(f"{funding_emoji} *资金费率*: `{funding:+.4f}%`")
+            else:
+                lines.append(f"{funding_emoji} *资金费率*: `{funding:+.4f}%`")
 
         lines.extend([
             "",
