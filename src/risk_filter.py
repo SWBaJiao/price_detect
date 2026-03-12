@@ -3,17 +3,17 @@
 检测假异动、延迟问题、市场操纵等风险
 """
 from collections import deque
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Tuple, TYPE_CHECKING
 
 from loguru import logger
 
-from ..models import OrderBookSnapshot, RiskCheckResult, TickerData
+from .models import OrderBookSnapshot, RiskCheckResult, TickerData
 
 if TYPE_CHECKING:
-    from ..price_tracker import PriceTracker
-    from ..orderbook_monitor import OrderBookMonitor
+    from .price_tracker import PriceTracker
+    from .orderbook_monitor import OrderBookMonitor
 
 
 @dataclass
@@ -405,67 +405,3 @@ class RiskFilter:
         for symbol in list(self._fake_signal_cooldown.keys()):
             if self._fake_signal_cooldown[symbol] < cutoff:
                 del self._fake_signal_cooldown[symbol]
-
-
-class AlertRiskIntegrator:
-    """
-    告警风险集成器
-
-    用于在告警流程中集成风险过滤
-    """
-
-    def __init__(self, risk_filter: RiskFilter, data_store=None):
-        self.risk_filter = risk_filter
-        self.data_store = data_store
-
-    def process_alert(
-        self,
-        symbol: str,
-        alert_type: str,
-        ticker: Optional[TickerData] = None,
-        snapshot: Optional[OrderBookSnapshot] = None
-    ) -> Tuple[bool, Optional[RiskCheckResult]]:
-        """
-        处理告警，检查风险并决定是否过滤
-
-        Args:
-            symbol: 交易对
-            alert_type: 告警类型
-            ticker: 行情数据
-            snapshot: 订单簿快照
-
-        Returns:
-            (should_send, risk_result)
-            should_send: 是否应该发送告警
-            risk_result: 风险检查结果
-        """
-        # 执行风险检查
-        risk_result = self.risk_filter.check_risk(
-            symbol=symbol,
-            ticker=ticker,
-            snapshot=snapshot
-        )
-
-        # 判断是否过滤
-        should_filter, filter_reason = self.risk_filter.should_filter_alert(risk_result)
-
-        # 记录到数据库
-        if self.data_store and should_filter:
-            try:
-                from datetime import datetime
-                self.data_store.save_alert(
-                    symbol=symbol,
-                    timestamp=datetime.now(),
-                    alert_type=alert_type,
-                    was_filtered=True,
-                    filter_reason=filter_reason
-                )
-            except Exception as e:
-                logger.error(f"保存过滤告警记录失败: {e}")
-
-        should_send = not should_filter
-
-        if should_filter:
-            logger.info(f"[风险过滤] {symbol} {alert_type}: {filter_reason}")
-
-        return should_send, risk_result

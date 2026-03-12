@@ -22,16 +22,7 @@ from src.telegram_bot import TelegramBot, AlertNotifier
 from src.bot_handler import BotCommandHandler
 from src.models import TickerData, AlertEvent, OrderBookSnapshot, OrderBookEvent
 from src.orderbook_monitor import OrderBookMonitor, OrderBookConfig, create_orderbook_alert
-
-# ML量化模块
-from src.ml import MLDataStore, FeatureEngine, LabelGenerator, RiskFilter, RiskConfig
-
-# 模拟交易模块
-from src.ml.trading import (
-    RealtimeSimEngine, RealtimeConfig,
-    TradingDataStore,
-    AccountConfig, StrategyConfig, StopLossConfig
-)
+from src.risk_filter import RiskFilter, RiskConfig
 
 # Web仪表板模块
 from src.web import create_app, run_web_server
@@ -95,29 +86,28 @@ class MonitorApp:
             on_event=self._on_orderbook_event
         )
 
-        # ==================== ML量化模块初始化 ====================
-        self.ml_enabled = settings.ml.enabled
-        self.ml_data_store: Optional[MLDataStore] = None
-        self.ml_feature_engine: Optional[FeatureEngine] = None
-        self.ml_label_generator: Optional[LabelGenerator] = None
-        self.ml_risk_filter: Optional[RiskFilter] = None
-
-        if self.ml_enabled:
-            self._init_ml_modules()
-
-        # ==================== 模拟交易模块初始化 ====================
-        self.trading_enabled = settings.trading.enabled
-        self.trading_engine: Optional[RealtimeSimEngine] = None
-        self.trading_store: Optional[TradingDataStore] = None
-
-        if self.trading_enabled:
-            self._init_trading_modules()
+        # ==================== 风险过滤器初始化 ====================
+        self.risk_filter: Optional[RiskFilter] = None
+        if settings.risk.enabled:
+            self.risk_filter = RiskFilter(
+                config=RiskConfig(
+                    enabled=settings.risk.enabled,
+                    filter_alerts=settings.risk.filter_alerts,
+                    max_ws_latency_ms=settings.risk.max_ws_latency_ms,
+                    max_spread_bps=settings.risk.max_spread_bps,
+                    min_depth_value=settings.risk.min_depth_value,
+                    fake_signal_window=settings.risk.fake_signal_window,
+                    fake_signal_revert_ratio=settings.risk.fake_signal_revert_ratio,
+                    fake_signal_min_change=settings.risk.fake_signal_min_change
+                ),
+                tracker=self.tracker,
+                orderbook_monitor=self.orderbook_monitor
+            )
+            self.alert_engine.set_risk_filter(self.risk_filter)
+            logger.info("风险过滤器已集成到告警引擎")
 
         # 初始化Web服务器
         self._init_web_server()
-
-        # 最新特征缓存（用于交易引擎）
-        self._last_features: dict = {}
 
         # OI 轮询任务
         self._oi_task = None
@@ -127,10 +117,6 @@ class MonitorApp:
         self._bot_task = None
         # 订单簿 WebSocket 任务
         self._orderbook_task = None
-        # ML标签生成任务
-        self._ml_label_task = None
-        # ML特征保存时间记录
-        self._ml_last_save: datetime = datetime.min
 
     def _on_alert(self, event: AlertEvent):
         """告警回调"""
@@ -203,159 +189,9 @@ class MonitorApp:
         alert = create_orderbook_alert(event, tier_label="订单簿")
         asyncio.create_task(self.notifier.notify(alert))
 
-    def _init_ml_modules(self):
-        """初始化ML量化模块"""
-        ml_cfg = self.settings.ml
-
-        # 确保数据目录存在
-        db_path = Path(ml_cfg.db_path)
-        db_path.parent.mkdir(parents=True, exist_ok=True)
-
-        # 初始化数据存储
-        self.ml_data_store = MLDataStore(str(db_path))
-        logger.info(f"ML数据存储初始化: {db_path}")
-
-        # 初始化风险过滤器
-        risk_cfg = ml_cfg.risk
-        self.ml_risk_filter = RiskFilter(
-            config=RiskConfig(
-                enabled=risk_cfg.enabled,
-                filter_alerts=risk_cfg.filter_alerts,
-                max_ws_latency_ms=risk_cfg.max_ws_latency_ms,
-                max_spread_bps=risk_cfg.max_spread_bps,
-                min_depth_value=risk_cfg.min_depth_value,
-                fake_signal_window=risk_cfg.fake_signal_window,
-                fake_signal_revert_ratio=risk_cfg.fake_signal_revert_ratio,
-                fake_signal_min_change=risk_cfg.fake_signal_min_change
-            ),
-            tracker=self.tracker,
-            orderbook_monitor=self.orderbook_monitor
-        )
-
-        # 设置AlertEngine的风险过滤器
-        self.alert_engine.set_risk_filter(self.ml_risk_filter)
-        logger.info("风险过滤器已集成到告警引擎")
-
-        # 初始化特征工程引擎
-        ind_cfg = ml_cfg.indicators
-        indicator_config = {
-            'ma_periods': ind_cfg.ma_periods,
-            'rsi_period': ind_cfg.rsi_period,
-            'macd_fast': ind_cfg.macd_fast,
-            'macd_slow': ind_cfg.macd_slow,
-            'macd_signal': ind_cfg.macd_signal,
-            'bb_period': ind_cfg.bb_period,
-            'bb_std': ind_cfg.bb_std
-        }
-        self.ml_feature_engine = FeatureEngine(
-            tracker=self.tracker,
-            orderbook_monitor=self.orderbook_monitor,
-            indicator_config=indicator_config
-        )
-        logger.info("特征工程引擎初始化完成")
-
-        # 初始化标签生成器
-        label_cfg = ml_cfg.label
-        self.ml_label_generator = LabelGenerator(
-            tracker=self.tracker,
-            data_store=self.ml_data_store,
-            direction_threshold=label_cfg.direction_threshold
-        )
-        logger.info("标签生成器初始化完成")
-
-    def _init_trading_modules(self):
-        """初始化模拟交易模块"""
-        trading_cfg = self.settings.trading
-        ml_cfg = self.settings.ml
-
-        # 确保数据目录存在
-        db_path = Path(ml_cfg.db_path)
-        db_path.parent.mkdir(parents=True, exist_ok=True)
-
-        # 初始化交易数据存储
-        self.trading_store = TradingDataStore(str(db_path))
-        logger.info("交易数据存储初始化完成")
-
-        # 配置账户
-        account_cfg = trading_cfg.account
-        account_config = AccountConfig(
-            initial_balance=account_cfg.initial_balance,
-            leverage=account_cfg.leverage,
-            maker_fee=account_cfg.maker_fee,
-            taker_fee=account_cfg.taker_fee,
-            max_positions=account_cfg.max_positions,
-            position_risk_pct=account_cfg.position_risk_pct
-        )
-
-        # 配置策略
-        strategy_cfg = trading_cfg.strategy
-        strategy_config = StrategyConfig(
-            min_confidence=strategy_cfg.min_confidence,
-            signal_threshold=strategy_cfg.signal_threshold,
-            use_ml_model=strategy_cfg.use_ml_model,
-            indicator_filter=strategy_cfg.indicator_filter,
-            rsi_oversold=strategy_cfg.rsi_oversold,
-            rsi_overbought=strategy_cfg.rsi_overbought,
-            min_volatility=strategy_cfg.min_volatility,
-            min_volume_ratio=strategy_cfg.min_volume_ratio,
-            imbalance_long_threshold=strategy_cfg.imbalance_long_threshold,
-            imbalance_short_threshold=strategy_cfg.imbalance_short_threshold,
-            trend_filter_pct=strategy_cfg.trend_filter_pct
-        )
-
-        # 配置止损
-        stop_loss_cfg = trading_cfg.stop_loss
-        stop_loss_config = StopLossConfig(
-            method=stop_loss_cfg.method,
-            fixed_stop_pct=stop_loss_cfg.fixed_stop_pct,
-            take_profit_pct=stop_loss_cfg.take_profit_pct,
-            atr_multiplier=stop_loss_cfg.atr_multiplier,
-            atr_period=stop_loss_cfg.atr_period,
-            trailing_distance=stop_loss_cfg.trailing_distance,
-            trailing_activation=stop_loss_cfg.trailing_activation,
-            max_hold_seconds=stop_loss_cfg.max_hold_seconds
-        )
-
-        # 配置实时模拟
-        realtime_cfg = trading_cfg.realtime
-        realtime_config = RealtimeConfig(
-            enabled=realtime_cfg.enabled,
-            save_interval=realtime_cfg.save_interval,
-            log_trades=realtime_cfg.log_trades,
-            max_positions_per_symbol=realtime_cfg.max_positions_per_symbol,
-            allowed_symbols=realtime_cfg.allowed_symbols
-        )
-
-        # 初始化实时模拟引擎
-        self.trading_engine = RealtimeSimEngine(
-            trading_store=self.trading_store,
-            account_config=account_config,
-            strategy_config=strategy_config,
-            stop_loss_config=stop_loss_config,
-            realtime_config=realtime_config
-        )
-
-        logger.info(
-            f"模拟交易引擎初始化完成: "
-            f"初始资金=${account_cfg.initial_balance}, "
-            f"杠杆={account_cfg.leverage}x, "
-            f"模式={trading_cfg.mode}"
-        )
-
     def _init_web_server(self):
         """初始化Web仪表板服务器"""
-        # 获取虚拟账户引用（如果交易模块启用）
-        virtual_account = None
-        if self.trading_enabled and self.trading_engine:
-            virtual_account = self.trading_engine.account
-
-        # 创建Flask应用
-        self.web_app = create_app(
-            trading_store=self.trading_store,
-            ml_data_store=self.ml_data_store,
-            virtual_account=virtual_account,
-            realtime_engine=self.trading_engine
-        )
+        self.web_app = create_app()
 
         logger.info("Web仪表板初始化完成")
 
@@ -375,69 +211,7 @@ class MonitorApp:
 
     async def _handle_tickers(self, tickers: List[TickerData]):
         """处理行情数据"""
-        # 原有告警检测逻辑（风险过滤已集成到AlertEngine）
         await self.alert_engine.process_tickers(tickers)
-
-        # ML特征计算和存储（如果启用）
-        if self.ml_enabled and self.ml_feature_engine and self.ml_data_store:
-            await self._process_ml_features(tickers)
-
-    async def _process_ml_features(self, tickers: List[TickerData]):
-        """处理ML特征计算和存储"""
-        now = datetime.now()
-        save_interval = self.settings.ml.feature.save_interval
-
-        # 检查是否到了保存间隔
-        if (now - self._ml_last_save).total_seconds() < save_interval:
-            return
-
-        self._ml_last_save = now
-
-        # 批量计算特征并存储
-        features_to_save = []
-        for ticker in tickers:
-            try:
-                # 计算特征
-                feature = self.ml_feature_engine.compute_features(
-                    symbol=ticker.symbol,
-                    ticker=ticker
-                )
-
-                if feature:
-                    features_to_save.append(feature)
-
-                    # 缓存最新特征（用于交易引擎）
-                    self._last_features[ticker.symbol] = feature
-
-                    # 注册到标签生成器（用于后续延迟标签生成）
-                    if self.ml_label_generator:
-                        self.ml_label_generator.register_feature(feature)
-
-                    # 存储价格快照（用于标签回填验证）
-                    self.ml_data_store.save_price_snapshot(
-                        symbol=ticker.symbol,
-                        timestamp=ticker.timestamp,
-                        price=ticker.price,
-                        volume=ticker.volume
-                    )
-
-                    # 调用交易引擎处理（如果启用）
-                    if self.trading_enabled and self.trading_engine:
-                        await self.trading_engine.on_feature_update(
-                            symbol=ticker.symbol,
-                            feature=feature,
-                            current_price=ticker.price
-                        )
-
-            except Exception as e:
-                logger.error(f"计算特征失败 {ticker.symbol}: {e}")
-
-        # 批量存储特征
-        if features_to_save:
-            try:
-                self.ml_data_store.save_features_batch(features_to_save)
-            except Exception as e:
-                logger.error(f"批量存储特征失败: {e}")
 
     async def _poll_open_interest(self):
         """定时轮询持仓量"""
@@ -481,39 +255,6 @@ class MonitorApp:
 
             await asyncio.sleep(interval)
 
-    async def _generate_ml_labels(self):
-        """定时生成ML标签（延迟标签生成，避免未来函数）"""
-        interval = 10  # 每10秒尝试生成一次标签
-
-        while self._running:
-            try:
-                if self.ml_label_generator and self.ml_data_store:
-                    # 尝试为所有待标注特征生成标签
-                    all_labels = self.ml_label_generator.try_generate_all_labels()
-
-                    # 批量保存标签
-                    for symbol, labels in all_labels.items():
-                        if labels:
-                            self.ml_data_store.save_labels_batch(labels)
-
-                    # 定期输出统计
-                    stats = self.ml_label_generator.get_stats()
-                    if stats['generated_count'] > 0 and stats['generated_count'] % 100 == 0:
-                        logger.info(
-                            f"标签生成统计: 已生成={stats['generated_count']}, "
-                            f"待标注={stats['pending_total']}, "
-                            f"丢弃={stats['dropped_count']}"
-                        )
-
-                    # 清理风险过滤器过期数据
-                    if self.ml_risk_filter:
-                        self.ml_risk_filter.cleanup(max_age_seconds=300)
-
-            except Exception as e:
-                logger.error(f"标签生成失败: {e}")
-
-            await asyncio.sleep(interval)
-
     async def start(self):
         """启动监控"""
         self._running = True
@@ -549,18 +290,6 @@ class MonitorApp:
         if self.telegram.is_enabled:
             self._bot_task = asyncio.create_task(self.bot_handler.start_polling())
             logger.info("Bot 查询功能已启动")
-
-        # 启动ML标签生成任务
-        if self.ml_enabled:
-            self._ml_label_task = asyncio.create_task(self._generate_ml_labels())
-            logger.info("ML标签生成任务已启动")
-
-        # 启动模拟交易引擎
-        if self.trading_enabled and self.trading_engine:
-            if not self.ml_enabled:
-                logger.warning("模拟交易依赖ML特征，请同时启用 ml.enabled")
-            self.trading_engine.start()
-            logger.info("模拟交易引擎已启动")
 
         # 启动Web仪表板服务器
         self._start_web_server()
@@ -633,25 +362,9 @@ class MonitorApp:
             except asyncio.CancelledError:
                 pass
 
-        # 取消ML标签生成任务
-        if self._ml_label_task:
-            self._ml_label_task.cancel()
-            try:
-                await self._ml_label_task
-            except asyncio.CancelledError:
-                pass
-
-        # 停止模拟交易引擎并输出统计
-        if self.trading_enabled and self.trading_engine:
-            # 平掉所有持仓
-            await self.trading_engine.close_all_positions()
-            # 停止引擎（会输出统计信息）
-            self.trading_engine.stop()
-
-        # 关闭ML数据存储
-        if self.ml_data_store:
-            self.ml_data_store.close()
-            logger.info("ML数据存储已关闭")
+        # 定期清理风险过滤器（若启用）
+        if self.risk_filter:
+            self.risk_filter.cleanup(max_age_seconds=300)
 
         # 关闭连接
         await self.binance.close()

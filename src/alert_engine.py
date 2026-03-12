@@ -13,7 +13,7 @@ from .models import AlertEvent, AlertType, TickerData
 from .price_tracker import PriceTracker
 
 if TYPE_CHECKING:
-    from .ml.risk_filter import RiskFilter
+    from .risk_filter import RiskFilter
 
 
 class AlertEngine:
