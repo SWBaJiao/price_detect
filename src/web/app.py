@@ -158,6 +158,7 @@ def create_app(account_store: Optional[AccountMonitorStore] = None):
                     'leverage_mode': getattr(c, 'leverage_mode', 'same') or 'same',
                     'custom_leverage': int(getattr(c, 'custom_leverage', 20) or 20),
                     'is_simulation': getattr(c, 'is_simulation', False),
+                    'sim_balance': float(getattr(c, 'sim_balance', 10000) or 10000),
                     'max_slippage': float(getattr(c, 'max_slippage', 0) or 0),
                     'copy_rule': getattr(c, 'copy_rule', 'sync') or 'sync',
                     'created_at': c.created_at,
@@ -181,6 +182,7 @@ def create_app(account_store: Optional[AccountMonitorStore] = None):
             leverage_mode = (data.get('leverage_mode') or 'same').strip() or 'same'
             custom_leverage = int(data.get('custom_leverage', 20))
             is_simulation = bool(data.get('is_simulation', False))
+            sim_balance = float(data.get('sim_balance', 10000) or 10000)
             max_slippage = float(data.get('max_slippage', 0)) / 100.0  # 前端传百分比，转为小数
             copy_rule = (data.get('copy_rule') or 'sync').strip() or 'sync'
             if not name or source_account_id is None:
@@ -191,7 +193,7 @@ def create_app(account_store: Optional[AccountMonitorStore] = None):
                 name, follower_api_key, follower_api_secret, int(source_account_id),
                 leverage_scale=leverage_scale, copy_mode=copy_mode, copy_ratio=copy_ratio,
                 leverage_mode=leverage_mode, custom_leverage=custom_leverage,
-                is_simulation=is_simulation,
+                is_simulation=is_simulation, sim_balance=sim_balance,
                 max_slippage=max_slippage, copy_rule=copy_rule,
             )
             return jsonify({'success': True, 'data': {'id': cid}})
@@ -234,6 +236,8 @@ def create_app(account_store: Optional[AccountMonitorStore] = None):
                 updates['custom_leverage'] = int(data['custom_leverage'])
             if 'is_simulation' in data:
                 updates['is_simulation'] = bool(data['is_simulation'])
+            if 'sim_balance' in data and data['sim_balance'] is not None:
+                updates['sim_balance'] = float(data['sim_balance'])
             if 'max_slippage' in data and data['max_slippage'] is not None:
                 updates['max_slippage'] = float(data['max_slippage']) / 100.0
             if 'copy_rule' in data and data['copy_rule']:
@@ -266,6 +270,23 @@ def create_app(account_store: Optional[AccountMonitorStore] = None):
             })
         except Exception as e:
             logger.error(f"获取模拟交易记录失败: {e}")
+            return jsonify({'success': False, 'error': str(e)})
+
+    @app.route('/api/copy-trades/<int:config_id>', methods=['GET'])
+    def api_copy_trades(config_id):
+        """获取真实跟单交易记录"""
+        try:
+            limit = request.args.get('limit', 100, type=int)
+            trades = app.account_store.get_copy_trades(config_id, limit=limit)
+            return jsonify({
+                'success': True,
+                'data': {
+                    'trades': trades,
+                    'total_trades': len(trades),
+                },
+            })
+        except Exception as e:
+            logger.error(f"获取跟单交易记录失败: {e}")
             return jsonify({'success': False, 'error': str(e)})
 
     return app

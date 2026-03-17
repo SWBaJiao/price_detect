@@ -369,9 +369,15 @@ class CopyTradingService:
 
             # --- 基线过滤：只跟单启用后新产生的仓位 ---
             if not self.store.is_baseline_initialized(config.id):
+                if not target_map:
+                    # 首次同步但源仓位为空（可能 API 暂未返回数据），跳过不初始化，等下一轮
+                    logger.info(f"跟单 {config.name} 首次同步但源仓位为空，跳过初始化基线")
+                    return
                 baseline_keys = list(target_map.keys())
                 self.store.save_copy_baseline(config.id, baseline_keys)
                 logger.info(f"跟单 {config.name} 初始化基线，排除 {len(baseline_keys)} 个已有仓位")
+                # 首次同步只记录基线，不执行任何开/平仓操作，避免误操作
+                return
             baseline = self.store.get_copy_baseline(config.id)
             # 源已平仓的基线仓位移除（后续重新开仓将被跟单）
             for bkey in list(baseline):
@@ -392,16 +398,50 @@ class CopyTradingService:
                 if abs(current) < 1e-8 and abs(target_amt) >= 1e-8:
                     if self._should_skip_open(config, target_amt, src_entry, mark_price):
                         continue
+                # 判断操作类型
+                if abs(current) < 1e-8:
+                    action = "open"
+                elif abs(target_amt) < 1e-8:
+                    action = "close"
+                elif (current > 0) != (target_amt > 0):
+                    action = "close"  # 翻转：先记 close，后续 open 单独记
+                elif abs(target_amt) > abs(current):
+                    action = "add"
+                else:
+                    action = "reduce"
+                last_result = None
                 if current != 0:
                     side = "SELL" if current > 0 else "BUY"
                     qty = round(abs(current), 8)
-                    await follower.place_market_order(symbol, side, qty, position_side=ps)
+                    last_result = await follower.place_market_order(symbol, side, qty, position_side=ps)
+                    # 翻转/平仓/减仓/加仓 先平旧仓 → 记录 close
+                    if action in ("close", "reduce") or ((current > 0) != (target_amt > 0)):
+                        exec_price = float(last_result.get("avgPrice", 0)) if last_result and last_result.get("avgPrice") else mark_price
+                        oid = str(last_result.get("orderId", "")) if last_result else ""
+                        st = str(last_result.get("status", "")) if last_result else "FAILED"
+                        self.store.add_copy_trade(
+                            config.id, symbol, "close" if action != "reduce" else action,
+                            old_amt=current, new_amt=0 if action == "close" else target_amt,
+                            price=exec_price, order_id=oid, status=st, position_side=ps,
+                        )
                     await asyncio.sleep(0.3)
                 if abs(target_amt) >= 1e-8:
                     side = "BUY" if target_amt > 0 else "SELL"
                     qty = round(abs(target_amt), 8)
                     await follower.set_leverage(symbol, leverage)
-                    await follower.place_market_order(symbol, side, qty, position_side=ps)
+                    last_result = await follower.place_market_order(symbol, side, qty, position_side=ps)
+                    exec_price = float(last_result.get("avgPrice", 0)) if last_result and last_result.get("avgPrice") else mark_price
+                    oid = str(last_result.get("orderId", "")) if last_result else ""
+                    st = str(last_result.get("status", "")) if last_result else "FAILED"
+                    # 纯开仓 / 翻转后开仓 / 加仓
+                    rec_action = "open" if action in ("open", "close") else action  # close 翻转后这里记 open
+                    if action == "add":
+                        rec_action = "add"
+                    self.store.add_copy_trade(
+                        config.id, symbol, rec_action,
+                        old_amt=0 if action in ("open", "close") else current, new_amt=target_amt,
+                        price=exec_price, order_id=oid, status=st, position_side=ps,
+                    )
                     logger.info(f"跟单 {config.name} 同步 {symbol}({ps}) {side} {qty} 杠杆{leverage}x")
             for key, current_pos in current_by_key.items():
                 if key not in target_map and current_pos.position_amt != 0:
@@ -410,7 +450,15 @@ class CopyTradingService:
                     symbol, ps = key
                     side = "SELL" if current_pos.position_amt > 0 else "BUY"
                     qty = round(abs(current_pos.position_amt), 8)
-                    await follower.place_market_order(symbol, side, qty, position_side=ps)
+                    result = await follower.place_market_order(symbol, side, qty, position_side=ps)
+                    exec_price = float(result.get("avgPrice", 0)) if result and result.get("avgPrice") else 0
+                    oid = str(result.get("orderId", "")) if result else ""
+                    st = str(result.get("status", "")) if result else "FAILED"
+                    self.store.add_copy_trade(
+                        config.id, symbol, "close",
+                        old_amt=current_pos.position_amt, new_amt=0,
+                        price=exec_price, order_id=oid, status=st, position_side=ps,
+                    )
                     logger.info(f"跟单 {config.name} 平仓 {symbol}({ps})")
         except Exception as e:
             logger.error(f"跟单 {config.name} 同步失败: {e}")
@@ -440,7 +488,7 @@ class CopyTradingService:
                     logger.debug(f"模拟跟单 {config.name} 源账户可用保证金为 0，跳过")
                     return
                 copy_ratio = float(getattr(config, "copy_ratio", 1.0) or 1.0)
-                follower_available = 10000.0
+                follower_available = float(getattr(config, "sim_balance", 10000) or 10000)
                 for pos in source_account_full.get("positions") or []:
                     symbol = pos.get("symbol", "")
                     if not symbol:
@@ -484,9 +532,13 @@ class CopyTradingService:
 
             # --- 基线过滤：只跟单启用后新产生的仓位 ---
             if not self.store.is_baseline_initialized(config.id):
+                if not target_map:
+                    logger.info(f"模拟跟单 {config.name} 首次同步但源仓位为空，跳过初始化基线")
+                    return
                 baseline_keys = list(target_map.keys())
                 self.store.save_copy_baseline(config.id, baseline_keys)
                 logger.info(f"模拟跟单 {config.name} 初始化基线，排除 {len(baseline_keys)} 个已有仓位")
+                return  # 首次同步只记录基线，不执行操作
             baseline = self.store.get_copy_baseline(config.id)
             for bkey in list(baseline):
                 if bkey not in target_map:

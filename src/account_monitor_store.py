@@ -68,6 +68,7 @@ class CopyTradingConfig:
     leverage_mode: str = "same"      # "same" 与源相同杠杆 | "custom" 自定义杠杆
     custom_leverage: int = 20         # leverage_mode=custom 时使用的杠杆倍数
     is_simulation: bool = False       # 模拟跟单模式（不实际下单）
+    sim_balance: float = 10000.0     # 模拟账户余额（USDT）
     max_slippage: float = 0.0        # 最大滑点比例（0=不限制，如0.02=2%）
     copy_rule: str = "sync"          # 开仓规则："sync"同步开单 | "better_price"仅价格更优时开单
     created_at: Optional[str] = None
@@ -139,6 +140,7 @@ class AccountMonitorStore:
                 "ALTER TABLE copy_configs ADD COLUMN leverage_mode TEXT NOT NULL DEFAULT 'same'",
                 "ALTER TABLE copy_configs ADD COLUMN custom_leverage INTEGER NOT NULL DEFAULT 20",
                 "ALTER TABLE copy_configs ADD COLUMN is_simulation INTEGER NOT NULL DEFAULT 0",
+                "ALTER TABLE copy_configs ADD COLUMN sim_balance REAL NOT NULL DEFAULT 10000",
                 "ALTER TABLE copy_configs ADD COLUMN max_slippage REAL NOT NULL DEFAULT 0",
                 "ALTER TABLE copy_configs ADD COLUMN copy_rule TEXT NOT NULL DEFAULT 'sync'",
             ]:
@@ -235,6 +237,23 @@ class AccountMonitorStore:
                 conn.execute("ALTER TABLE position_events ADD COLUMN position_side TEXT NOT NULL DEFAULT 'BOTH'")
             except sqlite3.OperationalError:
                 pass
+            # 真实跟单交易记录表
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS copy_trades (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    config_id INTEGER NOT NULL,
+                    symbol TEXT NOT NULL,
+                    position_side TEXT NOT NULL DEFAULT 'BOTH',
+                    action TEXT NOT NULL,
+                    old_amt REAL NOT NULL DEFAULT 0,
+                    new_amt REAL NOT NULL DEFAULT 0,
+                    price REAL NOT NULL DEFAULT 0,
+                    order_id TEXT,
+                    status TEXT,
+                    created_at TEXT NOT NULL,
+                    FOREIGN KEY (config_id) REFERENCES copy_configs(id)
+                )
+            """)
             # 跟单基线表：记录启用时源账户已有的仓位，不跟单这些仓位
             conn.execute("""
                 CREATE TABLE IF NOT EXISTS copy_baselines (
@@ -353,14 +372,15 @@ class AccountMonitorStore:
         leverage_mode: str = "same",
         custom_leverage: int = 20,
         is_simulation: bool = False,
+        sim_balance: float = 10000.0,
         max_slippage: float = 0.0,
         copy_rule: str = "sync",
     ) -> int:
         with sqlite3.connect(self.db_path) as conn:
             cur = conn.execute(
-                """INSERT INTO copy_configs (name, follower_api_key_enc, follower_api_secret_enc, source_account_id, enabled, leverage_scale, copy_mode, copy_ratio, leverage_mode, custom_leverage, is_simulation, max_slippage, copy_rule, created_at)
-                   VALUES (?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))""",
-                (name.strip(), self._encrypt(follower_api_key.strip()), self._encrypt(follower_api_secret.strip()), source_account_id, leverage_scale, copy_mode, copy_ratio, leverage_mode, custom_leverage, 1 if is_simulation else 0, max_slippage, copy_rule)
+                """INSERT INTO copy_configs (name, follower_api_key_enc, follower_api_secret_enc, source_account_id, enabled, leverage_scale, copy_mode, copy_ratio, leverage_mode, custom_leverage, is_simulation, sim_balance, max_slippage, copy_rule, created_at)
+                   VALUES (?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))""",
+                (name.strip(), self._encrypt(follower_api_key.strip()), self._encrypt(follower_api_secret.strip()), source_account_id, leverage_scale, copy_mode, copy_ratio, leverage_mode, custom_leverage, 1 if is_simulation else 0, sim_balance, max_slippage, copy_rule)
             )
             conn.commit()
             return cur.lastrowid
@@ -371,7 +391,7 @@ class AccountMonitorStore:
             conn.row_factory = sqlite3.Row
             for row in conn.execute("""
                 SELECT id, name, follower_api_key_enc, follower_api_secret_enc, source_account_id, enabled, leverage_scale,
-                       copy_mode, copy_ratio, leverage_mode, custom_leverage, is_simulation, max_slippage, copy_rule, created_at
+                       copy_mode, copy_ratio, leverage_mode, custom_leverage, is_simulation, sim_balance, max_slippage, copy_rule, created_at
                 FROM copy_configs ORDER BY id
             """).fetchall():
                 rows.append(self._row_to_copy_config(row))
@@ -394,6 +414,7 @@ class AccountMonitorStore:
             leverage_mode=str(_get("leverage_mode", "same") or "same"),
             custom_leverage=int(_get("custom_leverage", 20) or 20),
             is_simulation=bool(_get("is_simulation", 0)),
+            sim_balance=float(_get("sim_balance", 10000) or 10000),
             max_slippage=float(_get("max_slippage", 0) or 0),
             copy_rule=str(_get("copy_rule", "sync") or "sync"),
             created_at=row["created_at"],
@@ -404,7 +425,7 @@ class AccountMonitorStore:
             conn.row_factory = sqlite3.Row
             row = conn.execute("""
                 SELECT id, name, follower_api_key_enc, follower_api_secret_enc, source_account_id, enabled, leverage_scale,
-                       copy_mode, copy_ratio, leverage_mode, custom_leverage, is_simulation, max_slippage, copy_rule, created_at
+                       copy_mode, copy_ratio, leverage_mode, custom_leverage, is_simulation, sim_balance, max_slippage, copy_rule, created_at
                 FROM copy_configs WHERE id = ?
             """, (config_id,)).fetchone()
             if not row:
@@ -416,7 +437,7 @@ class AccountMonitorStore:
         allowed = {
             "name", "source_account_id", "leverage_scale",
             "copy_mode", "copy_ratio", "leverage_mode", "custom_leverage",
-            "is_simulation", "max_slippage", "copy_rule",
+            "is_simulation", "sim_balance", "max_slippage", "copy_rule",
         }
         # API Key/Secret 需要加密
         key_fields = {"follower_api_key", "follower_api_secret"}
@@ -455,6 +476,7 @@ class AccountMonitorStore:
         with sqlite3.connect(self.db_path) as conn:
             conn.execute("DELETE FROM simulation_positions WHERE config_id = ?", (config_id,))
             conn.execute("DELETE FROM simulation_trades WHERE config_id = ?", (config_id,))
+            conn.execute("DELETE FROM copy_trades WHERE config_id = ?", (config_id,))
             conn.execute("DELETE FROM copy_baselines WHERE config_id = ?", (config_id,))
             cur = conn.execute("DELETE FROM copy_configs WHERE id = ?", (config_id,))
             conn.commit()
@@ -535,6 +557,30 @@ class AccountMonitorStore:
                 """SELECT id, symbol, position_side, action, old_amt, new_amt, entry_price, mark_price, leverage, unrealized_profit, created_at
                    FROM position_events WHERE account_id = ? ORDER BY id DESC LIMIT ?""",
                 (account_id, limit)
+            ).fetchall()
+            return [dict(r) for r in rows]
+
+    # ---------- Copy trades (real copy trading history) ----------
+    def add_copy_trade(
+        self, config_id: int, symbol: str, action: str,
+        old_amt: float = 0, new_amt: float = 0, price: float = 0,
+        order_id: str = "", status: str = "", position_side: str = "BOTH",
+    ):
+        now = __import__("datetime").datetime.utcnow().isoformat() + "Z"
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute(
+                """INSERT INTO copy_trades (config_id, symbol, position_side, action, old_amt, new_amt, price, order_id, status, created_at)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                (config_id, symbol, position_side, action, old_amt, new_amt, price, order_id, status, now)
+            )
+            conn.commit()
+
+    def get_copy_trades(self, config_id: int, limit: int = 100) -> list:
+        with sqlite3.connect(self.db_path) as conn:
+            conn.row_factory = sqlite3.Row
+            rows = conn.execute(
+                "SELECT id, symbol, position_side, action, old_amt, new_amt, price, order_id, status, created_at FROM copy_trades WHERE config_id = ? ORDER BY id DESC LIMIT ?",
+                (config_id, limit)
             ).fetchall()
             return [dict(r) for r in rows]
 

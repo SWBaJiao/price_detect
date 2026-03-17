@@ -63,6 +63,11 @@
                     <input class="form-check-input" type="checkbox" id="newIsSimulation">
                     <label class="form-check-label" for="newIsSimulation">模拟跟单（不实际下单，仅记录模拟交易）</label>
                 </div>
+                <div class="mb-3 d-none" id="wrapSimBalance">
+                    <label class="form-label">模拟账户余额 (USDT)</label>
+                    <input type="number" class="form-control" id="newSimBalance" value="10000" step="100" min="100">
+                    <small class="text-muted">模拟跟单使用的虚拟可用保证金，用于按保证金比例计算仓位</small>
+                </div>
                 <div id="wrapApiKeys">
                     <div class="mb-3">
                         <label class="form-label">跟单账户 API Key</label>
@@ -152,6 +157,10 @@
                 <div class="mb-3 form-check form-switch">
                     <input class="form-check-input" type="checkbox" id="editIsSimulation">
                     <label class="form-check-label" for="editIsSimulation">模拟跟单</label>
+                </div>
+                <div class="mb-3 d-none" id="editWrapSimBalance">
+                    <label class="form-label">模拟账户余额 (USDT)</label>
+                    <input type="number" class="form-control" id="editSimBalance" value="10000" step="100" min="100">
                 </div>
                 <div id="editWrapApiKeys">
                     <div class="mb-3">
@@ -254,6 +263,31 @@
         </div>
     </div>
 </div>
+
+<!-- 真实跟单记录弹窗 -->
+<div class="modal fade" id="copyTradesModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">跟单交易记录 - <span id="copyTradesConfigName"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-sm table-striped mb-0">
+                    <thead class="table-light">
+                        <tr><th>时间</th><th>交易对</th><th>方向</th><th>操作</th><th>数量变化</th><th>成交价</th><th>状态</th></tr>
+                    </thead>
+                    <tbody id="copyTradesList">
+                        <tr><td colspan="7" class="text-center text-muted">暂无记录</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
@@ -297,10 +331,12 @@
         var tdA=document.createElement('td');
         var btnT=document.createElement('button'); btnT.className='btn btn-sm me-1 '+(c.enabled?'btn-warning':'btn-success'); btnT.dataset.id=c.id; btnT.dataset.enabled=c.enabled; btnT.textContent=c.enabled?'关闭跟单':'开启跟单';
         tdA.appendChild(btnT);
+        var btnView=document.createElement('button'); btnView.className='btn btn-sm btn-info me-1'; btnView.dataset.id=c.id; btnView.dataset.name=c.name; btnView.textContent='查看记录';
+        tdA.appendChild(btnView);
         if(c.is_simulation){
-          var btnView=document.createElement('button'); btnView.className='btn btn-sm btn-info me-1'; btnView.dataset.id=c.id; btnView.dataset.name=c.name; btnView.textContent='查看记录';
-          tdA.appendChild(btnView);
           btnView.addEventListener('click',function(){ showSimTrades(this.dataset.id, this.dataset.name); });
+        } else {
+          btnView.addEventListener('click',function(){ showCopyTrades(this.dataset.id, this.dataset.name); });
         }
         var btnD=document.createElement('button'); btnD.className='btn btn-sm btn-outline-danger'; btnD.dataset.id=c.id; btnD.textContent='删除';
         tdA.appendChild(btnD);
@@ -366,9 +402,46 @@
     });
   }
 
+  function showCopyTrades(configId, configName){
+    document.getElementById('copyTradesConfigName').textContent=configName;
+    fetch('/api/copy-trades/'+configId).then(function(r){return r.json();}).then(function(res){
+      if(!res.success){ alert(res.error||'获取失败'); return; }
+      var d=res.data;
+      var tb=document.getElementById('copyTradesList'); tb.textContent='';
+      if(!d.trades||!d.trades.length){
+        var tr=document.createElement('tr'); var td=document.createElement('td'); td.colSpan=7; td.className='text-center text-muted'; td.textContent='暂无记录'; tr.appendChild(td); tb.appendChild(tr);
+      } else {
+        d.trades.forEach(function(t){
+          var tr=document.createElement('tr');
+          var tdTime=document.createElement('td'); tdTime.textContent=t.created_at||''; tdTime.style.whiteSpace='nowrap'; tr.appendChild(tdTime);
+          var tdSym=document.createElement('td'); tdSym.textContent=t.symbol; tr.appendChild(tdSym);
+          var tdSide=document.createElement('td'); tdSide.textContent=t.position_side||'BOTH'; tr.appendChild(tdSide);
+          var tdAct=document.createElement('td'); tdAct.textContent=ACTION_LABELS[t.action]||t.action; tdAct.className=ACTION_COLORS[t.action]||''; tdAct.style.fontWeight='bold'; tr.appendChild(tdAct);
+          var tdAmt=document.createElement('td');
+          var oldA=t.old_amt||0, newA=t.new_amt||0;
+          if(t.action==='open'){ tdAmt.textContent='0 → '+newA; }
+          else if(t.action==='close'){ tdAmt.textContent=oldA+' → 0'; }
+          else { tdAmt.textContent=oldA+' → '+newA; }
+          tr.appendChild(tdAmt);
+          var tdPri=document.createElement('td'); tdPri.textContent=t.price?('$'+t.price):'--'; tr.appendChild(tdPri);
+          var tdSt=document.createElement('td');
+          var stText=t.status||''; var stClass='';
+          if(stText==='FILLED'){ stText='已成交'; stClass='text-success'; }
+          else if(stText==='FAILED'){ stText='失败'; stClass='text-danger'; }
+          else if(stText==='NEW'){ stText='已提交'; stClass='text-info'; }
+          tdSt.textContent=stText; tdSt.className=stClass;
+          tr.appendChild(tdSt);
+          tb.appendChild(tr);
+        });
+      }
+      new bootstrap.Modal(document.getElementById('copyTradesModal')).show();
+    });
+  }
+
   function toggleForm(){
     var isSim=document.getElementById('newIsSimulation').checked;
     document.getElementById('wrapApiKeys').classList.toggle('d-none', isSim);
+    document.getElementById('wrapSimBalance').classList.toggle('d-none', !isSim);
     document.getElementById('tipRealTrade').classList.toggle('d-none', isSim);
     document.getElementById('tipSimTrade').classList.toggle('d-none', !isSim);
     var mode=document.getElementById('newCopyMode').value;
@@ -397,9 +470,10 @@
     var copyRule=document.getElementById('newCopyRule').value;
     if(!name||!src){alert('请填写名称并选择跟随账户');return;}
     if(!isSim&&(!key||!sec)){alert('非模拟模式请填写跟单 API Key/Secret');return;}
-    var body={name:name,source_account_id:parseInt(src),follower_api_key:key,follower_api_secret:sec,leverage_scale:leverageScale,copy_mode:copyMode,copy_ratio:copyRatio,leverage_mode:leverageMode,custom_leverage:customLev,is_simulation:isSim,max_slippage:maxSlippage,copy_rule:copyRule};
+    var simBalance=parseFloat(document.getElementById('newSimBalance').value)||10000;
+    var body={name:name,source_account_id:parseInt(src),follower_api_key:key,follower_api_secret:sec,leverage_scale:leverageScale,copy_mode:copyMode,copy_ratio:copyRatio,leverage_mode:leverageMode,custom_leverage:customLev,is_simulation:isSim,sim_balance:simBalance,max_slippage:maxSlippage,copy_rule:copyRule};
     fetch('/api/copy-configs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(r){return r.json();}).then(function(data){
-      if(data.success){ document.getElementById('addCopyModal').querySelector('.btn-close').click(); document.getElementById('newCopyName').value=''; document.getElementById('newCopyApiKey').value=''; document.getElementById('newCopySecret').value=''; document.getElementById('newIsSimulation').checked=false; document.getElementById('newMaxSlippage').value='0'; document.getElementById('newCopyRule').value='sync'; load(); }
+      if(data.success){ document.getElementById('addCopyModal').querySelector('.btn-close').click(); document.getElementById('newCopyName').value=''; document.getElementById('newCopyApiKey').value=''; document.getElementById('newCopySecret').value=''; document.getElementById('newIsSimulation').checked=false; document.getElementById('newSimBalance').value='10000'; document.getElementById('newMaxSlippage').value='0'; document.getElementById('newCopyRule').value='sync'; load(); }
       else alert(data.error||'添加失败');
     });
   });
@@ -408,6 +482,7 @@
   function toggleEditForm(){
     var isSim=document.getElementById('editIsSimulation').checked;
     document.getElementById('editWrapApiKeys').classList.toggle('d-none', isSim);
+    document.getElementById('editWrapSimBalance').classList.toggle('d-none', !isSim);
     var mode=document.getElementById('editCopyMode').value;
     document.getElementById('editWrapCopyRatio').classList.toggle('d-none', mode!=='margin_ratio');
     document.getElementById('editWrapLeverageScale').classList.toggle('d-none', mode!=='amount_scale');
@@ -429,6 +504,7 @@
     document.getElementById('editLeverageScale').value=c.leverage_scale||1;
     document.getElementById('editLeverageMode').value=c.leverage_mode||'same';
     document.getElementById('editCustomLeverage').value=c.custom_leverage||20;
+    document.getElementById('editSimBalance').value=c.sim_balance||10000;
     document.getElementById('editMaxSlippage').value=((c.max_slippage||0)*100).toFixed(1);
     document.getElementById('editCopyRule').value=c.copy_rule||'sync';
     // 填充监控账户下拉
@@ -450,6 +526,7 @@
       leverage_scale:parseFloat(document.getElementById('editLeverageScale').value)||1,
       leverage_mode:document.getElementById('editLeverageMode').value,
       custom_leverage:parseInt(document.getElementById('editCustomLeverage').value,10)||20,
+      sim_balance:parseFloat(document.getElementById('editSimBalance').value)||10000,
       max_slippage:parseFloat(document.getElementById('editMaxSlippage').value)||0,
       copy_rule:document.getElementById('editCopyRule').value,
     };
