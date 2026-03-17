@@ -63,8 +63,8 @@ check_config() {
 
 # 创建日志目录
 create_dirs() {
-    mkdir -p logs
-    echo -e "${GREEN}✓ 日志目录已创建${NC}"
+    mkdir -p logs data
+    echo -e "${GREEN}✓ 日志/数据目录已创建${NC}"
 }
 
 # 检查并清理已运行的容器

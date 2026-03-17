@@ -27,6 +27,10 @@ from src.risk_filter import RiskFilter, RiskConfig
 # Web仪表板模块
 from src.web import create_app, run_web_server
 
+# 账户监控与跟单
+from src.account_monitor_store import AccountMonitorStore
+from src.account_monitor import AccountMonitorService, CopyTradingService
+
 
 class MonitorApp:
     """
@@ -106,8 +110,21 @@ class MonitorApp:
             self.alert_engine.set_risk_filter(self.risk_filter)
             logger.info("风险过滤器已集成到告警引擎")
 
-        # 初始化Web服务器
+        # 初始化Web服务器（含账户监控/跟单存储）
+        self.account_store = AccountMonitorStore()
         self._init_web_server()
+
+        # 账户监控与跟单服务
+        self._account_monitor_service: Optional[AccountMonitorService] = None
+        self._copy_trading_service: Optional[CopyTradingService] = None
+        monitor_interval = max(5, self.settings.account_monitor.monitor_poll_interval)
+        copy_interval = max(5, self.settings.account_monitor.copy_poll_interval)
+        self._account_monitor_service = AccountMonitorService(
+            self.account_store,
+            on_position_alert=lambda name, msg: asyncio.create_task(self.telegram.send_message(msg)),
+            poll_interval_seconds=monitor_interval,
+        )
+        self._copy_trading_service = CopyTradingService(self.account_store, poll_interval_seconds=copy_interval)
 
         # OI 轮询任务
         self._oi_task = None
@@ -191,7 +208,7 @@ class MonitorApp:
 
     def _init_web_server(self):
         """初始化Web仪表板服务器"""
-        self.web_app = create_app()
+        self.web_app = create_app(account_store=self.account_store)
 
         logger.info("Web仪表板初始化完成")
 
@@ -294,6 +311,12 @@ class MonitorApp:
         # 启动Web仪表板服务器
         self._start_web_server()
 
+        # 启动账户监控与跟单服务
+        if self._account_monitor_service:
+            self._account_monitor_service.start()
+        if self._copy_trading_service:
+            self._copy_trading_service.start()
+
         # 启动订单簿监控（如果启用）
         orderbook_cfg = self.settings.alerts.orderbook
         if orderbook_cfg.enabled:
@@ -365,6 +388,12 @@ class MonitorApp:
         # 定期清理风险过滤器（若启用）
         if self.risk_filter:
             self.risk_filter.cleanup(max_age_seconds=300)
+
+        # 停止账户监控与跟单服务
+        if self._account_monitor_service:
+            self._account_monitor_service.stop()
+        if self._copy_trading_service:
+            self._copy_trading_service.stop()
 
         # 关闭连接
         await self.binance.close()

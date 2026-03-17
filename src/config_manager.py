@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import List, Optional
 
 import yaml
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 from pydantic_settings import BaseSettings
 from dotenv import load_dotenv
 
@@ -113,6 +113,24 @@ class LoggingConfig(BaseModel):
     file_path: str = "logs/monitor.log"
 
 
+# ==================== 账户监控与跟单配置 ====================
+
+class AccountMonitorConfig(BaseModel):
+    """账户监控与跟单轮询配置"""
+    monitor_poll_interval: int = 10   # 账户监控轮询间隔（秒）
+    copy_poll_interval: int = 10      # 跟单服务轮询间隔（秒）
+
+    @model_validator(mode="before")
+    @classmethod
+    def _compat_poll_interval(cls, values):
+        """向后兼容：旧配置 poll_interval_seconds 映射到两个新字段"""
+        if isinstance(values, dict) and "poll_interval_seconds" in values:
+            legacy = values.pop("poll_interval_seconds")
+            values.setdefault("monitor_poll_interval", legacy)
+            values.setdefault("copy_poll_interval", legacy)
+        return values
+
+
 # ==================== 风险过滤配置 ====================
 
 class RiskConfig(BaseModel):
@@ -142,6 +160,7 @@ class Settings(BaseSettings):
     volume_tiers: List[VolumeTierConfig] = []
     filter: FilterConfig = Field(default_factory=FilterConfig)
     logging: LoggingConfig = Field(default_factory=LoggingConfig)
+    account_monitor: AccountMonitorConfig = Field(default_factory=AccountMonitorConfig)  # 账户监控/跟单
     risk: RiskConfig = Field(default_factory=RiskConfig)  # 风险过滤配置
 
     class Config:

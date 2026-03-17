@@ -1,0 +1,469 @@
+{% extends "base.html" %}
+{% block title %}跟单配置 - 合约价格异动监控系统{% endblock %}
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4><i class="bi bi-copy"></i> 跟单配置</h4>
+        <p class="text-muted">配置跟单账户的 API，并选择要跟随的「监控账户」。开启后，系统将根据监控账户的持仓变化，在跟单账户上自动进行开仓/平仓操作（通过币安 API 执行）。</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-list-ul"></i> 跟单列表</span>
+                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addCopyModal">
+                    <i class="bi bi-plus"></i> 添加跟单
+                </button>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>名称</th>
+                            <th>跟随账户</th>
+                            <th>跟单方式</th>
+                            <th>比例/倍数</th>
+                            <th>杠杆</th>
+                            <th>滑点/规则</th>
+                            <th>状态</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="copyList">
+                        <tr><td colspan="8" class="text-center text-muted">加载中...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加跟单弹窗 -->
+<div class="modal fade" id="addCopyModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">添加跟单配置</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">跟单账户名称</label>
+                    <input type="text" class="form-control" id="newCopyName" placeholder="例如：跟单账户1">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">跟随的监控账户</label>
+                    <select class="form-select" id="newCopySourceId">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+                <div class="mb-3 form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="newIsSimulation">
+                    <label class="form-check-label" for="newIsSimulation">模拟跟单（不实际下单，仅记录模拟交易）</label>
+                </div>
+                <div id="wrapApiKeys">
+                    <div class="mb-3">
+                        <label class="form-label">跟单账户 API Key</label>
+                        <input type="text" class="form-control" id="newCopyApiKey" placeholder="跟单账户的币安合约 API Key">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">跟单账户 API Secret</label>
+                        <input type="password" class="form-control" id="newCopySecret" placeholder="跟单账户的 API Secret">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">跟单方式</label>
+                    <select class="form-select" id="newCopyMode">
+                        <option value="margin_ratio">按保证金比例（根据双方可用保证金与开仓保证金等比例）</option>
+                        <option value="amount_scale">按仓位倍数（相对源仓位数量倍数）</option>
+                        <option value="same_margin">相同保证金（使用与源账户相同的保证金金额）</option>
+                    </select>
+                </div>
+                <div class="mb-3" id="wrapCopyRatio">
+                    <label class="form-label">跟单比例</label>
+                    <input type="number" class="form-control" id="newCopyRatio" value="1" step="0.1" min="0.01" max="2">
+                    <small class="text-muted">1 = 与源账户同比例占用可用保证金，0.5 = 一半</small>
+                </div>
+                <div class="mb-3 d-none" id="wrapLeverageScale">
+                    <label class="form-label">仓位倍数</label>
+                    <input type="number" class="form-control" id="newCopyLeverageScale" value="1" step="0.1" min="0.1" max="10">
+                    <small class="text-muted">1 = 与源仓位数量一致</small>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">杠杆</label>
+                    <select class="form-select" id="newLeverageMode">
+                        <option value="same">与源账户相同杠杆</option>
+                        <option value="custom">自定义杠杆</option>
+                    </select>
+                </div>
+                <div class="mb-3 d-none" id="wrapCustomLeverage">
+                    <label class="form-label">自定义杠杆倍数</label>
+                    <input type="number" class="form-control" id="newCustomLeverage" value="20" min="1" max="125">
+                </div>
+                <hr>
+                <h6 class="text-muted">风控设置</h6>
+                <div class="mb-3">
+                    <label class="form-label">最大滑点</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="newMaxSlippage" value="0" step="0.5" min="0" max="50">
+                        <span class="input-group-text">%</span>
+                    </div>
+                    <small class="text-muted">源账户开仓价与当前价偏差超过此比例时不跟单开仓，0 = 不限制</small>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">开仓规则</label>
+                    <select class="form-select" id="newCopyRule">
+                        <option value="sync">同步开单（检测到变化即跟单）</option>
+                        <option value="better_price">仅价格更优时开单（当前价优于源开仓价才跟单）</option>
+                    </select>
+                    <small class="text-muted">「价格更优」指做多时当前价 ≤ 源开仓价，做空时当前价 ≥ 源开仓价；若源账户已平仓则不再跟单</small>
+                </div>
+                <p class="small text-danger" id="tipRealTrade">跟单将自动在跟单账户上下单/平仓，请确保 API 已开启「合约」与「交易」权限，并注意风险。</p>
+                <p class="small text-info d-none" id="tipSimTrade">模拟跟单不会实际下单，系统将根据源账户仓位变化记录模拟交易和收益。</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="btnAddCopy">添加</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 编辑跟单弹窗 -->
+<div class="modal fade" id="editCopyModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">编辑跟单配置</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editCopyId">
+                <div class="mb-3">
+                    <label class="form-label">跟单账户名称</label>
+                    <input type="text" class="form-control" id="editCopyName">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">跟随的监控账户</label>
+                    <select class="form-select" id="editCopySourceId"></select>
+                </div>
+                <div class="mb-3 form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="editIsSimulation">
+                    <label class="form-check-label" for="editIsSimulation">模拟跟单</label>
+                </div>
+                <div id="editWrapApiKeys">
+                    <div class="mb-3">
+                        <label class="form-label">跟单账户 API Key</label>
+                        <input type="text" class="form-control" id="editCopyApiKey" placeholder="留空则不修改">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">跟单账户 API Secret</label>
+                        <input type="password" class="form-control" id="editCopySecret" placeholder="留空则不修改">
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">跟单方式</label>
+                    <select class="form-select" id="editCopyMode">
+                        <option value="margin_ratio">按保证金比例</option>
+                        <option value="amount_scale">按仓位倍数</option>
+                        <option value="same_margin">相同保证金</option>
+                    </select>
+                </div>
+                <div class="mb-3" id="editWrapCopyRatio">
+                    <label class="form-label">跟单比例</label>
+                    <input type="number" class="form-control" id="editCopyRatio" value="1" step="0.1" min="0.01" max="2">
+                </div>
+                <div class="mb-3 d-none" id="editWrapLeverageScale">
+                    <label class="form-label">仓位倍数</label>
+                    <input type="number" class="form-control" id="editLeverageScale" value="1" step="0.1" min="0.1" max="10">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">杠杆</label>
+                    <select class="form-select" id="editLeverageMode">
+                        <option value="same">与源账户相同杠杆</option>
+                        <option value="custom">自定义杠杆</option>
+                    </select>
+                </div>
+                <div class="mb-3 d-none" id="editWrapCustomLeverage">
+                    <label class="form-label">自定义杠杆倍数</label>
+                    <input type="number" class="form-control" id="editCustomLeverage" value="20" min="1" max="125">
+                </div>
+                <hr>
+                <h6 class="text-muted">风控设置</h6>
+                <div class="mb-3">
+                    <label class="form-label">最大滑点</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="editMaxSlippage" value="0" step="0.5" min="0" max="50">
+                        <span class="input-group-text">%</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">开仓规则</label>
+                    <select class="form-select" id="editCopyRule">
+                        <option value="sync">同步开单</option>
+                        <option value="better_price">仅价格更优时开单</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="btnSaveEdit">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 模拟交易记录弹窗 -->
+<div class="modal fade" id="simTradesModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">模拟交易记录 - <span id="simConfigName"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <h6>当前模拟持仓</h6>
+                    <table class="table table-sm table-bordered mb-0">
+                        <thead class="table-light">
+                            <tr><th>交易对</th><th>持仓量</th><th>开仓价</th><th>杠杆</th><th>开仓时间</th></tr>
+                        </thead>
+                        <tbody id="simPositions">
+                            <tr><td colspan="5" class="text-center text-muted">无持仓</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mb-3 d-flex align-items-center">
+                    <h6 class="mb-0 me-3">交易历史</h6>
+                    <span class="badge bg-primary fs-6" id="simTotalPnl">累计盈亏: --</span>
+                </div>
+                <table class="table table-sm table-striped mb-0">
+                    <thead class="table-light">
+                        <tr><th>时间</th><th>交易对</th><th>操作</th><th>数量变化</th><th>价格</th><th>盈亏</th></tr>
+                    </thead>
+                    <tbody id="simTradesList">
+                        <tr><td colspan="6" class="text-center text-muted">暂无记录</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function(){
+  var ACTION_LABELS = {open:'开仓',close:'平仓',add:'加仓',reduce:'减仓'};
+  var ACTION_COLORS = {open:'text-success',close:'text-danger',add:'text-primary',reduce:'text-warning'};
+  function modeLabel(m){ return m==='margin_ratio'?'保证金比例':(m==='same_margin'?'相同保证金':'仓位倍数'); }
+  function ratioText(c){ return c.copy_mode==='margin_ratio' ? (c.copy_ratio+' 倍') : (c.copy_mode==='same_margin'?'1:1':'('+c.leverage_scale+'x)'); }
+  function ruleText(c){
+    var slip=c.max_slippage||0; var rule=c.copy_rule||'sync';
+    var slipStr=slip>0?(slip*100).toFixed(1)+'%':'不限';
+    var ruleStr=rule==='better_price'?'价优':'同步';
+    return slipStr+' / '+ruleStr;
+  }
+  function levText(c){ return c.leverage_mode==='same' ? '同源' : (c.custom_leverage+'x'); }
+
+  function load(){
+    fetch('/api/copy-configs').then(function(r){return r.json();}).then(function(data){
+      var tbody=document.getElementById('copyList');
+      tbody.textContent='';
+      if(!data.success||!data.data.length){
+        var tr=document.createElement('tr'); var td=document.createElement('td'); td.colSpan=8; td.className='text-center text-muted'; td.textContent='暂无跟单配置'; tr.appendChild(td); tbody.appendChild(tr); return;
+      }
+      data.data.forEach(function(c){
+        var tr=document.createElement('tr');
+        // 名称列：含模拟标签
+        var tdName=document.createElement('td');
+        tdName.textContent=c.name;
+        if(c.is_simulation){
+          var simBadge=document.createElement('span');
+          simBadge.className='badge bg-info ms-1';
+          simBadge.textContent='模拟';
+          tdName.appendChild(simBadge);
+        }
+        tr.appendChild(tdName);
+        [c.source_account_name||'', modeLabel(c.copy_mode), ratioText(c), levText(c), ruleText(c)].forEach(function(t){ var td=document.createElement('td'); td.textContent=t; tr.appendChild(td); });
+        // 状态列
+        var tdS=document.createElement('td'); var badge=document.createElement('span'); badge.className='badge '+(c.enabled?'bg-success':'bg-secondary'); badge.textContent=c.enabled?'已开启':'已关闭'; tdS.appendChild(badge); tr.appendChild(tdS);
+        // 操作列
+        var tdA=document.createElement('td');
+        var btnT=document.createElement('button'); btnT.className='btn btn-sm me-1 '+(c.enabled?'btn-warning':'btn-success'); btnT.dataset.id=c.id; btnT.dataset.enabled=c.enabled; btnT.textContent=c.enabled?'关闭跟单':'开启跟单';
+        tdA.appendChild(btnT);
+        if(c.is_simulation){
+          var btnView=document.createElement('button'); btnView.className='btn btn-sm btn-info me-1'; btnView.dataset.id=c.id; btnView.dataset.name=c.name; btnView.textContent='查看记录';
+          tdA.appendChild(btnView);
+          btnView.addEventListener('click',function(){ showSimTrades(this.dataset.id, this.dataset.name); });
+        }
+        var btnD=document.createElement('button'); btnD.className='btn btn-sm btn-outline-danger'; btnD.dataset.id=c.id; btnD.textContent='删除';
+        tdA.appendChild(btnD);
+        // 编辑按钮
+        var btnE=document.createElement('button'); btnE.className='btn btn-sm btn-outline-secondary me-1'; btnE.textContent='编辑';
+        (function(cfg){ btnE.addEventListener('click',function(){ openEditModal(cfg); }); })(c);
+        tdA.insertBefore(btnE, btnD);
+        tr.appendChild(tdA); tbody.appendChild(tr);
+        btnT.addEventListener('click',function(){ fetch('/api/copy-configs/'+this.dataset.id+'/enabled',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({enabled:this.dataset.enabled!=='true'})}).then(function(r){return r.json();}).then(function(d){if(d.success)load();}); });
+        btnD.addEventListener('click',function(){ if(!confirm('确定删除？'))return; fetch('/api/copy-configs/'+this.dataset.id,{method:'DELETE'}).then(function(r){return r.json();}).then(function(d){if(d.success)load();}); });
+      });
+    });
+  }
+
+  function showSimTrades(configId, configName){
+    document.getElementById('simConfigName').textContent=configName;
+    fetch('/api/simulation-trades/'+configId).then(function(r){return r.json();}).then(function(res){
+      if(!res.success){ alert(res.error||'获取失败'); return; }
+      var d=res.data;
+      // 持仓
+      var posTb=document.getElementById('simPositions'); posTb.textContent='';
+      if(!d.positions||!d.positions.length){
+        var tr=document.createElement('tr'); var td=document.createElement('td'); td.colSpan=5; td.className='text-center text-muted'; td.textContent='无持仓'; tr.appendChild(td); posTb.appendChild(tr);
+      } else {
+        d.positions.forEach(function(p){
+          var tr=document.createElement('tr');
+          [p.symbol, p.position_amt, p.entry_price, p.leverage, p.opened_at||''].forEach(function(v){ var td=document.createElement('td'); td.textContent=v; tr.appendChild(td); });
+          posTb.appendChild(tr);
+        });
+      }
+      // 累计盈亏
+      var pnlEl=document.getElementById('simTotalPnl');
+      var pnl=d.total_pnl||0;
+      pnlEl.textContent='累计盈亏: '+(pnl>=0?'+':'')+pnl.toFixed(4)+' USDT';
+      pnlEl.className='badge fs-6 '+(pnl>=0?'bg-success':'bg-danger');
+      // 交易列表
+      var tb=document.getElementById('simTradesList'); tb.textContent='';
+      if(!d.trades||!d.trades.length){
+        var tr=document.createElement('tr'); var td=document.createElement('td'); td.colSpan=6; td.className='text-center text-muted'; td.textContent='暂无记录'; tr.appendChild(td); tb.appendChild(tr);
+      } else {
+        d.trades.forEach(function(t){
+          var tr=document.createElement('tr');
+          var tdTime=document.createElement('td'); tdTime.textContent=t.created_at||''; tdTime.style.whiteSpace='nowrap'; tr.appendChild(tdTime);
+          var tdSym=document.createElement('td'); tdSym.textContent=t.symbol; tr.appendChild(tdSym);
+          var tdAct=document.createElement('td'); tdAct.textContent=ACTION_LABELS[t.action]||t.action; tdAct.className=ACTION_COLORS[t.action]||''; tdAct.style.fontWeight='bold'; tr.appendChild(tdAct);
+          // 数量变化列：old_amt → new_amt
+          var tdAmt=document.createElement('td');
+          var oldA=t.old_amt||0, newA=t.new_amt||0;
+          if(t.action==='open'){ tdAmt.textContent='0 → '+newA; }
+          else if(t.action==='close'){ tdAmt.textContent=oldA+' → 0'; }
+          else { tdAmt.textContent=oldA+' → '+newA; }
+          tr.appendChild(tdAmt);
+          var tdPri=document.createElement('td'); tdPri.textContent='$'+t.price; tr.appendChild(tdPri);
+          var tdPnl=document.createElement('td');
+          tdPnl.textContent=(t.pnl>=0?'+':'')+t.pnl.toFixed(4);
+          if(t.pnl>0) tdPnl.className='text-success';
+          else if(t.pnl<0) tdPnl.className='text-danger';
+          tr.appendChild(tdPnl);
+          tb.appendChild(tr);
+        });
+      }
+      new bootstrap.Modal(document.getElementById('simTradesModal')).show();
+    });
+  }
+
+  function toggleForm(){
+    var isSim=document.getElementById('newIsSimulation').checked;
+    document.getElementById('wrapApiKeys').classList.toggle('d-none', isSim);
+    document.getElementById('tipRealTrade').classList.toggle('d-none', isSim);
+    document.getElementById('tipSimTrade').classList.toggle('d-none', !isSim);
+    var mode=document.getElementById('newCopyMode').value;
+    document.getElementById('wrapCopyRatio').classList.toggle('d-none', mode!=='margin_ratio');
+    document.getElementById('wrapLeverageScale').classList.toggle('d-none', mode!=='amount_scale');
+    var lev=document.getElementById('newLeverageMode').value;
+    document.getElementById('wrapCustomLeverage').classList.toggle('d-none', lev!=='custom');
+  }
+  document.getElementById('newIsSimulation').addEventListener('change',toggleForm);
+  document.getElementById('newCopyMode').addEventListener('change',toggleForm);
+  document.getElementById('newLeverageMode').addEventListener('change',toggleForm);
+  document.getElementById('addCopyModal').addEventListener('show.bs.modal',function(){
+    fetch('/api/monitored-accounts').then(function(r){return r.json();}).then(function(data){
+      var sel=document.getElementById('newCopySourceId'); sel.textContent=''; var o=document.createElement('option'); o.value=''; o.textContent='请选择'; sel.appendChild(o);
+      (data.data||[]).forEach(function(a){ var opt=document.createElement('option'); opt.value=a.id; opt.textContent=a.name; sel.appendChild(opt); });
+    });
+    toggleForm();
+  });
+  document.getElementById('btnAddCopy').addEventListener('click',function(){
+    var name=document.getElementById('newCopyName').value.trim(), src=document.getElementById('newCopySourceId').value;
+    var isSim=document.getElementById('newIsSimulation').checked;
+    var key=document.getElementById('newCopyApiKey').value.trim(), sec=document.getElementById('newCopySecret').value.trim();
+    var copyMode=document.getElementById('newCopyMode').value, copyRatio=parseFloat(document.getElementById('newCopyRatio').value)||1, leverageScale=parseFloat(document.getElementById('newCopyLeverageScale').value)||1;
+    var leverageMode=document.getElementById('newLeverageMode').value, customLev=parseInt(document.getElementById('newCustomLeverage').value,10)||20;
+    var maxSlippage=parseFloat(document.getElementById('newMaxSlippage').value)||0;
+    var copyRule=document.getElementById('newCopyRule').value;
+    if(!name||!src){alert('请填写名称并选择跟随账户');return;}
+    if(!isSim&&(!key||!sec)){alert('非模拟模式请填写跟单 API Key/Secret');return;}
+    var body={name:name,source_account_id:parseInt(src),follower_api_key:key,follower_api_secret:sec,leverage_scale:leverageScale,copy_mode:copyMode,copy_ratio:copyRatio,leverage_mode:leverageMode,custom_leverage:customLev,is_simulation:isSim,max_slippage:maxSlippage,copy_rule:copyRule};
+    fetch('/api/copy-configs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(r){return r.json();}).then(function(data){
+      if(data.success){ document.getElementById('addCopyModal').querySelector('.btn-close').click(); document.getElementById('newCopyName').value=''; document.getElementById('newCopyApiKey').value=''; document.getElementById('newCopySecret').value=''; document.getElementById('newIsSimulation').checked=false; document.getElementById('newMaxSlippage').value='0'; document.getElementById('newCopyRule').value='sync'; load(); }
+      else alert(data.error||'添加失败');
+    });
+  });
+
+  // ========== 编辑弹窗逻辑 ==========
+  function toggleEditForm(){
+    var isSim=document.getElementById('editIsSimulation').checked;
+    document.getElementById('editWrapApiKeys').classList.toggle('d-none', isSim);
+    var mode=document.getElementById('editCopyMode').value;
+    document.getElementById('editWrapCopyRatio').classList.toggle('d-none', mode!=='margin_ratio');
+    document.getElementById('editWrapLeverageScale').classList.toggle('d-none', mode!=='amount_scale');
+    var lev=document.getElementById('editLeverageMode').value;
+    document.getElementById('editWrapCustomLeverage').classList.toggle('d-none', lev!=='custom');
+  }
+  document.getElementById('editIsSimulation').addEventListener('change',toggleEditForm);
+  document.getElementById('editCopyMode').addEventListener('change',toggleEditForm);
+  document.getElementById('editLeverageMode').addEventListener('change',toggleEditForm);
+
+  function openEditModal(c){
+    document.getElementById('editCopyId').value=c.id;
+    document.getElementById('editCopyName').value=c.name;
+    document.getElementById('editIsSimulation').checked=!!c.is_simulation;
+    document.getElementById('editCopyApiKey').value='';
+    document.getElementById('editCopySecret').value='';
+    document.getElementById('editCopyMode').value=c.copy_mode||'amount_scale';
+    document.getElementById('editCopyRatio').value=c.copy_ratio||1;
+    document.getElementById('editLeverageScale').value=c.leverage_scale||1;
+    document.getElementById('editLeverageMode').value=c.leverage_mode||'same';
+    document.getElementById('editCustomLeverage').value=c.custom_leverage||20;
+    document.getElementById('editMaxSlippage').value=((c.max_slippage||0)*100).toFixed(1);
+    document.getElementById('editCopyRule').value=c.copy_rule||'sync';
+    // 填充监控账户下拉
+    fetch('/api/monitored-accounts').then(function(r){return r.json();}).then(function(data){
+      var sel=document.getElementById('editCopySourceId'); sel.textContent='';
+      (data.data||[]).forEach(function(a){ var opt=document.createElement('option'); opt.value=a.id; opt.textContent=a.name; if(a.id===c.source_account_id) opt.selected=true; sel.appendChild(opt); });
+    });
+    toggleEditForm();
+    new bootstrap.Modal(document.getElementById('editCopyModal')).show();
+  }
+  document.getElementById('btnSaveEdit').addEventListener('click',function(){
+    var cid=document.getElementById('editCopyId').value;
+    var body={
+      name:document.getElementById('editCopyName').value.trim(),
+      source_account_id:parseInt(document.getElementById('editCopySourceId').value),
+      is_simulation:document.getElementById('editIsSimulation').checked,
+      copy_mode:document.getElementById('editCopyMode').value,
+      copy_ratio:parseFloat(document.getElementById('editCopyRatio').value)||1,
+      leverage_scale:parseFloat(document.getElementById('editLeverageScale').value)||1,
+      leverage_mode:document.getElementById('editLeverageMode').value,
+      custom_leverage:parseInt(document.getElementById('editCustomLeverage').value,10)||20,
+      max_slippage:parseFloat(document.getElementById('editMaxSlippage').value)||0,
+      copy_rule:document.getElementById('editCopyRule').value,
+    };
+    var key=document.getElementById('editCopyApiKey').value.trim();
+    var sec=document.getElementById('editCopySecret').value.trim();
+    if(key) body.follower_api_key=key;
+    if(sec) body.follower_api_secret=sec;
+    fetch('/api/copy-configs/'+cid,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(r){return r.json();}).then(function(data){
+      if(data.success){ document.getElementById('editCopyModal').querySelector('.btn-close').click(); load(); }
+      else alert(data.error||'保存失败');
+    });
+  });
+
+  load();
+})();
+</script>
+{% endblock %}

@@ -26,6 +26,16 @@
                             <i class="bi bi-speedometer2"></i> 仪表板
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'account_monitor_page' %}active{% endif %}" href="/account-monitor">
+                            <i class="bi bi-bank"></i> 账户监控
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'copy_trading_page' %}active{% endif %}" href="/copy-trading">
+                            <i class="bi bi-copy"></i> 跟单配置
+                        </a>
+                    </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">

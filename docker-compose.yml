@@ -8,21 +8,26 @@ services:
     container_name: price-change-monitor
     restart: unless-stopped
 
-    # 环境变量（覆盖 .env 中的配置）
+    # 环境变量
     environment:
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
-      - PROXY_URL=${PROXY_URL}
+      - PROXY_URL=http://host.docker.internal:7890
       - TZ=Asia/Shanghai
 
     # 加载 .env 文件
     env_file:
       - .env
 
-    # 挂载配置和日志（便于修改配置和查看日志）
+    # 容器内访问宿主机（Linux 兼容）
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+    # 挂载配置、日志、数据（SQLite 持久化）
     volumes:
       - ./config:/app/config:ro
       - ./logs:/app/logs
+      - ./data:/app/data
 
     # 端口映射（Web仪表板）
     ports:

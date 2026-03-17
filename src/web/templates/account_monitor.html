@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+{% block title %}账户监控 - 合约价格异动监控系统{% endblock %}
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4><i class="bi bi-bank"></i> 币安账户监控</h4>
+        <p class="text-muted">配置币安 API 后，系统将实时监控该账户持仓，新开仓时通过 Telegram 提醒，并可在本页查看持仓。</p>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <span><i class="bi bi-list-ul"></i> 监控账户列表</span>
+                <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addAccountModal">
+                    <i class="bi bi-plus"></i> 添加账户
+                </button>
+            </div>
+            <div class="card-body p-0">
+                <ul class="list-group list-group-flush" id="accountList">
+                    <li class="list-group-item text-center text-muted">加载中...</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <i class="bi bi-wallet2"></i> 当前持仓
+                <span class="badge bg-secondary ms-2" id="positionAccountName">请选择左侧账户</span>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-hover table-sm mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>交易对</th>
+                            <th>方向</th>
+                            <th>数量</th>
+                            <th>开仓价</th>
+                            <th>标记价</th>
+                            <th>未实现盈亏</th>
+                        </tr>
+                    </thead>
+                    <tbody id="positionTable">
+                        <tr><td colspan="6" class="text-center text-muted">选择账户后加载</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 添加账户弹窗 -->
+<div class="modal fade" id="addAccountModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">添加监控账户</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">账户名称</label>
+                    <input type="text" class="form-control" id="newAccountName" placeholder="例如：主账户">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">API Key</label>
+                    <input type="text" class="form-control" id="newApiKey" placeholder="币安合约 API Key">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">API Secret</label>
+                    <input type="password" class="form-control" id="newApiSecret" placeholder="币安合约 API Secret">
+                </div>
+                <p class="small text-muted">请使用币安 USDT 合约 API，并勾选「启用合约」与「读取」权限。</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="btnAddAccount">添加</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 开平仓记录弹窗 -->
+<div class="modal fade" id="eventsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">开平仓记录 - <span id="eventsAccountName"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-sm table-striped mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>时间</th>
+                            <th>交易对</th>
+                            <th>操作</th>
+                            <th>数量变化</th>
+                            <th>开仓价</th>
+                            <th>标记价</th>
+                            <th>杠杆</th>
+                            <th>未实现盈亏</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eventsTableBody">
+                        <tr><td colspan="8" class="text-center text-muted">加载中...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function(){
+  var ACTION_LABELS = {open:'开仓',close:'平仓',increase:'加仓',decrease:'减仓'};
+  var ACTION_COLORS = {open:'text-success',close:'text-danger',increase:'text-primary',decrease:'text-warning'};
+  var selectedAccountId=null;
+
+  function loadAccounts(){
+    fetch('/api/monitored-accounts').then(function(r){return r.json();}).then(function(data){
+      var ul=document.getElementById('accountList');
+      ul.textContent='';
+      if(!data.success||!data.data.length){ var li=document.createElement('li'); li.className='list-group-item text-center text-muted'; li.textContent='暂无监控账户'; ul.appendChild(li); return; }
+      data.data.forEach(function(a){
+        var li=document.createElement('li');
+        li.className='list-group-item d-flex justify-content-between align-items-center';
+        var div=document.createElement('div');
+        var link=document.createElement('a'); link.href='#'; link.className='account-link'; link.dataset.id=a.id; link.textContent=a.name;
+        var badge=document.createElement('span'); badge.className='badge ms-2 '+(a.enabled?'bg-success':'bg-secondary'); badge.textContent=a.enabled?'已启用':'已暂停';
+        div.appendChild(link); div.appendChild(badge);
+        var actions=document.createElement('div');
+        var btnE=document.createElement('button'); btnE.className='btn btn-sm btn-outline-info me-1'; btnE.dataset.id=a.id; btnE.dataset.name=a.name; btnE.textContent='记录';
+        var btnT=document.createElement('button'); btnT.className='btn btn-sm btn-outline-'+(a.enabled?'warning':'success')+' me-1 toggle-enable'; btnT.dataset.id=a.id; btnT.dataset.enabled=a.enabled; btnT.textContent=a.enabled?'暂停':'启用';
+        var btnD=document.createElement('button'); btnD.className='btn btn-sm btn-outline-danger delete-account'; btnD.dataset.id=a.id; btnD.textContent='删除';
+        actions.appendChild(btnE); actions.appendChild(btnT); actions.appendChild(btnD);
+        li.appendChild(div); li.appendChild(actions); ul.appendChild(li);
+        link.addEventListener('click',function(e){e.preventDefault();selectAccount(parseInt(this.dataset.id));});
+        btnE.addEventListener('click',function(){ showEvents(this.dataset.id, this.dataset.name); });
+        btnT.addEventListener('click',function(){fetch('/api/monitored-accounts/'+this.dataset.id+'/enabled',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({enabled:this.dataset.enabled!=='true'})}).then(function(r){return r.json();}).then(function(d){if(d.success)loadAccounts();});});
+        btnD.addEventListener('click',function(){if(!confirm('确定删除？'))return; fetch('/api/monitored-accounts/'+this.dataset.id,{method:'DELETE'}).then(function(r){return r.json();}).then(function(d){if(d.success){loadAccounts(); var tb=document.getElementById('positionTable'); tb.textContent=''; var tr=document.createElement('tr'); var td=document.createElement('td'); td.colSpan=6; td.className='text-center text-muted'; td.textContent='选择账户后加载'; tr.appendChild(td); tb.appendChild(tr);}});});
+      });
+    });
+  }
+
+  function selectAccount(id){
+    selectedAccountId=id;
+    fetch('/api/monitored-accounts').then(function(r){return r.json();}).then(function(data){ var a=(data.data||[]).find(function(x){return x.id===id;}); document.getElementById('positionAccountName').textContent=a?a.name:'未知';});
+    var tbody=document.getElementById('positionTable'); tbody.textContent=''; var tr=document.createElement('tr'); var td=document.createElement('td'); td.colSpan=6; td.className='text-center'; td.textContent='加载中...'; tr.appendChild(td); tbody.appendChild(tr);
+    fetch('/api/monitored-accounts/'+id+'/positions').then(function(r){return r.json();}).then(function(data){
+      tbody.textContent='';
+      if(!data.success){ var r0=document.createElement('tr'); var d0=document.createElement('td'); d0.colSpan=6; d0.className='text-center text-danger'; d0.textContent=data.error||'加载失败'; r0.appendChild(d0); tbody.appendChild(r0); return; }
+      if(!data.data.length){ var r1=document.createElement('tr'); var d1=document.createElement('td'); d1.colSpan=6; d1.className='text-center text-muted'; d1.textContent='暂无持仓'; r1.appendChild(d1); tbody.appendChild(r1); return; }
+      data.data.forEach(function(p){
+        var row=document.createElement('tr');
+        var side=p.position_amt>0?'多':'空';
+        var cells=[p.symbol, side, Math.abs(p.position_amt), '$'+p.entry_price.toFixed(4), '$'+p.mark_price.toFixed(4), '$'+p.unrealized_profit.toFixed(2)];
+        cells.forEach(function(txt,i){
+          var cell=document.createElement('td');
+          cell.textContent=txt;
+          if(i===1) cell.className=p.position_amt>0?'text-success':'text-danger';
+          if(i===5) cell.className=p.unrealized_profit>=0?'text-success':'text-danger';
+          row.appendChild(cell);
+        });
+        tbody.appendChild(row);
+      });
+    });
+  }
+
+  function showEvents(accountId, accountName){
+    document.getElementById('eventsAccountName').textContent=accountName;
+    var tb=document.getElementById('eventsTableBody');
+    tb.textContent='';
+    var trL=document.createElement('tr'); var tdL=document.createElement('td'); tdL.colSpan=8; tdL.className='text-center'; tdL.textContent='加载中...'; trL.appendChild(tdL); tb.appendChild(trL);
+    new bootstrap.Modal(document.getElementById('eventsModal')).show();
+    fetch('/api/monitored-accounts/'+accountId+'/events').then(function(r){return r.json();}).then(function(res){
+      tb.textContent='';
+      if(!res.success){ var tr=document.createElement('tr'); var td=document.createElement('td'); td.colSpan=8; td.className='text-center text-danger'; td.textContent=res.error||'加载失败'; tr.appendChild(td); tb.appendChild(tr); return; }
+      if(!res.data||!res.data.length){ var tr=document.createElement('tr'); var td=document.createElement('td'); td.colSpan=8; td.className='text-center text-muted'; td.textContent='暂无开平仓记录'; tr.appendChild(td); tb.appendChild(tr); return; }
+      res.data.forEach(function(e){
+        var tr=document.createElement('tr');
+        // 时间
+        var tdTime=document.createElement('td'); tdTime.textContent=e.created_at||''; tdTime.style.whiteSpace='nowrap'; tr.appendChild(tdTime);
+        // 交易对
+        var tdSym=document.createElement('td'); tdSym.textContent=e.symbol; tr.appendChild(tdSym);
+        // 操作
+        var tdAct=document.createElement('td');
+        tdAct.textContent=ACTION_LABELS[e.action]||e.action;
+        tdAct.className=ACTION_COLORS[e.action]||'';
+        tdAct.style.fontWeight='bold';
+        tr.appendChild(tdAct);
+        // 数量变化
+        var tdAmt=document.createElement('td');
+        if(e.action==='open'){
+          tdAmt.textContent='0 → '+e.new_amt;
+        } else if(e.action==='close'){
+          tdAmt.textContent=e.old_amt+' → 0';
+        } else {
+          tdAmt.textContent=e.old_amt+' → '+e.new_amt;
+        }
+        tr.appendChild(tdAmt);
+        // 开仓价
+        var tdEntry=document.createElement('td'); tdEntry.textContent=e.entry_price?('$'+e.entry_price.toFixed(4)):'--'; tr.appendChild(tdEntry);
+        // 标记价
+        var tdMark=document.createElement('td'); tdMark.textContent=e.mark_price?('$'+e.mark_price.toFixed(4)):'--'; tr.appendChild(tdMark);
+        // 杠杆
+        var tdLev=document.createElement('td'); tdLev.textContent=e.leverage?(e.leverage+'x'):'--'; tr.appendChild(tdLev);
+        // 未实现盈亏
+        var tdPnl=document.createElement('td');
+        if(e.action==='close'){
+          tdPnl.textContent='--';
+        } else {
+          tdPnl.textContent='$'+(e.unrealized_profit||0).toFixed(2);
+          tdPnl.className=(e.unrealized_profit||0)>=0?'text-success':'text-danger';
+        }
+        tr.appendChild(tdPnl);
+        tb.appendChild(tr);
+      });
+    });
+  }
+
+  document.getElementById('btnAddAccount').addEventListener('click',function(){
+    var name=document.getElementById('newAccountName').value.trim(), key=document.getElementById('newApiKey').value.trim(), secret=document.getElementById('newApiSecret').value.trim();
+    if(!name||!key||!secret){alert('请填写名称、API Key 和 API Secret');return;}
+    fetch('/api/monitored-accounts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,api_key:key,api_secret:secret})}).then(function(r){return r.json();}).then(function(data){
+      if(data.success){ document.getElementById('addAccountModal').querySelector('.btn-close').click(); document.getElementById('newAccountName').value=''; document.getElementById('newApiKey').value=''; document.getElementById('newApiSecret').value=''; loadAccounts(); }
+      else alert(data.error||'添加失败');
+    });
+  });
+  loadAccounts();
+})();
+</script>
+{% endblock %}
