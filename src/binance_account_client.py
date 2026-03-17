@@ -247,6 +247,13 @@ class BinanceAccountClient:
             logger.error(f"place_market_order error: {e}")
             return None
 
+    async def get_position_mode(self) -> Optional[bool]:
+        """查询持仓模式。返回 True=双向持仓(hedge mode), False=单向持仓(one-way), None=查询失败"""
+        raw = await self._signed_request("GET", "/fapi/v1/positionSide/dual")
+        if raw is None:
+            return None
+        return bool(raw.get("dualSidePosition", False))
+
     async def set_leverage(self, symbol: str, leverage: int) -> bool:
         """设置合约杠杆"""
         raw = await self._signed_request("POST", "/fapi/v1/leverage", data={

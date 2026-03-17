@@ -249,6 +249,7 @@ class CopyTradingService:
         self.poll_interval = poll_interval_seconds
         self._running = False
         self._task: Optional[asyncio.Task] = None
+        self._follower_hedge_mode: dict = {}  # config_id -> bool (跟单账户持仓模式缓存)
 
     def _should_skip_open(
         self, config: CopyTradingConfig, target_amt: float,
@@ -389,6 +390,50 @@ class CopyTradingService:
                 if bkey in target_map:
                     del target_map[bkey]
 
+            # --- 获取跟单账户持仓模式，映射 position_side ---
+            if config.id not in self._follower_hedge_mode:
+                follower_is_hedge = await follower.get_position_mode()
+                if follower_is_hedge is None:
+                    logger.warning(f"跟单 {config.name} 无法查询跟单账户持仓模式，跳过本轮")
+                    return
+                self._follower_hedge_mode[config.id] = follower_is_hedge
+                logger.info(f"跟单 {config.name} 跟单账户持仓模式: {'双向持仓' if follower_is_hedge else '单向持仓'}")
+            follower_is_hedge = self._follower_hedge_mode[config.id]
+
+            # 将 target_map 的 position_side 映射为跟单账户的格式
+            if not follower_is_hedge:
+                # 跟单账户是单向持仓，将 LONG/SHORT 合并为 BOTH
+                remapped: dict = {}
+                for (sym, src_ps), val in target_map.items():
+                    new_key = (sym, "BOTH")
+                    if new_key in remapped:
+                        old_val = remapped[new_key]
+                        remapped[new_key] = (old_val[0] + val[0], val[1], val[2], val[3])
+                    else:
+                        remapped[new_key] = val
+                target_map = remapped
+                # 基线也映射为单向格式（用于清仓循环对比）
+                follower_baseline = {(sym, "BOTH") for sym, _ in baseline}
+            elif any(ps == "BOTH" for _, ps in target_map):
+                # 跟单账户是双向持仓，但源是单向 → 按方向映射
+                remapped = {}
+                for (sym, src_ps), (t_amt, lev, entry, mark) in target_map.items():
+                    if src_ps == "BOTH":
+                        new_ps = "LONG" if t_amt >= 0 else "SHORT"
+                        remapped[(sym, new_ps)] = (t_amt, lev, entry, mark)
+                    else:
+                        remapped[(sym, src_ps)] = (t_amt, lev, entry, mark)
+                target_map = remapped
+                follower_baseline = set()
+                for sym, ps in baseline:
+                    if ps == "BOTH":
+                        follower_baseline.add((sym, "LONG"))
+                        follower_baseline.add((sym, "SHORT"))
+                    else:
+                        follower_baseline.add((sym, ps))
+            else:
+                follower_baseline = baseline
+
             for (symbol, ps), (target_amt, leverage, src_entry, mark_price) in target_map.items():
                 current_pos = current_by_key.get((symbol, ps))
                 current = current_pos.position_amt if current_pos else 0
@@ -424,6 +469,9 @@ class CopyTradingService:
                             old_amt=current, new_amt=0 if action == "close" else target_amt,
                             price=exec_price, order_id=oid, status=st, position_side=ps,
                         )
+                    if last_result is None:
+                        logger.warning(f"跟单 {config.name} 平旧仓 {symbol}({ps}) 失败，跳过后续操作")
+                        continue
                     await asyncio.sleep(0.3)
                 if abs(target_amt) >= 1e-8:
                     side = "BUY" if target_amt > 0 else "SELL"
@@ -442,10 +490,13 @@ class CopyTradingService:
                         old_amt=0 if action in ("open", "close") else current, new_amt=target_amt,
                         price=exec_price, order_id=oid, status=st, position_side=ps,
                     )
-                    logger.info(f"跟单 {config.name} 同步 {symbol}({ps}) {side} {qty} 杠杆{leverage}x")
+                    if last_result:
+                        logger.info(f"跟单 {config.name} 同步 {symbol}({ps}) {side} {qty} 杠杆{leverage}x")
+                    else:
+                        logger.warning(f"跟单 {config.name} 同步 {symbol}({ps}) {side} {qty} 下单失败")
             for key, current_pos in current_by_key.items():
                 if key not in target_map and current_pos.position_amt != 0:
-                    if key in baseline:
+                    if key in follower_baseline:
                         continue  # 基线仓位不主动平仓
                     symbol, ps = key
                     side = "SELL" if current_pos.position_amt > 0 else "BUY"
@@ -459,7 +510,10 @@ class CopyTradingService:
                         old_amt=current_pos.position_amt, new_amt=0,
                         price=exec_price, order_id=oid, status=st, position_side=ps,
                     )
-                    logger.info(f"跟单 {config.name} 平仓 {symbol}({ps})")
+                    if result:
+                        logger.info(f"跟单 {config.name} 平仓 {symbol}({ps})")
+                    else:
+                        logger.warning(f"跟单 {config.name} 平仓 {symbol}({ps}) 下单失败")
         except Exception as e:
             logger.error(f"跟单 {config.name} 同步失败: {e}")
         finally:
@@ -637,6 +691,8 @@ class CopyTradingService:
                     source_full = await source_client.get_account_full()
                     if source_full:
                         await self._sync_follower_to_source(config, source_account_full=source_full)
+                    else:
+                        logger.warning(f"跟单 {config.name} 无法获取源账户完整信息(mode={copy_mode})，跳过本轮")
                 else:
                     positions = await source_client.get_position_risk()
                     if positions is None:
