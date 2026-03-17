@@ -215,15 +215,38 @@ class AccountMonitorService:
         while self._running:
             try:
                 await self._poll_once()
+            except asyncio.CancelledError:
+                logger.warning("账户监控 _loop 收到 CancelledError")
+                raise
             except Exception as e:
                 logger.exception(f"账户监控轮询异常: {e}")
-            await asyncio.sleep(self.poll_interval)
+            try:
+                await asyncio.sleep(self.poll_interval)
+            except asyncio.CancelledError:
+                logger.warning("账户监控 _loop sleep 被取消")
+                return
+
+    def _on_task_done(self, task: asyncio.Task) -> None:
+        """任务结束回调：非主动停止时自动重启"""
+        if not self._running:
+            return
+        if task.cancelled():
+            logger.error("账户监控 task 被意外取消，尝试重启")
+        else:
+            exc = task.exception()
+            if exc:
+                logger.error(f"账户监控 task 异常退出: {exc}，尝试重启")
+            else:
+                logger.warning("账户监控 task 意外退出，尝试重启")
+        self._task = asyncio.create_task(self._loop())
+        self._task.add_done_callback(self._on_task_done)
 
     def start(self) -> None:
         if self._running:
             return
         self._running = True
         self._task = asyncio.create_task(self._loop())
+        self._task.add_done_callback(self._on_task_done)
         logger.info("账户监控服务已启动")
 
     def stop(self) -> None:
@@ -690,6 +713,9 @@ class CopyTradingService:
                 if copy_mode in ("margin_ratio", "same_margin"):
                     source_full = await source_client.get_account_full()
                     if source_full:
+                        src_pos_count = len(source_full.get("positions") or [])
+                        if src_pos_count > 0:
+                            logger.info(f"跟单 {config.name} 源账户有 {src_pos_count} 个持仓(mode={copy_mode})，开始同步")
                         await self._sync_follower_to_source(config, source_account_full=source_full)
                     else:
                         logger.warning(f"跟单 {config.name} 无法获取源账户完整信息(mode={copy_mode})，跳过本轮")
@@ -698,6 +724,8 @@ class CopyTradingService:
                     if positions is None:
                         logger.warning(f"跟单 {config.name} 无法获取源账户持仓，跳过本轮")
                         continue
+                    if positions:
+                        logger.info(f"跟单 {config.name} 源账户有 {len(positions)} 个持仓(mode={copy_mode})，开始同步")
                     await self._sync_follower_to_source(config, source_positions=positions)
             except Exception as e:
                 logger.error(f"跟单拉取源账户 {source.name} 失败: {e}")
@@ -705,18 +733,46 @@ class CopyTradingService:
                 await source_client.close()
 
     async def _loop(self) -> None:
+        poll_count = 0
         while self._running:
             try:
                 await self._poll_once()
+                poll_count += 1
+                # 每 60 次轮询输出一次心跳日志（约 5 分钟一次）
+                if poll_count % 60 == 0:
+                    logger.info(f"跟单服务运行中，已完成 {poll_count} 次轮询")
+            except asyncio.CancelledError:
+                logger.warning("跟单服务 _loop 收到 CancelledError")
+                raise  # 重新抛出让 task 正常结束
             except Exception as e:
                 logger.exception(f"跟单轮询异常: {e}")
-            await asyncio.sleep(self.poll_interval)
+            try:
+                await asyncio.sleep(self.poll_interval)
+            except asyncio.CancelledError:
+                logger.warning("跟单服务 _loop sleep 被取消")
+                return
+        logger.warning("跟单服务 _loop 正常退出 (_running=False)")
+
+    def _on_task_done(self, task: asyncio.Task) -> None:
+        """任务结束回调：非主动停止时自动重启"""
+        if not self._running:
+            return  # 主动 stop，不重启
+        exc = task.exception() if not task.cancelled() else None
+        if task.cancelled():
+            logger.error("跟单服务 task 被意外取消，尝试重启")
+        elif exc:
+            logger.error(f"跟单服务 task 异常退出: {exc}，尝试重启")
+        else:
+            logger.warning("跟单服务 task 意外正常退出，尝试重启")
+        self._task = asyncio.create_task(self._loop())
+        self._task.add_done_callback(self._on_task_done)
 
     def start(self) -> None:
         if self._running:
             return
         self._running = True
         self._task = asyncio.create_task(self._loop())
+        self._task.add_done_callback(self._on_task_done)
         logger.info("跟单服务已启动")
 
     def stop(self) -> None:
